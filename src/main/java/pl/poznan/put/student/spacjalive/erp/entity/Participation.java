@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "participation")
 @IdClass(Participation.class)
 public class Participation implements Serializable {
 

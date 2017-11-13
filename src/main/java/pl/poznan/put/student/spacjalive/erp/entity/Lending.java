@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 
-@Entity(name = "lending")
+@Entity
+@Table(name = "lending")
 public class Lending {
 
     @Id
