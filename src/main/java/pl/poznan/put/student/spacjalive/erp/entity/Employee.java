@@ -25,6 +25,9 @@ public class Employee {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "user_type")
+    private String userType;
+
     @Column(name = "mario_dollars")
     private double marioDollars;
 
@@ -51,11 +54,12 @@ public class Employee {
 
     }
 
-    public Employee(String firstName, String lastName, String email, String phoneNumber, double marioDollars, String password, String index, boolean officeEntrance) {
+    public Employee(String firstName, String lastName, String email, String phoneNumber, String userType, double marioDollars, String password, String index, boolean officeEntrance) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.userType = userType;
         this.marioDollars = marioDollars;
         this.password = password;
         this.index = index;
@@ -100,6 +104,14 @@ public class Employee {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public double getMarioDollars() {
@@ -167,6 +179,7 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", userType='" + userType + '\'' +
                 ", marioDollars=" + marioDollars +
                 ", password='" + password + '\'' +
                 ", index='" + index + '\'' +

@@ -27,8 +27,11 @@ public class Event {
     @Column(name = "organizer")
     private String organizer;
 
-    @Column(name = "contact")
-    private String contact;
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "comments")
     private String comments;
@@ -56,12 +59,13 @@ public class Event {
 
     }
 
-    public Event(String name, String place, Date date, String organizer, String contact, String comments, int priority, Date deadline, boolean archived, String videoType, double value) {
+    public Event(String name, String place, Date date, String organizer, String phoneNumber, String email, String comments, int priority, Date deadline, boolean archived, String videoType, double value) {
         this.name = name;
         this.place = place;
         this.date = date;
         this.organizer = organizer;
-        this.contact = contact;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
         this.comments = comments;
         this.priority = priority;
         this.deadline = deadline;
@@ -110,12 +114,20 @@ public class Event {
         this.organizer = organizer;
     }
 
-    public String getContact() {
-        return contact;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getComments() {
@@ -191,7 +203,8 @@ public class Event {
                 ", place='" + place + '\'' +
                 ", date=" + date +
                 ", organizer='" + organizer + '\'' +
-                ", contact='" + contact + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
                 ", comments='" + comments + '\'' +
                 ", priority=" + priority +
                 ", deadline=" + deadline +
