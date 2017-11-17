@@ -13,6 +13,7 @@
     <springframework.version>4.3.4.RELEASE</springframework.version>
     <hibernate.version>5.2.5.Final</hibernate.version>
     <mysql.connector.version>6.0.4</mysql.connector.version>
+    <springsecurity.version>4.2.3.RELEASE</springsecurity.version>
   </properties>
 
   <dependencies>
@@ -40,6 +41,20 @@
       <version>${springframework.version}</version>
     </dependency>
 
+    <!-- Security -->
+   <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+      <version>${springsecurity.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+      <version>${springsecurity.version}</version>
+    </dependency>
+
+
     <!-- Hibernate -->
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -60,6 +75,15 @@
       <artifactId>c3p0</artifactId>
       <version>0.9.5.2</version>
     </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+
+
   </dependencies>
 
   <build>
