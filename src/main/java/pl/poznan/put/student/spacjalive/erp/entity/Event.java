@@ -1,6 +1,10 @@
 package pl.poznan.put.student.spacjalive.erp.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +12,8 @@ import java.util.List;
 @Entity
 @Table(name = "event")
 public class Event {
+
+    //TODO add fields validations
 
     @Id
     @Column(name = "id")
@@ -20,9 +26,11 @@ public class Event {
     @Column(name = "place")
     private String place;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date")
-    private Date date;
+    @DateTimeFormat(pattern = "yy-MM-dd hh:mm")
+//    @Pattern(regexp = "^[0-9]{2}\\-((0[0-9])|(1[0-2]))\\-((0[1-9])|([1-2][0-9])|(3[0-1]))\\ (([0-1][0-9])|(2[0-3]))\\:[0-5][0-9]",
+//            message = "Niepoprawny format daty! YY-MM-DD hh:mm")
+    @Column(name = "date", columnDefinition = "TIMESTAMP")
+    private LocalDateTime date;
 
     @Column(name = "organizer")
     private String organizer;
@@ -39,9 +47,9 @@ public class Event {
     @Column(name = "priority")
     private int priority;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "deadline")
-    private Date deadline;
+    @DateTimeFormat(pattern = "yy-MM-dd hh:mm")
+    @Column(name = "deadline", columnDefinition = "TIMESTAMP")
+    private LocalDateTime deadline;
 
     @Column(name = "archived")
     private boolean archived;
@@ -59,7 +67,7 @@ public class Event {
 
     }
 
-    public Event(String name, String place, Date date, String organizer, String phoneNumber, String email, String comments, int priority, Date deadline, boolean archived, String videoType, double value) {
+    public Event(String name, String place, LocalDateTime date, String organizer, String phoneNumber, String email, String comments, int priority, LocalDateTime deadline, boolean archived, String videoType, double value) {
         this.name = name;
         this.place = place;
         this.date = date;
@@ -98,11 +106,11 @@ public class Event {
         this.place = place;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -146,11 +154,11 @@ public class Event {
         this.priority = priority;
     }
 
-    public Date getDeadline() {
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
     }
 

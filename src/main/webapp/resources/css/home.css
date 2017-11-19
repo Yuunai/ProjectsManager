@@ -1,0 +1,15 @@
+#event_section {
+    float: left;
+}
+
+#employees_section {
+    float: left;
+}
+
+#footer {
+    float: none;
+}
+
+#header {
+    text-align: center;
+}

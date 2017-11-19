@@ -1,6 +1,7 @@
 package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -8,22 +9,22 @@ import java.util.Date;
 @Table(name = "lending")
 public class Lending {
 
+    //TODO add fields validations
+
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "since")
-    private Date since;
+    @Column(name = "since", columnDefinition = "TIMESTAMP")
+    private LocalDateTime since;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "to")
-    private Date to;
+    @Column(name = "to", columnDefinition = "TIMESTAMP")
+    private LocalDateTime to;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "return_time")
-    private Date return_time;
+    @Column(name = "return_time", columnDefinition = "TIMESTAMP")
+    private LocalDateTime return_time;
 
     @Column(name = "comments")
     String comments;
@@ -46,7 +47,7 @@ public class Lending {
 
     }
 
-    public Lending(Date since, Date to, Date return_time, String comments) {
+    public Lending(LocalDateTime since, LocalDateTime to, LocalDateTime return_time, String comments) {
         this.since = since;
         this.to = to;
         this.return_time = return_time;
@@ -61,27 +62,27 @@ public class Lending {
         this.id = id;
     }
 
-    public Date getSince() {
+    public LocalDateTime getSince() {
         return since;
     }
 
-    public void setSince(Date since) {
+    public void setSince(LocalDateTime since) {
         this.since = since;
     }
 
-    public Date getTo() {
+    public LocalDateTime getTo() {
         return to;
     }
 
-    public void setTo(Date to) {
+    public void setTo(LocalDateTime to) {
         this.to = to;
     }
 
-    public Date getReturn_time() {
+    public LocalDateTime getReturn_time() {
         return return_time;
     }
 
-    public void setReturn_time(Date return_time) {
+    public void setReturn_time(LocalDateTime return_time) {
         this.return_time = return_time;
     }
 

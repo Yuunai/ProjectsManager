@@ -10,10 +10,11 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <springframework.version>4.3.4.RELEASE</springframework.version>
-    <hibernate.version>5.2.5.Final</hibernate.version>
-    <mysql.connector.version>6.0.4</mysql.connector.version>
-    <springsecurity.version>4.2.3.RELEASE</springsecurity.version>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <springframework.version>4.3.4.RELEASE</springframework.version>
+      <hibernate.version>5.2.5.Final</hibernate.version>
+      <mysql.connector.version>6.0.4</mysql.connector.version>
+      <springsecurity.version>4.2.3.RELEASE</springsecurity.version>
   </properties>
 
   <dependencies>
@@ -41,7 +42,9 @@
       <version>${springframework.version}</version>
     </dependency>
 
-    <!-- Security -->
+
+
+      <!-- Security -->
    <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
@@ -62,7 +65,15 @@
       <version>${hibernate.version}</version>
     </dependency>
 
-    <!-- MySQL -->
+      <!-- Validator -->
+      <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-validator</artifactId>
+          <version>6.0.5.Final</version>
+      </dependency>
+
+
+      <!-- MySQL -->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
@@ -78,10 +89,31 @@
 
     <dependency>
       <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
       <scope>provided</scope>
     </dependency>
+
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>javax.servlet.jsp-api</artifactId>
+      <version>2.3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+
+    <!-- bootstrap -->
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>bootstrap</artifactId>
+      <version>3.3.7-1</version>
+    </dependency>
+
 
 
   </dependencies>

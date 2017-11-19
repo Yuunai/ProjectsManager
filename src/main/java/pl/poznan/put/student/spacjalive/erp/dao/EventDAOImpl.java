@@ -32,11 +32,15 @@ public class EventDAOImpl implements EventDAO {
 
         Query<Event> query = session.createQuery("FROM Event WHERE archived=:archiv", Event.class);
 
+        /*
         if(active) {
             query.setParameter("archiv", 1);
         } else {
             query.setParameter("archiv", 0);
         }
+        */
+
+        query.setParameter("archiv", active);
 
         List<Event> events = query.getResultList();
 

@@ -8,6 +8,8 @@ import java.util.List;
 @Table(name = "role")
 public class Role {
 
+    //TODO add fields validations
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

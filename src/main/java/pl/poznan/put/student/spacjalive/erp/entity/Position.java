@@ -1,12 +1,15 @@
 package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "position")
 public class Position {
+
+    //TODO add fields validations
 
     @Id
     @Column(name = "id")
@@ -16,9 +19,8 @@ public class Position {
     @Column(name = "name")
     private String name;
 
-    @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "lending_time")
-    private Date lendingTime;
+    @Column(name = "lending_time", columnDefinition = "TIMESTAMP")
+    private LocalDateTime lendingTime;
 
     @OneToMany(cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
@@ -31,7 +33,7 @@ public class Position {
 
     }
 
-    public Position(String name, Date lendingTime) {
+    public Position(String name, LocalDateTime lendingTime) {
         this.name = name;
         this.lendingTime = lendingTime;
     }
@@ -52,11 +54,11 @@ public class Position {
         this.name = name;
     }
 
-    public Date getLendingTime() {
+    public LocalDateTime getLendingTime() {
         return lendingTime;
     }
 
-    public void setLendingTime(Date lendingTime) {
+    public void setLendingTime(LocalDateTime lendingTime) {
         this.lendingTime = lendingTime;
     }
 

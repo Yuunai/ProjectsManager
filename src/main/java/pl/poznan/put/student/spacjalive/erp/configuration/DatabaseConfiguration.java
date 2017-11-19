@@ -9,7 +9,6 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.util.Properties;
@@ -26,6 +25,8 @@ public class DatabaseConfiguration {
     @Autowired
     private Environment env;
 
+
+    //TODO repair memory leak
     @Bean(destroyMethod = "close")
     public DataSource dataSource() throws PropertyVetoException {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
@@ -51,7 +52,7 @@ public class DatabaseConfiguration {
         properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 
         factoryBean.setHibernateProperties(properties);
-        factoryBean.setAnnotatedPackages("pl.poznan.put.student.spacjalive.erp.entity");
+        factoryBean.setPackagesToScan("pl.poznan.put.student.spacjalive.erp.entity");
 
         return factoryBean;
     }
