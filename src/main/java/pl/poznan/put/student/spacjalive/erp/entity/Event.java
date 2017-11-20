@@ -3,9 +3,7 @@ package pl.poznan.put.student.spacjalive.erp.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class Event {
     @Column(name = "place")
     private String place;
 
-    @DateTimeFormat(pattern = "yy-MM-dd hh:mm")
+    @DateTimeFormat(pattern = "d.M.u H:m")
 //    @Pattern(regexp = "^[0-9]{2}\\-((0[0-9])|(1[0-2]))\\-((0[1-9])|([1-2][0-9])|(3[0-1]))\\ (([0-1][0-9])|(2[0-3]))\\:[0-5][0-9]",
 //            message = "Niepoprawny format daty! YY-MM-DD hh:mm")
     @Column(name = "date", columnDefinition = "TIMESTAMP")
@@ -47,7 +45,7 @@ public class Event {
     @Column(name = "priority")
     private int priority;
 
-    @DateTimeFormat(pattern = "yy-MM-dd hh:mm")
+    @DateTimeFormat(pattern = "d.M.u H:m")
     @Column(name = "deadline", columnDefinition = "TIMESTAMP")
     private LocalDateTime deadline;
 

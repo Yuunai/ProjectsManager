@@ -5,13 +5,12 @@
   Time: 16:04
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" pageEncoding="UTF-8"%>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Add Event</title>
 
     <link type="text/css"
@@ -30,7 +29,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <form:form action="addEvent" modelAttribute="event" method="POST">
+        <form:form action="addEvent" modelAttribute="event" method="POST" acceptCharset="utf8">
 
             <form:hidden path="id"/>
             <form:hidden path="archived"/>
@@ -54,7 +53,7 @@
                     <td><form:input path="place" /></td>
                 </tr>
                 <tr>
-                    <td><label>Data(YY-MM-DD HH:MM)</label></td>
+                    <td><label>Data(dd.MM.yy hh:mm)</label></td>
                     <td><form:input path="date" />
                     <form:errors path="date"/>
                     </td>
@@ -80,15 +79,16 @@
                     <td><form:input path="priority" /></td>
                 </tr>
                 <tr>
-                    <td><label>Deadline</label></td>
-                    <td><form:input path="deadline" /></td>
+                    <td><label>Deadline(dd.MM.yy hh:mm)</label></td>
+                    <td><form:input path="deadline" />
+                        <form:errors path="deadline"/></td>
                 </tr>
                 <tr>
                     <td><label>Typ nagrania</label></td>
                     <td><form:input path="videoType" /></td>
                 </tr>
                 <tr>
-                    <td><label>Wartosc</label></td>
+                    <td><label>Wartość</label></td>
                     <td><form:input path="value" /></td>
                 </tr>
 

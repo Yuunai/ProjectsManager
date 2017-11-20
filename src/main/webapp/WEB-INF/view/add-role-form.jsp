@@ -5,8 +5,7 @@
   Time: 20:00
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" pageEncoding="UTF-8"%>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
@@ -28,7 +27,7 @@
 
     <div class="row justify-content-center">
         <div>
-            <form:form action="addRole" modelAttribute="role" method="POST">
+            <form:form action="addRole" modelAttribute="role" method="POST" acceptCharset="utf8">
 
                 <form:hidden path="id"/>
                 <table class="table col-4 table-bordered">
