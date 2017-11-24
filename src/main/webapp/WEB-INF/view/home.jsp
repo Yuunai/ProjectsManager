@@ -25,25 +25,32 @@
     </div>
 
     <div class="row">
-        <!-- TODO add href for event details -->
         <div id="event_section" class="col-6">
             <table class="table table-bordered">
                 <thead class="thead-dark">
+                <tr>
                     <th scope="col">Nazwa</th>
                     <th scope="col">Miejsce</th>
                     <th scope="col">Data</th>
+                    <th scope="col">Szczegóły</th>
+                </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="event" items="${events}">
+                        <c:url var="eventDetails" value="/event/eventDetails">
+                            <c:param name="eventId" value="${event.id}" />
+                        </c:url>
                         <tr>
                             <td>${event.name}</td>
                             <td>${event.place}</td>
                             <td>${event.date}</td>
+                            <td>
+                                <a href="${eventDetails}">Szczegóły</a>
+                            </td>
                         </tr>
-
                     </c:forEach>
                 <tr>
-                    <td colspan="3">
+                    <td colspan="4">
                         <a class="btn btn-primary" href="event/addEventForm" role="button">Add Event</a>
                     </td>
                 </tr>

@@ -25,10 +25,8 @@ public class DatabaseConfiguration {
     @Autowired
     private Environment env;
 
-
-    //TODO repair memory leak
     @Bean(destroyMethod = "close")
-    public DataSource dataSource() throws PropertyVetoException {
+    public ComboPooledDataSource dataSource() throws PropertyVetoException {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         dataSource.setDriverClass(env.getProperty("db.driver"));
         dataSource.setJdbcUrl(env.getProperty("db.url"));

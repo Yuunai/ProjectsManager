@@ -25,9 +25,11 @@
     <div id="role-table-section">
         <table class="table col-4 table-bordered">
             <thead class="thead-dark">
-            <th scope="col">Id</th>
-            <th scope="col">Nazwa</th>
-            <th scope="col">Akcja</th>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nazwa</th>
+                <th scope="col">Akcja</th>
+            </tr>
             </thead>
             <tbody>
             <c:forEach var="role" items="${roles}">

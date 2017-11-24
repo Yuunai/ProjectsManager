@@ -53,7 +53,7 @@
                     <td><form:input path="place" /></td>
                 </tr>
                 <tr>
-                    <td><label>Data(dd.MM.yy hh:mm)</label></td>
+                    <td><label>Data(dd.MM.yyyy hh:mm)</label></td>
                     <td><form:input path="date" />
                     <form:errors path="date"/>
                     </td>
@@ -79,7 +79,7 @@
                     <td><form:input path="priority" /></td>
                 </tr>
                 <tr>
-                    <td><label>Deadline(dd.MM.yy hh:mm)</label></td>
+                    <td><label>Deadline(dd.MM.yyyy hh:mm)</label></td>
                     <td><form:input path="deadline" />
                         <form:errors path="deadline"/></td>
                 </tr>

@@ -3,7 +3,7 @@ package pl.poznan.put.student.spacjalive.erp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import pl.poznan.put.student.spacjalive.erp.entity.Event;
 import pl.poznan.put.student.spacjalive.erp.service.EventService;
 
@@ -15,7 +15,7 @@ public class HomeController {
     @Autowired
     EventService eventService;
 
-    @RequestMapping("/home")
+    @GetMapping("/home")
     public String home(Model model) {
 
         List<Event> events = eventService.getEvents();

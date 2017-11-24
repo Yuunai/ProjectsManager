@@ -25,8 +25,6 @@ public class Event {
     private String place;
 
     @DateTimeFormat(pattern = "d.M.u H:m")
-//    @Pattern(regexp = "^[0-9]{2}\\-((0[0-9])|(1[0-2]))\\-((0[1-9])|([1-2][0-9])|(3[0-1]))\\ (([0-1][0-9])|(2[0-3]))\\:[0-5][0-9]",
-//            message = "Niepoprawny format daty! YY-MM-DD hh:mm")
     @Column(name = "date", columnDefinition = "TIMESTAMP")
     private LocalDateTime date;
 
@@ -57,9 +55,6 @@ public class Event {
 
     @Column(name = "value")
     private double value;
-
-    @OneToMany(mappedBy = "event")
-    private List<Participation> participations;
 
     public Event() {
 
@@ -184,23 +179,6 @@ public class Event {
         this.value = value;
     }
 
-    public List<Participation> getParticipations() {
-        return participations;
-    }
-
-    public void setParticipations(List<Participation> participations) {
-        this.participations = participations;
-    }
-
-    public void addParticipation(Participation participation) {
-        if(participations == null) {
-            participations = new ArrayList<>();
-            participations.add(participation);
-        } else {
-            participations.add(participation);
-        }
-    }
-
     @Override
     public String toString() {
         return "Event{" +
@@ -217,7 +195,6 @@ public class Event {
                 ", archived=" + archived +
                 ", videoType='" + videoType + '\'' +
                 ", value=" + value +
-                ", participations=" + participations +
                 '}';
     }
 }

@@ -27,6 +27,12 @@ public class Participation implements Serializable {
 
     }
 
+    public Participation(Event event, Employee employee, Role role) {
+        this.event = event;
+        this.employee = employee;
+        this.role = role;
+    }
+
     public Event getEvent() {
         return event;
     }

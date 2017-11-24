@@ -22,15 +22,14 @@ public class Position {
     @Column(name = "lending_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime lendingTime;
 
-    @OneToMany(cascade = {CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH})
-    @JoinColumn(name = "position_id")
-    private List<Employee> employees;
+//    @OneToMany(cascade = {CascadeType.DETACH,
+//                    CascadeType.MERGE,
+//                    CascadeType.PERSIST,
+//                    CascadeType.REFRESH})
+//    @JoinColumn(name = "position_id")
+//    private List<Employee> employees;
 
     public Position() {
-
     }
 
     public Position(String name, LocalDateTime lendingTime) {
@@ -62,13 +61,13 @@ public class Position {
         this.lendingTime = lendingTime;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
+//    public List<Employee> getEmployees() {
+//        return employees;
+//    }
+//
+//    public void setEmployees(List<Employee> employees) {
+//        this.employees = employees;
+//    }
 
     @Override
     public String toString() {
@@ -76,7 +75,7 @@ public class Position {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lendingTime=" + lendingTime +
-                ", employees=" + employees +
+//                ", employees=" + employees +
                 '}';
     }
 }

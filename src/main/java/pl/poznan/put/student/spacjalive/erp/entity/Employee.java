@@ -49,9 +49,6 @@ public class Employee {
     @JoinColumn(name = "position_id")
     private Position position;
 
-    @OneToMany(mappedBy = "employee")
-    private List<Participation> participations;
-
     public Employee() {
 
     }
@@ -156,22 +153,6 @@ public class Employee {
         this.position = position;
     }
 
-    public List<Participation> getParticipations() {
-        return participations;
-    }
-
-    public void setParticipations(List<Participation> participations) {
-        this.participations = participations;
-    }
-
-    private void addParticipation(Participation participation) {
-        if(participations == null) {
-            participations = new ArrayList<>();
-            participations.add(participation);
-        } else {
-            participations.add(participation);
-        }
-    }
 
     @Override
     public String toString() {
@@ -187,7 +168,6 @@ public class Employee {
                 ", index='" + index + '\'' +
                 ", officeEntrance=" + officeEntrance +
                 ", position=" + position +
-                ", participations=" + participations +
                 '}';
     }
 }
