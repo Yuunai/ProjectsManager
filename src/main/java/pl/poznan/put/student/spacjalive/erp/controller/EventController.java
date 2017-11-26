@@ -1,10 +1,15 @@
 package pl.poznan.put.student.spacjalive.erp.controller;
 
+import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
+import org.hibernate.HibernateException;
+import org.hibernate.JDBCException;
+import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.Employee;
@@ -18,6 +23,7 @@ import pl.poznan.put.student.spacjalive.erp.service.RoleService;
 import pl.poznan.put.student.spacjalive.erp.viewmodel.ParticipationViewModel;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -66,7 +72,8 @@ public class EventController {
         }
 
         eventService.saveEvent(event);
-        logger.info("Event " + event.getName() + " zapisany");
+
+//TODO add database errors handling(everywhere)
 
         return "redirect:/home";
     }

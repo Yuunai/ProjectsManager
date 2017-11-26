@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.Employee;
+import pl.poznan.put.student.spacjalive.erp.entity.Position;
 import pl.poznan.put.student.spacjalive.erp.service.EmployeeService;
+import pl.poznan.put.student.spacjalive.erp.service.PositionService;
 
 import java.util.List;
 
@@ -16,6 +18,9 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
+    @Autowired
+    PositionService positionService;
+
     @GetMapping("/list")
     public String listEmployee(Model model) {
 
@@ -23,8 +28,7 @@ public class EmployeeController {
 
         model.addAttribute("employees", employees);
 
-//        TODO add employees list page
-        return null;
+        return "list-employees";
     }
 
     @GetMapping("/employeeDetails")
@@ -45,8 +49,11 @@ public class EmployeeController {
 
         model.addAttribute("employee", employee);
 
-//        TODO add addEmployeeForm
-        return null;
+        List<Position> positions = positionService.getPositions();
+
+        model.addAttribute("positions", positions);
+
+        return "add-employee-form";
     }
 
     @PostMapping("/saveEmployee")
@@ -54,8 +61,7 @@ public class EmployeeController {
 
         employeeService.saveEmployee(employee);
 
-//        TODO return employeeList page
-        return null;
+        return "redirect:/employee/list";
     }
 
 }

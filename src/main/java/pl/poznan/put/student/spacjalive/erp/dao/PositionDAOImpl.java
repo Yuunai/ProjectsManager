@@ -46,6 +46,7 @@ public class PositionDAOImpl implements PositionDAO {
 
     @Override
     public Position getPosition(int id) {
+
         Session session = sessionFactory.getCurrentSession();
 
         Position position = session.get(Position.class, id);

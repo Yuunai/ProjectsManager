@@ -2,9 +2,9 @@ package pl.poznan.put.student.spacjalive.erp.viewmodel;
 
 public class ParticipationViewModel {
 
-    int eventId;
-    int employeeId;
-    int roleId;
+    private int eventId;
+    private int employeeId;
+    private int roleId;
 
     public int getEventId() {
         return eventId;

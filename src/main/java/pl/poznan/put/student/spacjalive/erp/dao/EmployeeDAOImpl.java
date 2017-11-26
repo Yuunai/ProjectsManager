@@ -31,12 +31,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<Employee> getEmployees(boolean active) {
         Session session = sessionFactory.getCurrentSession();
 
-        Query<Employee> query = session.createQuery("FROM Employee WHERE id=:employeeId");
+        Query<Employee> query = session.createQuery("FROM Employee WHERE active=:active");
 
         if(active) {
-            query.setParameter("employeeId", 1);
+            query.setParameter("active", 1);
         } else {
-            query.setParameter("employeeId", 0);
+            query.setParameter("active", 0);
         }
 
         List<Employee> employees = query.getResultList();

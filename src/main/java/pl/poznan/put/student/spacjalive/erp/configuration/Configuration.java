@@ -1,5 +1,6 @@
 package pl.poznan.put.student.spacjalive.erp.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.format.FormatterRegistry;
@@ -7,13 +8,19 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import pl.poznan.put.student.spacjalive.erp.converter.StringPositionIdToPositionConverter;
+import pl.poznan.put.student.spacjalive.erp.converter.StringToBooleanConverter;
 import pl.poznan.put.student.spacjalive.erp.converter.StringToLocalDateTimeConverter;
+import pl.poznan.put.student.spacjalive.erp.service.PositionService;
+import pl.poznan.put.student.spacjalive.erp.service.PositionServiceImpl;
 
 @EnableWebMvc
 @org.springframework.context.annotation.Configuration
 @ComponentScan(basePackages = "pl.poznan.put.student.spacjalive.erp")
 public class Configuration extends WebMvcConfigurerAdapter{
 
+    @Autowired
+    PositionService positionService;
 
     @Bean
     public InternalResourceViewResolver internalResourceViewResolver() {
@@ -32,6 +39,8 @@ public class Configuration extends WebMvcConfigurerAdapter{
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new StringToLocalDateTimeConverter());
+        registry.addConverter(new StringToBooleanConverter());
+        registry.addConverter(new StringPositionIdToPositionConverter(positionService));
     }
 
     

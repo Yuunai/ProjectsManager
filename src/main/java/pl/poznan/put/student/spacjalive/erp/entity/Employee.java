@@ -36,11 +36,14 @@ public class Employee {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "index")
-    private String index;
+    @Column(name = "student_index")
+    private String studentIndex;
 
     @Column(name = "office_entrance")
-    private boolean officeEntrance;
+    private int officeEntrance;
+
+    @Column(name = "active")
+    private int active;
 
     @ManyToOne(cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
@@ -53,7 +56,7 @@ public class Employee {
 
     }
 
-    public Employee(String firstName, String lastName, String email, String phoneNumber, String userType, double marioDollars, String password, String index, boolean officeEntrance) {
+    public Employee(String firstName, String lastName, String email, String phoneNumber, String userType, double marioDollars, String password, String studentIndex, int officeEntrance, int active) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -61,8 +64,9 @@ public class Employee {
         this.userType = userType;
         this.marioDollars = marioDollars;
         this.password = password;
-        this.index = index;
+        this.studentIndex = studentIndex;
         this.officeEntrance = officeEntrance;
+        this.active = active;
     }
 
     public int getId() {
@@ -129,20 +133,28 @@ public class Employee {
         this.password = password;
     }
 
-    public String getIndex() {
-        return index;
+    public String getStudentIndex() {
+        return studentIndex;
     }
 
-    public void setIndex(String index) {
-        this.index = index;
+    public void setStudentIndex(String studentIndex) {
+        this.studentIndex = studentIndex;
     }
 
-    public boolean isOfficeEntrance() {
+    public int getOfficeEntrance() {
         return officeEntrance;
     }
 
-    public void setOfficeEntrance(boolean officeEntrance) {
+    public void setOfficeEntrance(int officeEntrance) {
         this.officeEntrance = officeEntrance;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
     }
 
     public Position getPosition() {
@@ -165,8 +177,9 @@ public class Employee {
                 ", userType='" + userType + '\'' +
                 ", marioDollars=" + marioDollars +
                 ", password='" + password + '\'' +
-                ", index='" + index + '\'' +
+                ", studentIndex='" + studentIndex + '\'' +
                 ", officeEntrance=" + officeEntrance +
+                ", active=" + active +
                 ", position=" + position +
                 '}';
     }

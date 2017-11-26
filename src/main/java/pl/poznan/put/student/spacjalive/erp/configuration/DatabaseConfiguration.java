@@ -25,7 +25,7 @@ public class DatabaseConfiguration {
     @Autowired
     private Environment env;
 
-    @Bean(destroyMethod = "close")
+    @Bean//(destroyMethod = "close")
     public ComboPooledDataSource dataSource() throws PropertyVetoException {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         dataSource.setDriverClass(env.getProperty("db.driver"));

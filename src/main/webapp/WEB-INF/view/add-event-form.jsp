@@ -46,11 +46,13 @@
                 <tbody>
                 <tr>
                     <td><label>Nazwa</label></td>
-                    <td><form:input path="name" /></td>
+                    <td><form:input path="name" />
+                    <form:errors path="name" /></td>
                 </tr>
                 <tr>
                     <td><label>Miejsce</label></td>
-                    <td><form:input path="place" /></td>
+                    <td><form:input path="place" />
+                    <form:errors path="place" /></td>
                 </tr>
                 <tr>
                     <td><label>Data(dd.MM.yyyy hh:mm)</label></td>
@@ -60,23 +62,28 @@
                 </tr>
                 <tr>
                     <td><label>Organizator</label></td>
-                    <td><form:input path="organizer" /></td>
+                    <td><form:input path="organizer" />
+                    <form:errors path="organizer" /></td>
                 </tr>
                 <tr>
                     <td><label>Number telefonu</label></td>
-                    <td><form:input path="phoneNumber" /></td>
+                    <td><form:input path="phoneNumber" />
+                    <form:errors path="phoneNumber" /></td>
                 </tr>
                 <tr>
                     <td><label>Email</label></td>
-                    <td><form:input path="email" /></td>
+                    <td><form:input path="email" />
+                    <form:errors path="email" /></td>
                 </tr>
                 <tr>
                     <td><label>Komentarze</label></td>
-                    <td><form:input path="comments" /></td>
+                    <td><form:input path="comments" />
+                    <form:errors path="comments" /></td>
                 </tr>
                 <tr>
                     <td><label>Priorytet</label></td>
-                    <td><form:input path="priority" /></td>
+                    <td><form:input path="priority" />
+                    <form:errors path="priority" /></td>
                 </tr>
                 <tr>
                     <td><label>Deadline(dd.MM.yyyy hh:mm)</label></td>
@@ -85,11 +92,13 @@
                 </tr>
                 <tr>
                     <td><label>Typ nagrania</label></td>
-                    <td><form:input path="videoType" /></td>
+                    <td><form:input path="videoType" />
+                    <form:errors path="videoType" /></td>
                 </tr>
                 <tr>
                     <td><label>Wartość</label></td>
-                    <td><form:input path="value" /></td>
+                    <td><form:input path="value" />
+                    <form:errors path="value" /></td>
                 </tr>
 
                 <tr>
