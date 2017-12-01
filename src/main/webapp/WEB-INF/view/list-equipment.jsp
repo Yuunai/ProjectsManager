@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Yuunai
-  Date: 2017-11-18
-  Time: 20:00
+  Date: 2017-12-01
+  Time: 16:20
   To change this template use File | Settings | File Templates.
 --%>
 <!DOCTYPE html>
@@ -13,7 +13,7 @@
 <head>
     <meta charset="utf-8">
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.css" />" rel="stylesheet">
-    <title>Role list</title>
+    <title>Equipment List</title>
 </head>
 <body>
 
@@ -26,37 +26,39 @@
         <table class="table col-4 table-bordered">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Id</th>
                 <th scope="col">Nazwa</th>
+                <th scope="col">Stan</th>
+                <th scope="col">Komentarz</th>
                 <th scope="col">Akcja</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="role" items="${roles}">
+            <c:forEach var="item" items="${equipment}">
 
-                <c:url var="updateLink" value="/role/updateRoleForm">
-                    <c:param name="roleId" value="${role.id}" />
+                <c:url var="updateLink" value="/equipment/updateEquipmentForm">
+                    <c:param name="itemId" value="${item.id}" />
                 </c:url>
 
-                <c:url var="deleteLink" value="/role/deleteRole">
-                    <c:param name="roleId" value="${role.id}" />
+                <c:url var="deleteLink" value="/equipment/deleteEquipment">
+                    <c:param name="itemId" value="${item.id}" />
                 </c:url>
 
                 <tr>
-                    <td>${role.id}</td>
-                    <td>${role.name}</td>
+                    <td>${item.name}</td>
+                    <td>${item.state}</td>
+                    <td>${item.comments}</td>
                     <td>
                         <a href="${updateLink}">Update</a>
                         |
                         <a href="${deleteLink}"
-                           onclick="if (!(confirm('Czy na pewno chcesz usunąć tą rolę?'))) return false">Delete</a>
+                           onclick="if (!(confirm('Czy na pewno chcesz usunąć ten przedmiot?'))) return false">Delete</a>
                     </td>
                 </tr>
 
             </c:forEach>
             <tr>
-                <td colspan="3">
-                    <a class="btn btn-primary" href="/role/addRoleForm" role="button">Add Role</a>
+                <td colspan="4">
+                    <a class="btn btn-primary" href="/equipment/addEquipmentForm" role="button">Dodaj przedmiot</a>
                 </td>
             </tr>
             </tbody>
@@ -72,4 +74,5 @@
 
 </body>
 </html>
+
 

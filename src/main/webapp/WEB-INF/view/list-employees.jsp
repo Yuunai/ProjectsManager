@@ -58,7 +58,7 @@
                     <td>${employee.phoneNumber}</td>
                     <td><a href="${detailsLink}">Szczegóły</a> |
                         <a href="${deleteLink}"
-                           onclick="if (!(confirm('Are you sure you want to delete this role?'))) return false">Usuń</a> |
+                           onclick="if (!(confirm('Czy na pewno chcesz usunąć tego członka?'))) return false">Usuń</a> |
                         <a href="${editLink}">Aktualizuj</a></td>
                 </tr>
 

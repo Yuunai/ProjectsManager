@@ -108,7 +108,7 @@
 
 
         <p>
-            <a href="${pageContext.request.contextPath}/employee/list">Back to List</a>
+            <a href="${pageContext.request.contextPath}/employee/list">Wróć do listy</a>
         </p>
 
     </div>

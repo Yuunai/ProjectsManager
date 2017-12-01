@@ -158,7 +158,7 @@
         </div>
 
         <p>
-            <a href="${pageContext.request.contextPath}/home">Back to List</a>
+            <a href="${pageContext.request.contextPath}/home">Wróc do listy</a>
         </p>
 
 

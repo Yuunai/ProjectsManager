@@ -33,7 +33,7 @@
                 <table class="table col-4 table-bordered">
                     <thead class="thead-dark">
                     <tr>
-                        <th class="col text-center" colspan="2">Edit Role</th>
+                        <th class="col text-center" colspan="2">Edytuj rolę</th>
                     </tr>
                     <tr>
                         <th class="col">Właściwość</th>
@@ -49,7 +49,7 @@
                     </tr>
                     <tr>
                         <td><label></label></td>
-                        <td><input type="submit" value="Save Role"/></td>
+                        <td><input type="submit" value="Zapisz rolę"/></td>
                     </tr>
                     </tbody>
                 </table>
@@ -59,7 +59,7 @@
         </div>
     </div>
     <p>
-        <a href="${pageContext.request.contextPath}/role/list">Back to List</a>
+        <a href="${pageContext.request.contextPath}/role/list">Wróć do listy</a>
     </p>
 </div>
 

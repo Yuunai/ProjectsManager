@@ -36,7 +36,7 @@
             <table class="table col-4 table-bordered">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col" colspan="2" class="text-center">Edit Event</th>
+                    <th scope="col" colspan="2" class="text-center">Edytuj wydarzenie</th>
                 </tr>
 
                 <tr>
@@ -106,7 +106,7 @@
 
                 <tr>
                     <td><label></label></td>
-                    <td><input type="submit" value="Add Event"/></td>
+                    <td><input type="submit" value="Zapisz wydarzenie"/></td>
                 </tr>
                 </tbody>
             </table>
@@ -115,7 +115,7 @@
 
 
         <p>
-            <a href="${pageContext.request.contextPath}/home">Back to List</a>
+            <a href="${pageContext.request.contextPath}/home">Wróc do listy</a>
         </p>
 
     </div>

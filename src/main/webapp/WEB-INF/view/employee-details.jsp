@@ -136,7 +136,7 @@
         </div>
 
         <p>
-            <a href="${pageContext.request.contextPath}/employee/list">Back to List</a>
+            <a href="${pageContext.request.contextPath}/employee/list">Wróc do listy</a>
         </p>
 
 
