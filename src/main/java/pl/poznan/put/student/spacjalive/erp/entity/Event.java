@@ -3,9 +3,8 @@ package pl.poznan.put.student.spacjalive.erp.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "event")
@@ -18,31 +17,55 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull(message = "Pole nie może być puste!")
+    @Size(min = 1, message = "Pole nie może być puste!")
+    @Size(max = 60, message = "Długość pola nie może przekroczyć 60 znaków!")
     @Column(name = "name")
     private String name;
 
+    @NotNull(message = "Pole nie może być puste!")
+    @Size(min = 1, message = "Pole nie może być puste!")
+    @Size(max = 45, message = "Długość pola nie może przekroczyć 45 znaków!")
     @Column(name = "place")
     private String place;
 
+    @NotNull(message = "Wymagany format pola: 'dd.MM.yyyy hh:mm!' Nie może być puste!")
+    @FutureOrPresent(message = "Nie można dodać wydarzenia z przeszłości!")
     @DateTimeFormat(pattern = "d.M.u H:m")
     @Column(name = "date", columnDefinition = "TIMESTAMP")
     private LocalDateTime date;
 
+    @NotNull(message = "Pole nie może być puste!")
+    @Size(min = 1, message = "Pole nie może być puste!")
+    @Size(max = 60, message = "Długość pola nie może przekroczyć 60 znaków!")
     @Column(name = "organizer")
     private String organizer;
 
+    @NotNull(message = "Pole nie może być puste!")
+    @Size(min = 1, message = "Pole nie może być puste!")
+    @Size(max = 20, message = "Długość pola nie może przekroczyć 20 znaków!")
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @NotNull(message = "Pole nie może być puste!")
+    @Size(min = 1, message = "Pole nie może być puste!")
+    @Size(max = 40, message = "Długość pola nie może przekroczyć 40 znaków!")
+    @Email(message = "Niepoprawny email!")
     @Column(name = "email")
     private String email;
 
+    @Size(max = 256, message = "Długość pola nie może przekroczyć 256 znaków!")
     @Column(name = "comments")
     private String comments;
 
+    @Min(value = 0, message = "Wybierz liczbę z zakresu 0-10!")
+    @Max(value = 10, message = "Wybierz liczbę z zakresu 0-10")
+    @Digits(integer = 2, fraction = 0, message = "Dozwolone wyłącznie liczby całkowite!")
     @Column(name = "priority")
     private int priority;
 
+    @NotNull(message = "Wymagany format pola: 'dd.MM.yyyy hh:mm!' Nie może być puste!")
+    @FutureOrPresent(message = "Nie można dodać wydarzenia z przeszłości!")
     @DateTimeFormat(pattern = "d.M.u H:m")
     @Column(name = "deadline", columnDefinition = "TIMESTAMP")
     private LocalDateTime deadline;
@@ -50,9 +73,14 @@ public class Event {
     @Column(name = "archived")
     private boolean archived;
 
+    @NotNull(message = "Pole nie może być puste!")
+    @Size(min = 1, message = "Pole nie może być puste!")
+    @Size(max = 40, message = "Długość pola nie może przekroczyć 40 znaków!")
     @Column(name = "video_type")
     private String videoType;
 
+    @Min(value = 0, message = "Wybierz liczbę większą lub równą 0!")
+    @Digits(integer = 5, fraction = 2, message = "Wyłącznie liczby!")
     @Column(name = "value")
     private double value;
 

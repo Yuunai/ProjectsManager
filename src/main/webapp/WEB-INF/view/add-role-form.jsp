@@ -36,11 +36,13 @@
                         <th class="col text-center" colspan="2">Edit Role</th>
                     </tr>
                     <tr>
-                        <th class="col">Nazwa</th>
+                        <th class="col">Właściwość</th>
                         <th class="col">Wartość</th>
                     </tr>
                     </thead>
                     <tbody>
+                    <%--Error field for sql errors--%>
+                    <tr><td colspan="2"><form:errors/></td></tr>
                     <tr>
                         <td><label>Nazwa:</label></td>
                         <td><form:input path="name" /></td>

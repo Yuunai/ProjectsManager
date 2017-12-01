@@ -19,7 +19,7 @@
           href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
     <link type="text/css"
           rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/add-event-style.css" />
+          href="${pageContext.request.contextPath}/resources/css/header-style.css" />
 
 </head>
 <body>

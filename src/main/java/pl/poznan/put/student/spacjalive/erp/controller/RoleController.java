@@ -1,12 +1,15 @@
 package pl.poznan.put.student.spacjalive.erp.controller;
 
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.Role;
 import pl.poznan.put.student.spacjalive.erp.service.RoleService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -37,9 +40,14 @@ public class RoleController {
     }
 
     @PostMapping("/addRole")
-    public String addRole(@ModelAttribute("role") Role role) {
+    public String addRole(@ModelAttribute("role") @Valid Role role, BindingResult result) {
 
-        roleService.saveRole(role);
+        try {
+            roleService.saveRole(role);
+        } catch (JDBCException e) {
+            result.reject(String.valueOf(e.getErrorCode()), e.getSQLException().getMessage());
+            return "add-role-form";
+        }
 
         return "redirect:/role/list";
     }

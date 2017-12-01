@@ -59,7 +59,33 @@
         </div>
 
         <div id="employees_section" class="col-6">
-
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Miejsce</th>
+                    <th scope="col">Imie</th>
+                    <th scope="col">Nazwisko</th>
+                    <th scope="col">Mario$$</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:set var="counter" value="${1}" scope="page"/>
+                <c:forEach var="employee" items="${mostActiveEmployees}">
+                    <tr>
+                        <td>${counter}</td>
+                        <td>${employee.firstName}</td>
+                        <td>${employee.lastName}</td>
+                        <td>${employee.marioDollars}</td>
+                    </tr>
+                    <c:set var="counter" value="${counter + 1}" scope="page"/>
+                </c:forEach>
+                <tr>
+                    <td colspan="4">
+                        <a class="btn btn-primary" href="/employee/list" role="button">Pełna lista członków</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 
         <div id="footer">

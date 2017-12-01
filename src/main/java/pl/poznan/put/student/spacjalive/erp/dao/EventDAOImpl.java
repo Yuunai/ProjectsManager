@@ -19,7 +19,7 @@ public class EventDAOImpl implements EventDAO {
     public List<Event> getEvents() {
         Session session = sessionFactory.getCurrentSession();
 
-        Query<Event> query = session.createQuery("FROM Event", Event.class);
+        Query<Event> query = session.createQuery("FROM Event e ORDER BY e.date ASC ", Event.class);
 
         List<Event> events = query.getResultList();
 
@@ -31,14 +31,6 @@ public class EventDAOImpl implements EventDAO {
         Session session = sessionFactory.getCurrentSession();
 
         Query<Event> query = session.createQuery("FROM Event WHERE archived=:archiv", Event.class);
-
-        /*
-        if(active) {
-            query.setParameter("archiv", 1);
-        } else {
-            query.setParameter("archiv", 0);
-        }
-        */
 
         query.setParameter("archiv", active);
 

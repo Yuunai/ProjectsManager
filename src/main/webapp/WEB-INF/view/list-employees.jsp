@@ -32,8 +32,8 @@
                 <th scope="col">Imię</th>
                 <th scope="col">Nazwisko</th>
                 <th scope="col">Indeks</th>
-                <th scope="col">Number telefonu</th>
-                <th scope="col">Szczegóły</th>
+                <th scope="col">Numer telefonu</th>
+                <th scope="col">Akcja</th>
             </tr>
             </thead>
             <tbody>
@@ -43,12 +43,23 @@
                     <c:param name="employeeId" value="${employee.id}" />
                 </c:url>
 
+                <c:url var="deleteLink" value="/employee/deleteEmployee">
+                    <c:param name="employeeId" value="${employee.id}" />
+                </c:url>
+
+                <c:url var="editLink" value="/employee/updateEmployeeForm">
+                    <c:param name="employeeId" value="${employee.id}" />
+                </c:url>
+
                 <tr>
                     <td>${employee.firstName}</td>
                     <td>${employee.lastName}</td>
                     <td>${employee.studentIndex}</td>
                     <td>${employee.phoneNumber}</td>
-                    <td><a href="${detailsLink}">Szczegóły</a></td>
+                    <td><a href="${detailsLink}">Szczegóły</a> |
+                        <a href="${deleteLink}"
+                           onclick="if (!(confirm('Are you sure you want to delete this role?'))) return false">Usuń</a> |
+                        <a href="${editLink}">Aktualizuj</a></td>
                 </tr>
 
             </c:forEach>

@@ -19,7 +19,7 @@
           href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
     <link type="text/css"
           rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/add-event-style.css" />
+          href="${pageContext.request.contextPath}/resources/css/header-style.css" />
 
 </head>
 <body>
@@ -39,15 +39,18 @@
             <table class="table col-4 table-bordered">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col" colspan="2" class="text-center">Edit Event</th>
+                    <th scope="col" colspan="2" class="text-center">Edytuj członka</th>
                 </tr>
                 <tr>
-                    <th scope="col">Nazwa</th>
+                    <th scope="col">Właściwość</th>
                     <th scope="col">Wartość</th>
                 </tr>
                 </thead>
                 <tbody>
+                <%--Error field for sql errors--%>
+                <tr><td colspan="2"><form:errors/></td></tr>
                 <tr>
+
                     <td><label>Imię</label></td>
                     <td><form:input path="firstName" />
                         <form:errors path="firstName" /></td>
@@ -83,8 +86,13 @@
                 </tr>
                 <td><label>Pozycja początkowa</label></td>
                 <td><form:select path="position" >
+                    <c:if test="${employee.position != null}">
+                        <form:option value="${employee.position.id}" label="${employee.position.name}"/>
+                    </c:if>
                     <c:forEach var="position" items="${positions}">
-                        <form:option value="${position.id}" label="${position.name}"/>
+                        <c:if test="${employee.position.id != position.id}">
+                            <form:option value="${position.id}" label="${position.name}"/>
+                        </c:if>
                     </c:forEach>
                 </form:select>
                 </td>

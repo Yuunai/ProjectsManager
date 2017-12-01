@@ -4,6 +4,8 @@ import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
 import org.hibernate.HibernateException;
 import org.hibernate.JDBCException;
 import org.hibernate.exception.DataException;
+import org.hibernate.exception.JDBCConnectionException;
+import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import pl.poznan.put.student.spacjalive.erp.service.RoleService;
 import pl.poznan.put.student.spacjalive.erp.viewmodel.ParticipationViewModel;
 
 import javax.validation.Valid;
+import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -71,8 +74,16 @@ public class EventController {
             return "add-event-form";
         }
 
-        eventService.saveEvent(event);
-
+        try {
+            eventService.saveEvent(event);
+        } catch(JDBCConnectionException e) {
+            result.reject(String.valueOf(e.getErrorCode()), "Brak połączenia z bazą danych, skontaktuj się z administratorem.");
+        } catch(SQLGrammarException e) {
+            result.reject(String.valueOf(e.getErrorCode()), "Niepoprawna składnia zapytania, skontaktuj się z administratorem.");
+        }catch (JDBCException e) {
+            result.reject(String.valueOf(e.getErrorCode()), e.getSQLException().getMessage());
+            return "add-event-form";
+        }
 //TODO add database errors handling(everywhere)
 
         return "redirect:/home";

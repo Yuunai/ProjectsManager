@@ -20,7 +20,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<Employee> getEmployees() {
         Session session = sessionFactory.getCurrentSession();
 
-        Query<Employee> query = session.createQuery("FROM Employee ");
+        Query<Employee> query = session.createQuery("FROM Employee e ORDER BY e.firstName, e.lastName");
 
         List<Employee> employees = query.getResultList();
 
@@ -31,7 +31,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<Employee> getEmployees(boolean active) {
         Session session = sessionFactory.getCurrentSession();
 
-        Query<Employee> query = session.createQuery("FROM Employee WHERE active=:active");
+        Query<Employee> query = session.createQuery("FROM Employee e WHERE e.active=:active ORDER BY e.firstName, e.lastName");
 
         if(active) {
             query.setParameter("active", 1);

@@ -18,7 +18,7 @@
           href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
     <link type="text/css"
           rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/add-event-style.css" />
+          href="${pageContext.request.contextPath}/resources/css/header-style.css" />
 
 </head>
 <body>
@@ -38,12 +38,15 @@
                 <tr>
                     <th scope="col" colspan="2" class="text-center">Edit Event</th>
                 </tr>
+
                 <tr>
-                    <th scope="col">Nazwa</th>
+                    <th scope="col">Właściwość</th>
                     <th scope="col">Wartość</th>
                 </tr>
                 </thead>
                 <tbody>
+                <%--Error field for sql errors--%>
+                <tr><td colspan="2"><form:errors/></td></tr>
                 <tr>
                     <td><label>Nazwa</label></td>
                     <td><form:input path="name" />
