@@ -70,7 +70,7 @@ public class EmployeeController {
     @GetMapping("/addEmployeeForm")
     public String addEmployeeForm(Model model) {
 
-        Employee employee = new Employee(null, null, null, null, "USER", 0, null, null, 0, 1);
+        Employee employee = new Employee(null, null, null, null, "USER", 0, null, 0, 1);
 
         model.addAttribute("employee", employee);
 

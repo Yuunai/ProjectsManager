@@ -1,6 +1,7 @@
 package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -19,20 +20,13 @@ public class Position {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "lending_time", columnDefinition = "TIMESTAMP")
-    private LocalDateTime lendingTime;
-
-//    @OneToMany(cascade = {CascadeType.DETACH,
-//                    CascadeType.MERGE,
-//                    CascadeType.PERSIST,
-//                    CascadeType.REFRESH})
-//    @JoinColumn(name = "position_id")
-//    private List<Employee> employees;
+    @Column(name = "lending_time")
+    private int lendingTime;
 
     public Position() {
     }
 
-    public Position(String name, LocalDateTime lendingTime) {
+    public Position(String name, int lendingTime) {
         this.name = name;
         this.lendingTime = lendingTime;
     }
@@ -53,21 +47,13 @@ public class Position {
         this.name = name;
     }
 
-    public LocalDateTime getLendingTime() {
+    public int getLendingTime() {
         return lendingTime;
     }
 
-    public void setLendingTime(LocalDateTime lendingTime) {
+    public void setLendingTime(int lendingTime) {
         this.lendingTime = lendingTime;
     }
-
-//    public List<Employee> getEmployees() {
-//        return employees;
-//    }
-//
-//    public void setEmployees(List<Employee> employees) {
-//        this.employees = employees;
-//    }
 
     @Override
     public String toString() {
@@ -75,7 +61,6 @@ public class Position {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lendingTime=" + lendingTime +
-//                ", employees=" + employees +
                 '}';
     }
 }

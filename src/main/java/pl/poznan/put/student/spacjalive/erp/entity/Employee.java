@@ -52,9 +52,6 @@ public class Employee {
     @Column(name = "mario_dollars")
     private double marioDollars;
 
-    @Column(name = "password")
-    private String password;
-
     @Column(name = "student_index")
     private String studentIndex;
 
@@ -75,14 +72,13 @@ public class Employee {
 
     }
 
-    public Employee(String firstName, String lastName, String email, String phoneNumber, String userType, double marioDollars, String password, String studentIndex, int officeEntrance, int active) {
+    public Employee(String firstName, String lastName, String email, String phoneNumber, String userType, double marioDollars, String studentIndex, int officeEntrance, int active) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.userType = userType;
         this.marioDollars = marioDollars;
-        this.password = password;
         this.studentIndex = studentIndex;
         this.officeEntrance = officeEntrance;
         this.active = active;
@@ -144,14 +140,6 @@ public class Employee {
         this.marioDollars = marioDollars;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getStudentIndex() {
         return studentIndex;
     }
@@ -195,7 +183,6 @@ public class Employee {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", userType='" + userType + '\'' +
                 ", marioDollars=" + marioDollars +
-                ", password='" + password + '\'' +
                 ", studentIndex='" + studentIndex + '\'' +
                 ", officeEntrance=" + officeEntrance +
                 ", active=" + active +

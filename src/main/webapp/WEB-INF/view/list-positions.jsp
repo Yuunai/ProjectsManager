@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Yuunai
-  Date: 2017-11-18
-  Time: 20:00
+  Date: 2017-12-02
+  Time: 13:14
   To change this template use File | Settings | File Templates.
 --%>
 <!DOCTYPE html>
@@ -13,7 +13,7 @@
 <head>
     <meta charset="utf-8">
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.css" />" rel="stylesheet">
-    <title>Role list</title>
+    <title>Positions list</title>
 </head>
 <body>
 
@@ -27,34 +27,36 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col">Nazwa</th>
+                <th scope="col">Maksymalny czas wypożyczenia(dni)</th>
                 <th scope="col">Akcja</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="role" items="${roles}">
+            <c:forEach var="position" items="${positions}">
 
-                <c:url var="updateLink" value="/role/updateRoleForm">
-                    <c:param name="roleId" value="${role.id}" />
+                <c:url var="updateLink" value="/position/updatePositionForm">
+                    <c:param name="positionId" value="${position.id}" />
                 </c:url>
 
-                <c:url var="deleteLink" value="/role/deleteRole">
-                    <c:param name="roleId" value="${role.id}" />
+                <c:url var="deleteLink" value="/position/deletePosition">
+                    <c:param name="positionId" value="${position.id}" />
                 </c:url>
 
                 <tr>
-                    <td>${role.name}</td>
+                    <td>${position.name}</td>
+                    <td>${position.lendingTime}</td>
                     <td>
                         <a href="${updateLink}">Aktualizuj</a>
                         |
                         <a href="${deleteLink}"
-                           onclick="if (!(confirm('Czy na pewno chcesz usunąć tą rolę?'))) return false">Usuń</a>
+                           onclick="if (!(confirm('Czy na pewno chcesz usunąć tą pozycję?'))) return false">Usuń</a>
                     </td>
                 </tr>
 
             </c:forEach>
             <tr>
                 <td colspan="3">
-                    <a class="btn btn-primary" href="/role/addRoleForm" role="button">Dodaj Rolę</a>
+                    <a class="btn btn-primary" href="/position/addPositionForm" role="button">Dodaj pozycję</a>
                 </td>
             </tr>
             </tbody>
@@ -70,4 +72,3 @@
 
 </body>
 </html>
-

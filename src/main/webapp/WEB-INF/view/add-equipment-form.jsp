@@ -45,19 +45,31 @@
                         <tr><td colspan="2"><form:errors/></td></tr>
                         <tr>
                             <td><label>Nazwa</label></td>
-                            <td><form:input path="name" /></td>
+                            <td>
+                                <form:input path="name" />
+                                <form:errors path="name" />
+                            </td>
                         </tr>
                         <tr>
                             <td><label>Stan</label></td>
-                            <td><form:input path="state" /></td>
+                            <td>
+                                <form:input path="state" />
+                                <form:errors path="state" />
+                            </td>
                         </tr>
                         <tr>
                             <td><label>Ilość</label></td>
-                            <td><form:input path="quantity" /></td>
+                            <td>
+                                <form:input path="quantity" />
+                                <form:errors path="quantity" />
+                            </td>
                         </tr>
                         <tr>
                             <td><label>Komentarz</label></td>
-                            <td><form:input path="comments" /></td>
+                            <td>
+                                <form:input path="comments" />
+                                <form:errors path="comments" />
+                            </td>
                         </tr>
                         <tr>
                             <td><label></label></td>

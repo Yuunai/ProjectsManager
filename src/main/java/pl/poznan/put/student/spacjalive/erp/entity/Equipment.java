@@ -24,9 +24,6 @@ public class Equipment {
     @Column(name = "comments")
     private String comments;
 
-    @Column(name = "quantity")
-    private int quantity;
-
     @JoinTable(name = "eq_lending",
                     joinColumns = @JoinColumn(name="equipment_id"),
                     inverseJoinColumns = @JoinColumn(name = "lending_id"))
@@ -46,11 +43,10 @@ public class Equipment {
 
     }
 
-    public Equipment(String name, String state, String comments, int quantity) {
+    public Equipment(String name, String state, String comments) {
         this.name = name;
         this.state = state;
         this.comments = comments;
-        this.quantity = quantity;
     }
 
     public int getId() {
@@ -85,14 +81,6 @@ public class Equipment {
         this.comments = comments;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public List<Lending> getLendings() {
         return lendings;
     }
@@ -108,7 +96,6 @@ public class Equipment {
                 ", name='" + name + '\'' +
                 ", state='" + state + '\'' +
                 ", comments='" + comments + '\'' +
-                ", quantity=" + quantity +
                 '}';
     }
 
