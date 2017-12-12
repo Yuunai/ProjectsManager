@@ -28,6 +28,11 @@
             <tr>
                 <th scope="col" colspan="5" class="text-center">Lista członków</th>
             </tr>
+            <c:if test="${!empty message}" >
+                <tr>
+                    <th scope="col" colspan="5" class="text-center">${message}</th>
+                </tr>
+            </c:if>
             <tr>
                 <th scope="col">Imię</th>
                 <th scope="col">Nazwisko</th>

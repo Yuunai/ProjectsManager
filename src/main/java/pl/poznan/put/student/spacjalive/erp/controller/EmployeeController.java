@@ -115,8 +115,26 @@ public class EmployeeController {
     }
 
     @GetMapping("/deleteEmployee")
-    public String deleteEmployee(@RequestParam("employeeId") int employeeId) {
-        employeeService.deleteEmployee(employeeId);
+    public String deleteEmployee(@RequestParam("employeeId") int employeeId, Model model) {
+
+        try {
+            employeeService.deleteEmployee(employeeId);
+        } catch(JDBCConnectionException e) {
+            model.addAttribute("message", "Brak połączenia z bazą danych, skontaktuj się z administratorem.");
+        } catch(SQLGrammarException e) {
+            model.addAttribute("message", "Niepoprawna składnia zapytania, skontaktuj się z administratorem.");
+        } catch (JDBCException e) {
+            List<Employee> employees = employeeService.getEmployees();
+
+            model.addAttribute("employees", employees);
+
+            if(e.getSQLState().equalsIgnoreCase("12345")) {
+                model.addAttribute("message", e.getSQLException().getMessage());
+            } else {
+                model.addAttribute("message",e.getSQLException().getMessage());
+            }
+            return "list-employees";
+        }
 
         return "redirect:/employee/list";
     }
@@ -136,10 +154,3 @@ public class EmployeeController {
     }
 
 }
-
-
-
-//biuro@datasystem.pl Ci od pracy
-
-//znać do egzaminu helmana, RSA, założenia do Ergamala
-//plecakowy
