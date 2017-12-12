@@ -19,7 +19,9 @@ public class PositionDAOImpl implements PositionDAO {
     public List<Position> getPositions() {
         Session session = sessionFactory.getCurrentSession();
 
-        Query<Position> query = session.createQuery("FROM Position", Position.class);
+//        Query<Position> query = session.createQuery("FROM Position p ORDER BY p.name", Position.class);
+
+        Query<Position> query = session.getNamedQuery("callGetPositions");
 
         List<Position> positions = query.getResultList();
 
@@ -30,16 +32,32 @@ public class PositionDAOImpl implements PositionDAO {
     public void savePosition(Position position) {
         Session session = sessionFactory.getCurrentSession();
 
-        session.saveOrUpdate(position);
+//        session.saveOrUpdate(position);
+        Query query;
+        if(position.getId() == 0) {
+            query = session.getNamedQuery("callAddPosition");
+            query.setParameter("name", position.getName());
+            query.setParameter("lendingTime", position.getLendingTime());
+        } else {
+            query = session.getNamedQuery("callUpdatePosition");
+            query.setParameter("id", position.getId());
+            query.setParameter("name", position.getName());
+            query.setParameter("lendingTime", position.getLendingTime());
+        }
+
+        query.executeUpdate();
     }
 
     @Override
     public void deletePosition(int id) {
         Session session = sessionFactory.getCurrentSession();
 
-        Query query = session.createQuery("DELETE FROM Position WHERE id=:positionId");
+//        Query query = session.createQuery("DELETE FROM Position WHERE id=:positionId");
+//
+//        query.setParameter("positionId", id);
 
-        query.setParameter("positionId", id);
+        Query query = session.getNamedQuery("callDeletePosition");
+        query.setParameter("id", id);
 
         query.executeUpdate();
     }

@@ -1,13 +1,13 @@
 package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "position")
+@NamedNativeQueries({@NamedNativeQuery(name = "callGetPositions", query = "CALL get_positions", resultClass = Position.class),
+        @NamedNativeQuery(name = "callDeletePosition", query = "CALL delete_position(:id)"),
+        @NamedNativeQuery(name = "callUpdatePosition", query = "CALL update_position(:id, :name, :lendingTime)"),
+        @NamedNativeQuery(name = "callAddPosition", query = "CALL add_position(:name, :lendingTime)")})
 public class Position {
 
     //TODO add fields validations
