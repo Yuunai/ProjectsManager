@@ -51,9 +51,26 @@ public class PositionController {
     }
 
     @GetMapping("/deletePosition")
-    public String deletePosition(@RequestParam("positionId") int positionId) {
+    public String deletePosition(@RequestParam("positionId") int positionId, Model model) {
 
-        positionService.deletePosition(positionId);
+        try {
+            positionService.deletePosition(positionId);
+        } catch(JDBCConnectionException e) {
+            model.addAttribute("message", "Brak połączenia z bazą danych, skontaktuj się z administratorem.");
+        } catch(SQLGrammarException e) {
+            model.addAttribute("message", "Niepoprawna składnia zapytania, skontaktuj się z administratorem.");
+        } catch (JDBCException e) {
+            List<Position> positions = positionService.getPositions();
+
+            model.addAttribute("positions", positions);
+
+            if(e.getSQLState().equalsIgnoreCase("12345")) {
+                model.addAttribute("message", e.getSQLException().getMessage());
+            } else {
+                model.addAttribute("message",e.getSQLException().getMessage());
+            }
+            return "list-positions";
+        }
 
         return "redirect:/position/list";
     }

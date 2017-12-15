@@ -29,6 +29,9 @@
             <table class="table table-bordered">
                 <thead class="thead-dark">
                 <tr>
+                    <th scope="col" colspan="4" class="text-center">Nadchodzące wydarzenia</th>
+                </tr>
+                <tr>
                     <th scope="col">Nazwa</th>
                     <th scope="col">Miejsce</th>
                     <th scope="col">Data</th>
@@ -61,6 +64,9 @@
         <div id="employees_section" class="col-6">
             <table class="table table-bordered">
                 <thead class="thead-dark">
+                <tr>
+                    <th scope="col" colspan="4" class="text-center">Top 5 najaktywniejszych pracowników!</th>
+                </tr>
                 <tr>
                     <th scope="col">Miejsce</th>
                     <th scope="col">Imie</th>

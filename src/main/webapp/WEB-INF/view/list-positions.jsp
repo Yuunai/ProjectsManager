@@ -26,6 +26,14 @@
         <table class="table col-4 table-bordered">
             <thead class="thead-dark">
             <tr>
+                <th scope="col" colspan="3" class="text-center">Lista pozycji</th>
+            </tr>
+            <c:if test="${!empty message}" >
+                <tr>
+                    <th scope="col" colspan="3" class="text-center">${message}</th>
+                </tr>
+            </c:if>
+            <tr>
                 <th scope="col">Nazwa</th>
                 <th scope="col">Maksymalny czas wypożyczenia(dni)</th>
                 <th scope="col">Akcja</th>
