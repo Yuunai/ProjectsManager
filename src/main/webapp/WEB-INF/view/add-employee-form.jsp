@@ -25,9 +25,8 @@
 <body>
 
 <div id="container" class="container">
-    <div id="window-header">
-        <h1 id="header">SpacjaTV ERP</h1>
-    </div>
+
+    <%@include file="header.jsp"%>
 
     <div class="row justify-content-center">
         <form:form action="saveEmployee" modelAttribute="employee" method="POST" acceptCharset="utf8">

@@ -13,15 +13,15 @@
 <head>
     <meta charset="utf-8">
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.css" />" rel="stylesheet">
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/header-style.css" />" rel="stylesheet">
     <title>Positions list</title>
 </head>
 <body>
 
 <div id="container" class="container" >
 
-    <div id="window-header">
-        <h1 id="header">SpacjaTV ERP</h1>
-    </div>
+    <%@include file="header.jsp"%>
+
     <div id="role-table-section">
         <table class="table col-4 table-bordered">
             <thead class="thead-dark">

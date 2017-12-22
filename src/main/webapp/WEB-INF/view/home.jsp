@@ -5,8 +5,8 @@
   Time: 12:29
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <!DOCTYPE html>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -14,15 +14,14 @@
     <meta charset="utf-8">
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.css" />" rel="stylesheet">
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/home.css" />" rel="stylesheet">
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/header-style.css" />" rel="stylesheet">
     <title>Home page</title>
 </head>
 <body>
 
 <div id="container" class="container" >
 
-    <div id="window-header">
-        <h1 id="header">SpacjaTV ERP</h1>
-    </div>
+    <%@include file="header.jsp"%>
 
     <div class="row">
         <div id="event_section" class="col-6">
