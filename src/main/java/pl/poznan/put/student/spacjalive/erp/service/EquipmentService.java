@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface EquipmentService {
 
+    public List<Equipment> getFreeEquipment();
+
     public List<Equipment> getEquipmentList();
 
     public void saveEquipment(Equipment equipment);

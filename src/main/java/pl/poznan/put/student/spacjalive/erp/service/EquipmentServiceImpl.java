@@ -16,6 +16,11 @@ public class EquipmentServiceImpl implements EquipmentService {
     EquipmentDAO equipmentDAO;
 
     @Override
+    public List<Equipment> getFreeEquipment() {
+        return equipmentDAO.getFreeEquipment();
+    }
+
+    @Override
     public List<Equipment> getEquipmentList() {
         return equipmentDAO.getEquipmentList();
     }

@@ -6,6 +6,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "equipment")
+@NamedNativeQueries({@NamedNativeQuery(name = "getEquipmentFromGivenLending", query = "CALL select_equipment_from_given_lending(:id)", resultClass = Equipment.class),
+        @NamedNativeQuery(name = "getFreeEquipment", query = "CALL select_free_equipment()", resultClass = Equipment.class)})
 public class Equipment {
 
     //TODO add fields validations
@@ -13,7 +15,7 @@ public class Equipment {
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int Id;
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -50,11 +52,11 @@ public class Equipment {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -92,7 +94,7 @@ public class Equipment {
     @Override
     public String toString() {
         return "Equipment{" +
-                "Id=" + Id +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", state='" + state + '\'' +
                 ", comments='" + comments + '\'' +

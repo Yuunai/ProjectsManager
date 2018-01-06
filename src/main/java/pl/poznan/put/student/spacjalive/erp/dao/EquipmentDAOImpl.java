@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
 
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import java.util.List;
 
 @Repository
@@ -18,7 +20,11 @@ public class EquipmentDAOImpl implements EquipmentDAO {
     public List<Equipment> getFreeEquipment() {
         Session session = sessionFactory.getCurrentSession();
 
-        Query<Equipment> query =
+        Query<Equipment> query = session.getNamedQuery("getFreeEquipment");
+
+        List<Equipment> equipmentList = query.getResultList();
+
+        return equipmentList;
     }
 
     @Override

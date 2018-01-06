@@ -61,7 +61,7 @@ public class LendingController {
         Lending lending = new Lending();
         model.addAttribute("lending", lending);
 
-        List<Equipment> equipmentList = equipmentService.getEquipmentList();
+        List<Equipment> equipmentList = equipmentService.getFreeEquipment();
         model.addAttribute("equipmentList", equipmentList);
 
         List<Event> events = eventService.getEvents(0);

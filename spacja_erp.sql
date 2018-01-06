@@ -206,7 +206,7 @@ from eq_lending el
 where el.lending_id in
 (select l.id
 from lending l
-where l.return_time = null))
+where l.return_time is null))
 order by e.name;
 END//
 delimiter ;
