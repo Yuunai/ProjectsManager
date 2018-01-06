@@ -2,7 +2,8 @@ package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -20,8 +21,8 @@ public class Lending {
     @Column(name = "since", columnDefinition = "TIMESTAMP")
     private LocalDateTime since;
 
-    @Column(name = "to", columnDefinition = "TIMESTAMP")
-    private LocalDateTime to;
+    @Column(name = "end", columnDefinition = "TIMESTAMP")
+    private LocalDateTime end;
 
     @Column(name = "return_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime return_time;
@@ -43,13 +44,28 @@ public class Lending {
     @JoinColumn(name = "event_id")
     private Event event;
 
+    @JoinTable(name = "eq_lending",
+            joinColumns = @JoinColumn(name = "lending_id"),
+            inverseJoinColumns = @JoinColumn(name="equipment_id"))
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Equipment> equipmentList;
+
+    public void addEquipment(Equipment equipment) {
+        if(equipmentList == null) {
+            equipmentList = new ArrayList<>();
+            equipmentList.add(equipment);
+        } else {
+            equipmentList.add(equipment);
+        }
+    }
+
     public Lending() {
 
     }
 
-    public Lending(LocalDateTime since, LocalDateTime to, LocalDateTime return_time, String comments) {
+    public Lending(LocalDateTime since, LocalDateTime end, LocalDateTime return_time, String comments) {
         this.since = since;
-        this.to = to;
+        this.end = end;
         this.return_time = return_time;
         this.comments = comments;
     }
@@ -70,12 +86,12 @@ public class Lending {
         this.since = since;
     }
 
-    public LocalDateTime getTo() {
-        return to;
+    public LocalDateTime getEnd() {
+        return end;
     }
 
-    public void setTo(LocalDateTime to) {
-        this.to = to;
+    public void setEnd(LocalDateTime end) {
+        this.end = end;
     }
 
     public LocalDateTime getReturn_time() {
@@ -110,16 +126,25 @@ public class Lending {
         this.event = event;
     }
 
+    public List<Equipment> getEquipmentList() {
+        return equipmentList;
+    }
+
+    public void setEquipmentList(List<Equipment> equipmentList) {
+        this.equipmentList = equipmentList;
+    }
+
     @Override
     public String toString() {
         return "Lending{" +
                 "id=" + id +
                 ", since=" + since +
-                ", to=" + to +
+                ", end=" + end +
                 ", return_time=" + return_time +
                 ", comments='" + comments + '\'' +
                 ", employee=" + employee +
                 ", event=" + event +
+                ", equipmentList=" + equipmentList +
                 '}';
     }
 }

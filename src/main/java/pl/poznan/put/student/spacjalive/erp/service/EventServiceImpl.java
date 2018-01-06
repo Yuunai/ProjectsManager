@@ -21,8 +21,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getEvents(boolean active) {
-        return eventDAO.getEvents(active);
+    public List<Event> getEvents(int archived) {
+        return eventDAO.getEvents(archived);
     }
 
     @Override

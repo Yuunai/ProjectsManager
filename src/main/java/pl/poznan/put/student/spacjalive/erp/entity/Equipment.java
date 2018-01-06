@@ -28,7 +28,7 @@ public class Equipment {
                     joinColumns = @JoinColumn(name="equipment_id"),
                     inverseJoinColumns = @JoinColumn(name = "lending_id"))
     @ManyToMany(fetch = FetchType.LAZY)
-    List <Lending> lendings;
+    private List <Lending> lendings;
 
     public void addLending(Lending lending) {
         if(lendings == null) {

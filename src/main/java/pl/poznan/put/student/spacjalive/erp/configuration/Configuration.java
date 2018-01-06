@@ -8,9 +8,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import pl.poznan.put.student.spacjalive.erp.converter.StringPositionIdToPositionConverter;
-import pl.poznan.put.student.spacjalive.erp.converter.StringToBooleanConverter;
-import pl.poznan.put.student.spacjalive.erp.converter.StringToLocalDateTimeConverter;
+import pl.poznan.put.student.spacjalive.erp.converter.*;
+import pl.poznan.put.student.spacjalive.erp.service.EmployeeService;
+import pl.poznan.put.student.spacjalive.erp.service.EquipmentService;
+import pl.poznan.put.student.spacjalive.erp.service.EventService;
 import pl.poznan.put.student.spacjalive.erp.service.PositionService;
 
 @EnableWebMvc
@@ -20,6 +21,15 @@ public class Configuration extends WebMvcConfigurerAdapter{
 
     @Autowired
     PositionService positionService;
+
+    @Autowired
+    EmployeeService employeeService;
+
+    @Autowired
+    EquipmentService equipmentService;
+
+    @Autowired
+    EventService eventService;
 
     @Bean
     public InternalResourceViewResolver internalResourceViewResolver() {
@@ -42,6 +52,9 @@ public class Configuration extends WebMvcConfigurerAdapter{
         registry.addConverter(new StringToLocalDateTimeConverter());
         registry.addConverter(new StringToBooleanConverter());
         registry.addConverter(new StringPositionIdToPositionConverter(positionService));
+        registry.addConverter(new StringEmployeeIdToEmployeeConverter(employeeService));
+        registry.addConverter(new StringEquipmentIdToEquipmentConverter(equipmentService));
+        registry.addConverter(new StringEventIdToEventConverter(eventService));
     }
 
     

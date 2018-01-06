@@ -19,7 +19,7 @@ public class LendingDAOImpl implements LendingDAO {
     public List<Lending> getLendings() {
         Session session = sessionFactory.getCurrentSession();
 
-        Query<Lending> query = session.createQuery("FROM Lending ");
+        Query<Lending> query = session.createQuery("FROM Lending l order by l.since", Lending.class);
 
         List<Lending> lendings = query.getResultList();
 

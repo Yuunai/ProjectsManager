@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface EquipmentDAO {
 
-    public List<Equipment> getEquipments();
+    public List<Equipment> getFreeEquipment();
+
+    public List<Equipment> getEquipmentList();
 
     public void saveEquipment(Equipment equipment);
 

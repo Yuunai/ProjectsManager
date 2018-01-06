@@ -71,7 +71,7 @@ public class Event {
     private LocalDateTime deadline;
 
     @Column(name = "archived")
-    private boolean archived;
+    private int archived;
 
     @NotNull(message = "Pole nie może być puste!")
     @Size(min = 1, message = "Pole nie może być puste!")
@@ -88,7 +88,7 @@ public class Event {
 
     }
 
-    public Event(String name, String place, LocalDateTime date, String organizer, String phoneNumber, String email, String comments, int priority, LocalDateTime deadline, boolean archived, String videoType, double value) {
+    public Event(String name, String place, LocalDateTime date, String organizer, String phoneNumber, String email, String comments, int priority, LocalDateTime deadline, int archived, String videoType, double value) {
         this.name = name;
         this.place = place;
         this.date = date;
@@ -183,11 +183,11 @@ public class Event {
         this.deadline = deadline;
     }
 
-    public boolean isArchived() {
+    public int isArchived() {
         return archived;
     }
 
-    public void setArchived(boolean archived) {
+    public void setArchived(int archived) {
         this.archived = archived;
     }
 

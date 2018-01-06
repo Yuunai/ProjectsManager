@@ -8,8 +8,8 @@ import pl.poznan.put.student.spacjalive.erp.entity.Lending;
 
 import java.util.List;
 
-@Service("lendingService")
 @Transactional
+@Service("lendingService")
 public class LendingServiceImpl implements LendingService {
 
     @Autowired

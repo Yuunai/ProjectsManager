@@ -27,12 +27,12 @@ public class EventDAOImpl implements EventDAO {
     }
 
     @Override
-    public List<Event> getEvents(boolean active) {
+    public List<Event> getEvents(int archived) {
         Session session = sessionFactory.getCurrentSession();
 
         Query<Event> query = session.createQuery("FROM Event WHERE archived=:archiv", Event.class);
 
-        query.setParameter("archiv", active);
+        query.setParameter("archiv", archived);
 
         List<Event> events = query.getResultList();
 

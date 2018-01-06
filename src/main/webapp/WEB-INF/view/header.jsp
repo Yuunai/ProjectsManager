@@ -6,5 +6,6 @@
     <a href="/equipment/list" class="menu-button">Wyposażenie</a>
     <a href="/position/list" class="menu-button">Pozycje</a>
     <a href="/role/list" class="menu-button">Role</a>
+    <a href="/lending/list" class="menu-button">Wypożyczenia</a>
 </div>
 

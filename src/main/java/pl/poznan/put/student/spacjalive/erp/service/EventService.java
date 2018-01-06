@@ -8,7 +8,7 @@ public interface EventService {
 
     public List<Event> getEvents();
 
-    public List<Event> getEvents(boolean active);
+    public List<Event> getEvents(int archived);
 
     public void saveEvent(Event event);
 

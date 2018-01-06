@@ -68,7 +68,7 @@
                     <form:errors path="organizer" /></td>
                 </tr>
                 <tr>
-                    <td><label>Number telefonu</label></td>
+                    <td><label>Numer telefonu</label></td>
                     <td><form:input path="phoneNumber" />
                     <form:errors path="phoneNumber" /></td>
                 </tr>

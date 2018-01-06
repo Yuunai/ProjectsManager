@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
 
 import java.util.List;
@@ -16,7 +15,14 @@ public class EquipmentDAOImpl implements EquipmentDAO {
     SessionFactory sessionFactory;
 
     @Override
-    public List<Equipment> getEquipments() {
+    public List<Equipment> getFreeEquipment() {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query<Equipment> query =
+    }
+
+    @Override
+    public List<Equipment> getEquipmentList() {
         Session session = sessionFactory.getCurrentSession();
 
         Query<Equipment> query = session.createQuery("from Equipment " + "ORDER BY id", Equipment.class);

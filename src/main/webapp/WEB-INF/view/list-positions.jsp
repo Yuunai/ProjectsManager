@@ -22,7 +22,7 @@
 
     <%@include file="header.jsp"%>
 
-    <div id="role-table-section">
+    <div id="position-table-section">
         <table class="table col-4 table-bordered">
             <thead class="thead-dark">
             <tr>

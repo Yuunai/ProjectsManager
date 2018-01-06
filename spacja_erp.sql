@@ -94,8 +94,8 @@ DROP TABLE IF EXISTS `lending`;
 CREATE TABLE `lending` (
   `id` int NOT NULL AUTO_INCREMENT,
   `since` datetime DEFAULT current_timestamp,
-  `to` datetime NOT NULL,
-  `return_time` datetime NOT NULL,
+  `end` datetime DEFAULT NULL,
+  `return_time` datetime DEFAULT NULL,
   `comments` varchar(256) DEFAULT NULL,
   `event_id` int NOT NULL,
   `employee_id` int NOT NULL,
@@ -182,6 +182,35 @@ where p.id = id;
 END//
 delimiter ;
 
+delimiter //
+create procedure select_equipment_from_given_lending(id int)
+BEGIN
+select *
+from equipment e
+where e.id in
+(select el.equipment_id
+from eq_lending el
+where el.lending_id=id)
+order by e.name;
+END//
+delimiter ;
+
+delimiter //
+create procedure select_free_equipment()
+BEGIN
+select *
+from equipment e
+where e.id not in
+(select el.equipment_id
+from eq_lending el
+where el.lending_id in
+(select l.id
+from lending l
+where l.return_time = null))
+order by e.name;
+END//
+delimiter ;
+
 DELIMITER $$
 CREATE TRIGGER `makeUserInactive` BEFORE DELETE ON `employee`
 FOR EACH ROW
@@ -191,8 +220,6 @@ BEGIN
 END$$   
 DELIMITER ; 
 
-drop trigger `makeUserInactive`
-
 DELIMITER $$
 CREATE TRIGGER `Europe_email_test` BEFORE INSERT ON `employee`
 FOR EACH ROW
@@ -201,6 +228,21 @@ BEGIN
         SIGNAL SQLSTATE '12345'
             SET MESSAGE_TEXT = 'Nie przyjmujemy maili w domenie .eu';
     END IF;
+END$$   
+DELIMITER ; 
+
+DELIMITER $$
+CREATE TRIGGER `set_lending_time` BEFORE INSERT ON `lending`
+FOR EACH ROW
+BEGIN
+	set NEW.since = now();
+    set NEW.end = date_add(NEW.since, INTERVAL (
+    select p.lending_time
+    from position p
+    where p.id = 
+    (select e.position_id
+    from employee e
+    where e.id = NEW.employee_id)) DAY);
 END$$   
 DELIMITER ; 
 

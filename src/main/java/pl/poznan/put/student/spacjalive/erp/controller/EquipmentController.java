@@ -33,7 +33,7 @@ public class EquipmentController {
     @GetMapping("/list")
     public String listEquipment(Model model) {
 
-        List<Equipment> equipment = equipmentService.getEquipments();
+        List<Equipment> equipment = equipmentService.getEquipmentList();
 
         model.addAttribute("equipment", equipment);
 
