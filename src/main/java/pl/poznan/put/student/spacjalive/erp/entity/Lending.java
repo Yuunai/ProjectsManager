@@ -47,7 +47,7 @@ public class Lending {
     @JoinTable(name = "eq_lending",
             joinColumns = @JoinColumn(name = "lending_id"),
             inverseJoinColumns = @JoinColumn(name="equipment_id"))
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Equipment> equipmentList;
 
     public void addEquipment(Equipment equipment) {

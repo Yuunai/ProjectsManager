@@ -103,7 +103,7 @@
                     <th scope="col" colspan="3" class="text-center">Uczestnicy</th>
                 </tr>
                 <tr>
-                    <th scope="col">Imię i nazwisko</td></th>
+                    <th scope="col">Imię i nazwisko</th>
                     <th scope="col">Rola</th>
                     <th scope="col">Akcja</th>
                 </tr>

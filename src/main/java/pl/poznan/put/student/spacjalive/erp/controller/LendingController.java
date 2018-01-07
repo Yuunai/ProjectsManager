@@ -76,10 +76,13 @@ public class LendingController {
     @PostMapping("/addLending")
     public String addLending(@ModelAttribute("lending") @Valid Lending lending, BindingResult result, Model model) {
 
+        logger.info(lending.toString());
+
         if(result.hasErrors()) {
+            logger.info(result.toString());
             model.addAttribute("lending", lending);
 
-            List<Equipment> equipmentList = equipmentService.getEquipmentList();
+            List<Equipment> equipmentList = equipmentService.getFreeEquipment();
             model.addAttribute("equipmentList", equipmentList);
 
             List<Event> events = eventService.getEvents(0);
@@ -91,13 +94,37 @@ public class LendingController {
             return "add-lending-form";
         }
 
-        logger.info(lending.toString());
-
         lendingService.saveLending(lending);
 
         return "redirect:/lending/list";
     }
 
+    @GetMapping("/updateLendingForm")
+    public String updateLendingForm(Model model, @RequestParam("lendingId") int lendingId) {
 
+        Lending lending = lendingService.getLending(lendingId);
+        model.addAttribute("lending", lending);
+
+        List<Equipment> equipmentList = equipmentService.getFreeEquipment();
+        model.addAttribute("equipmentList", equipmentList);
+
+        List<Event> events = eventService.getEvents(0);
+        events.remove(lending.getEvent());
+        model.addAttribute("events", events);
+
+        List<Employee> employees = employeeService.getEmployees(true);
+        employees.remove(lending.getEmployee());
+        model.addAttribute("employees", employees);
+
+        return "add-lending-form";
+    }
+
+    @GetMapping("/deleteLending")
+    public String deleteLending(@RequestParam("lendingId") int lendingId) {
+
+        lendingService.deleteLending(lendingId);
+
+        return "redirect:/lending/list";
+    }
 
 }

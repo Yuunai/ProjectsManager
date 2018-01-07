@@ -76,7 +76,7 @@
                         <td><label>Przedmioty</label></td>
                         <td>
                             <c:forEach items="${lending.equipmentList}" var="equipment">
-                                <form:checkbox path="equipmentList" label="${equipment.name}" value="${equipment.id}"/>
+                                <form:checkbox path="equipmentList" label="${equipment.name}" value="${equipment.id}" checked="checked"/>
                             </c:forEach>
                             <c:forEach items="${equipmentList}" var="equipment">
                                 <form:checkbox path="equipmentList" label="${equipment.name}" value="${equipment.id}"/>

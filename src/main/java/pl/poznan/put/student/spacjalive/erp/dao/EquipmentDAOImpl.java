@@ -31,7 +31,7 @@ public class EquipmentDAOImpl implements EquipmentDAO {
     public List<Equipment> getEquipmentList() {
         Session session = sessionFactory.getCurrentSession();
 
-        Query<Equipment> query = session.createQuery("from Equipment " + "ORDER BY id", Equipment.class);
+        Query<Equipment> query = session.createQuery("from Equipment " + "ORDER BY name", Equipment.class);
 
         List<Equipment> equipment = query.getResultList();
 

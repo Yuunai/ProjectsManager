@@ -183,7 +183,7 @@ public class Event {
         this.deadline = deadline;
     }
 
-    public int isArchived() {
+    public int getArchived() {
         return archived;
     }
 
