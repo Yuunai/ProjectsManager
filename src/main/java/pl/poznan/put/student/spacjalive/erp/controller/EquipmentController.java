@@ -5,6 +5,8 @@ import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.orm.hibernate5.HibernateJdbcException;
+import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,7 +53,7 @@ public class EquipmentController {
     }
 
     @PostMapping("/addEquipment")
-    public String addEquipment(@ModelAttribute("equipment") @Valid Equipment equipment, BindingResult result) {
+    public String addEquipment(@ModelAttribute("equipment") @Valid Equipment equipment, BindingResult result, Model model) {
 
         if(result.hasErrors()) {
             return "add-equipment-form";
@@ -71,6 +73,20 @@ public class EquipmentController {
                 result.reject(String.valueOf(e.getErrorCode()),"Niepoprawne dane!");
             }
             return "add-equipment-form";
+        } catch (HibernateJdbcException e) {
+
+            if(e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
+                Equipment eq = equipmentService.getEquipment(equipment.getId());
+                model.addAttribute("equipment", eq);
+
+                model.addAttribute("message", e.getSQLException().getMessage());
+            } else {
+                model.addAttribute("equipment", equipment);
+                model.addAttribute("message", "Nieznany błąd, skontaktuj się administratorem!");
+            }
+            return "add-equipment-form";
+        } catch (HibernateOptimisticLockingFailureException e) {
+            return "redirect:/equipment/list";
         }
 
         return "redirect:/equipment/list";

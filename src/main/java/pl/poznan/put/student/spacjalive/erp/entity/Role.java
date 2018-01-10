@@ -18,8 +18,16 @@ public class Role {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "last_update")
+    private String lastUpdate;
+
     public Role() {
 
+    }
+
+    public Role(String name, String lastUpdate) {
+        this.name = name;
+        this.lastUpdate = lastUpdate;
     }
 
     public Role(String name) {
@@ -42,12 +50,20 @@ public class Role {
         this.name = name;
     }
 
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 
     @Override
     public String toString() {
         return "Role{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", lastUpdate='" + lastUpdate + '\'' +
                 '}';
     }
 }

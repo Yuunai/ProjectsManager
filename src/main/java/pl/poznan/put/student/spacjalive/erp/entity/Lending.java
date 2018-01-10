@@ -50,6 +50,9 @@ public class Lending {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Equipment> equipmentList;
 
+    @Column(name = "last_update")
+    private String lastUpdate;
+
     public void addEquipment(Equipment equipment) {
         if(equipmentList == null) {
             equipmentList = new ArrayList<>();
@@ -63,11 +66,12 @@ public class Lending {
 
     }
 
-    public Lending(LocalDateTime since, LocalDateTime end, LocalDateTime return_time, String comments) {
+    public Lending(LocalDateTime since, LocalDateTime end, LocalDateTime return_time, String comments, String lastUpdate) {
         this.since = since;
         this.end = end;
         this.return_time = return_time;
         this.comments = comments;
+        this.lastUpdate = lastUpdate;
     }
 
     public int getId() {
@@ -134,6 +138,14 @@ public class Lending {
         this.equipmentList = equipmentList;
     }
 
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     @Override
     public String toString() {
         return "Lending{" +
@@ -145,6 +157,7 @@ public class Lending {
                 ", employee=" + employee +
                 ", event=" + event +
                 ", equipmentList=" + equipmentList +
+                ", lastUpdate='" + lastUpdate + '\'' +
                 '}';
     }
 }

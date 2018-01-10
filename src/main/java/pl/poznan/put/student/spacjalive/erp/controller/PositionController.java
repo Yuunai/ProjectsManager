@@ -5,6 +5,8 @@ import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.orm.hibernate5.HibernateJdbcException;
+import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -86,7 +88,7 @@ public class PositionController {
     }
 
     @PostMapping("/addPosition")
-    public String addPosition(@ModelAttribute("position") @Valid Position position, BindingResult result) {
+    public String addPosition(@ModelAttribute("position") @Valid Position position, BindingResult result, Model model) {
 
         if(result.hasErrors()) {
             return "add-position-form";
@@ -106,6 +108,19 @@ public class PositionController {
                 result.reject(String.valueOf(e.getErrorCode()),"Niepoprawne dane!");
             }
             return "add-position-form";
+        } catch (HibernateJdbcException e) {
+
+            if(e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
+                Position pos = positionService.getPosition(position.getId());
+                model.addAttribute("position", pos);
+                model.addAttribute("message", e.getSQLException().getMessage());
+            } else {
+                model.addAttribute("position", position);
+                model.addAttribute("message", "Nieznany błąd, skontaktuj się administratorem!");
+            }
+            return "add-event-form";
+        } catch (HibernateOptimisticLockingFailureException e) {
+            return "redirect:/position/list";
         }
 
         return "redirect:/position/list";

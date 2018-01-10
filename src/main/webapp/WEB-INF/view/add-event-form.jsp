@@ -7,6 +7,7 @@
 --%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +33,7 @@
 
             <form:hidden path="id"/>
             <form:hidden path="archived"/>
+            <form:hidden path="lastUpdate"/>
             <table class="table col-4 table-bordered">
                 <thead class="thead-dark">
                 <tr>
@@ -45,6 +47,11 @@
                 </thead>
                 <tbody>
                 <%--Error field for sql errors--%>
+                <c:if test="${!empty message}" >
+                    <tr>
+                        <th scope="col" colspan="2" class="text-center">${message}</th>
+                    </tr>
+                </c:if>
                 <tr><td colspan="2"><form:errors/></td></tr>
                 <tr>
                     <td><label>Nazwa</label></td>

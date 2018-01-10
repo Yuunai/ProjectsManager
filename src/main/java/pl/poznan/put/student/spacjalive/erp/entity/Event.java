@@ -84,11 +84,14 @@ public class Event {
     @Column(name = "value")
     private double value;
 
+    @Column(name = "last_update")
+    private String lastUpdate;
+
     public Event() {
 
     }
 
-    public Event(String name, String place, LocalDateTime date, String organizer, String phoneNumber, String email, String comments, int priority, LocalDateTime deadline, int archived, String videoType, double value) {
+    public Event(String name, String place, LocalDateTime date, String organizer, String phoneNumber, String email, String comments, int priority, LocalDateTime deadline, int archived, String videoType, double value, String lastUpdate) {
         this.name = name;
         this.place = place;
         this.date = date;
@@ -101,6 +104,7 @@ public class Event {
         this.archived = archived;
         this.videoType = videoType;
         this.value = value;
+        this.lastUpdate = lastUpdate;
     }
 
     public int getId() {
@@ -207,6 +211,14 @@ public class Event {
         this.value = value;
     }
 
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
@@ -223,6 +235,7 @@ public class Event {
                 ", archived=" + archived +
                 ", videoType='" + videoType + '\'' +
                 ", value=" + value +
+                ", lastUpdate='" + lastUpdate + '\'' +
                 '}';
     }
 }

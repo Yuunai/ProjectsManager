@@ -12,7 +12,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Add Event</title>
+    <title>Add Employee</title>
 
     <link type="text/css"
           rel="stylesheet"
@@ -35,6 +35,7 @@
             <form:hidden path="userType"/>
             <form:hidden path="marioDollars"/>
             <form:hidden path="active"/>
+            <form:hidden path="lastUpdate"/>
             <table class="table col-4 table-bordered">
                 <thead class="thead-dark">
                 <tr>
@@ -47,7 +48,15 @@
                 </thead>
                 <tbody>
                 <%--Error field for sql errors--%>
-                <tr><td colspan="2"><form:errors/></td></tr>
+                <c:if test="${!empty message}" >
+                    <tr>
+                        <th scope="col" colspan="2" class="text-center">${message}</th>
+                    </tr>
+                </c:if>
+                <tr>
+                    <td colspan="2"><form:errors/></td>
+                </tr>
+
                 <tr>
 
                     <td><label>Imię</label></td>

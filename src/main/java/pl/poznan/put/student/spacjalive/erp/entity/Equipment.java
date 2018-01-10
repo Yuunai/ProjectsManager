@@ -32,6 +32,9 @@ public class Equipment {
     @ManyToMany(fetch = FetchType.LAZY)
     private List <Lending> lendings;
 
+    @Column(name = "last_update")
+    private String lastUpdate;
+
     public void addLending(Lending lending) {
         if(lendings == null) {
             lendings = new ArrayList<>();
@@ -45,10 +48,11 @@ public class Equipment {
 
     }
 
-    public Equipment(String name, String state, String comments) {
+    public Equipment(String name, String state, String comments, String lastUpdate) {
         this.name = name;
         this.state = state;
         this.comments = comments;
+        this.lastUpdate = lastUpdate;
     }
 
     public int getId() {
@@ -91,6 +95,14 @@ public class Equipment {
         this.lendings = lendings;
     }
 
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     @Override
     public String toString() {
         return "Equipment{" +
@@ -98,6 +110,7 @@ public class Equipment {
                 ", name='" + name + '\'' +
                 ", state='" + state + '\'' +
                 ", comments='" + comments + '\'' +
+                ", lastUpdate='" + lastUpdate + '\'' +
                 '}';
     }
 

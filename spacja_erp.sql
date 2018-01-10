@@ -12,11 +12,15 @@ CREATE TABLE `position` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(48) NOT NULL,
   `lending_time` int NOT NULL,
+  `last_update` TIMESTAMP NOT NULL,
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-
 DROP TABLE IF EXISTS `employee`;
+
+UPDATE `employee`
+set last_update = now()
+where id > 0;
 
 CREATE TABLE `employee` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -30,6 +34,7 @@ CREATE TABLE `employee` (
   `student_index` varchar(10) NOT NULL,
   `office_entrance` tinyint(1) DEFAULT 0,
   `active` tinyint(1) DEFAULT 1,
+  `last_update` TIMESTAMP NOT NULL,
   
   PRIMARY KEY(`id`),
   CONSTRAINT `FK_POSITION`
@@ -53,6 +58,7 @@ CREATE TABLE `event` (
   `archived` bool DEFAULT false,
   `video_type` varchar(40) NOT NULL,
   `value` decimal(14,2) DEFAULT NULL,
+  `last_update` TIMESTAMP NOT NULL,
   
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
@@ -62,6 +68,7 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(48) NOT NULL,
+  `last_update` TIMESTAMP NOT NULL,
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
@@ -99,6 +106,7 @@ CREATE TABLE `lending` (
   `comments` varchar(256) DEFAULT NULL,
   `event_id` int NOT NULL,
   `employee_id` int NOT NULL,
+  `last_update` TIMESTAMP NOT NULL,
   
   PRIMARY KEY(`id`),
   CONSTRAINT `FK_EVENT_LENDING`
@@ -118,6 +126,7 @@ CREATE TABLE `equipment` (
   `name` varchar(45) NOT NULL,
   `state` varchar(45) DEFAULT "Dobry",
   `comments` varchar(256) DEFAULT NULL,
+  `last_update` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
@@ -245,6 +254,96 @@ BEGIN
     where e.id = NEW.employee_id)) DAY);
 END$$   
 DELIMITER ; 
+
+DELIMITER $$
+CREATE TRIGGER `optimistic_locking_employee` BEFORE UPDATE ON `employee`
+FOR EACH ROW
+BEGIN
+	IF NEW.last_update != (
+    select e.last_update
+    from employee e
+    where e.id = NEW.id) THEN
+        SIGNAL SQLSTATE '12346'
+            SET MESSAGE_TEXT = 'Edycja nieudana, ponów próbę!';
+	ELSE set new.last_update = now();
+    END IF;
+END$$   
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER `optimistic_locking_equipment` BEFORE UPDATE ON `equipment`
+FOR EACH ROW
+BEGIN
+	IF NEW.last_update != (
+    select e.last_update
+    from equipment e
+    where e.id = NEW.id) THEN
+        SIGNAL SQLSTATE '12346'
+            SET MESSAGE_TEXT = 'Edycja nieudana, ponów próbę!';
+	ELSE set new.last_update = now();
+    END IF;
+END$$   
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER `optimistic_locking_event` BEFORE UPDATE ON `event`
+FOR EACH ROW
+BEGIN
+	IF NEW.last_update != (
+    select e.last_update
+    from event e
+    where e.id = NEW.id) THEN
+        SIGNAL SQLSTATE '12346'
+            SET MESSAGE_TEXT = 'Edycja nieudana, ponów próbę!';
+	ELSE set new.last_update = now();
+    END IF;
+END$$   
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER `optimistic_locking_lending` BEFORE UPDATE ON `lending`
+FOR EACH ROW
+BEGIN
+	IF NEW.last_update != (
+    select l.last_update
+    from lending l
+    where l.id = NEW.id) THEN
+        SIGNAL SQLSTATE '12346'
+            SET MESSAGE_TEXT = 'Edycja nieudana, ponów próbę!';
+	ELSE set new.last_update = now();
+    END IF;
+END$$   
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER `optimistic_locking_position` BEFORE UPDATE ON `position`
+FOR EACH ROW
+BEGIN
+	IF NEW.last_update != (
+    select p.last_update
+    from position p
+    where p.id = NEW.id) THEN
+        SIGNAL SQLSTATE '12346'
+            SET MESSAGE_TEXT = 'Edycja nieudana, ponów próbę!';
+	ELSE set new.last_update = now();
+    END IF;
+END$$   
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER `optimistic_locking_role` BEFORE UPDATE ON `role`
+FOR EACH ROW
+BEGIN
+	IF NEW.last_update != (
+    select r.last_update
+    from role r
+    where r.id = NEW.id) THEN
+        SIGNAL SQLSTATE '12346'
+            SET MESSAGE_TEXT = 'Edycja nieudana, ponów próbę!';
+	ELSE set new.last_update = now();
+    END IF;
+END$$   
+DELIMITER ;
 
 SET FOREIGN_KEY_CHECKS = 1;
 

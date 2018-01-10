@@ -1,7 +1,12 @@
 package pl.poznan.put.student.spacjalive.erp.controller;
 
+import org.hibernate.JDBCException;
+import org.hibernate.exception.JDBCConnectionException;
+import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.orm.hibernate5.HibernateJdbcException;
+import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -79,7 +84,6 @@ public class LendingController {
         logger.info(lending.toString());
 
         if(result.hasErrors()) {
-            logger.info(result.toString());
             model.addAttribute("lending", lending);
 
             List<Equipment> equipmentList = equipmentService.getFreeEquipment();
@@ -94,7 +98,44 @@ public class LendingController {
             return "add-lending-form";
         }
 
-        lendingService.saveLending(lending);
+
+        try {
+            lendingService.saveLending(lending);
+        } catch(JDBCConnectionException e) {
+            result.reject(String.valueOf(e.getErrorCode()), "Brak połączenia z bazą danych, skontaktuj się z administratorem.");
+        } catch(SQLGrammarException e) {
+            result.reject(String.valueOf(e.getErrorCode()), "Niepoprawna składnia zapytania, skontaktuj się z administratorem.");
+        } catch (JDBCException e) {
+
+            if(e.getSQLState().equalsIgnoreCase("12345")) {
+                result.reject(String.valueOf(e.getErrorCode()), e.getSQLException().getMessage());
+            } else {
+                result.reject(String.valueOf(e.getErrorCode()),"Niepoprawne dane!");
+            }
+            return "add-lending-form";
+        } catch (HibernateJdbcException e) {
+
+            List<Equipment> equipmentList = equipmentService.getFreeEquipment();
+            model.addAttribute("equipmentList", equipmentList);
+
+            List<Event> events = eventService.getEvents(0);
+            model.addAttribute("events", events);
+
+            List<Employee> employees = employeeService.getEmployees(true);
+            model.addAttribute("employees", employees);
+
+            if(e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
+                Lending len = lendingService.getLending(lending.getId());
+                model.addAttribute("position", len);
+                model.addAttribute("message", e.getSQLException().getMessage());
+            } else {
+                model.addAttribute("lending", lending);
+                model.addAttribute("message", "Nieznany błąd, skontaktuj się administratorem!");
+            }
+            return "add-lending-form";
+        } catch (HibernateOptimisticLockingFailureException e) {
+            return "redirect:/lending/list";
+        }
 
         return "redirect:/lending/list";
     }

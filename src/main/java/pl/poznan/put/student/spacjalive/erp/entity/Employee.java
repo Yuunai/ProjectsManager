@@ -68,11 +68,14 @@ public class Employee {
     @JoinColumn(name = "position_id")
     private Position position;
 
+    @Column(name = "last_update")
+    private String lastUpdate;
+
     public Employee() {
 
     }
 
-    public Employee(String firstName, String lastName, String email, String phoneNumber, String userType, double marioDollars, String studentIndex, int officeEntrance, int active) {
+    public Employee(String firstName, String lastName, String email, String phoneNumber, String userType, double marioDollars, String studentIndex, int officeEntrance, int active, String lastUpdate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -82,6 +85,7 @@ public class Employee {
         this.studentIndex = studentIndex;
         this.officeEntrance = officeEntrance;
         this.active = active;
+        this.lastUpdate = lastUpdate;
     }
 
     public int getId() {
@@ -172,6 +176,13 @@ public class Employee {
         this.position = position;
     }
 
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 
     @Override
     public String toString() {
@@ -187,6 +198,7 @@ public class Employee {
                 ", officeEntrance=" + officeEntrance +
                 ", active=" + active +
                 ", position=" + position +
+                ", lastUpdate='" + lastUpdate + '\'' +
                 '}';
     }
 }

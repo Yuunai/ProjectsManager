@@ -5,6 +5,8 @@ import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.orm.hibernate5.HibernateJdbcException;
+import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,7 +53,7 @@ public class RoleController {
     }
 
     @PostMapping("/addRole")
-    public String addRole(@ModelAttribute("role") @Valid Role role, BindingResult result) {
+    public String addRole(@ModelAttribute("role") @Valid Role role, BindingResult result, Model model) {
 
         try {
             roleService.saveRole(role);
@@ -67,6 +69,19 @@ public class RoleController {
                 result.reject(String.valueOf(e.getErrorCode()),"Niepoprawne dane!");
             }
             return "add-role-form";
+        } catch (HibernateJdbcException e) {
+
+            if(e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
+                Role rl = roleService.getRole(role.getId());
+                model.addAttribute("role", rl);
+                model.addAttribute("message", e.getSQLException().getMessage());
+            } else {
+                model.addAttribute("role", role);
+                model.addAttribute("message", "Nieznany błąd, skontaktuj się administratorem!");
+            }
+            return "add-role-form";
+        } catch (HibernateOptimisticLockingFailureException e) {
+            return "redirect:/role/list";
         }
 
         return "redirect:/role/list";

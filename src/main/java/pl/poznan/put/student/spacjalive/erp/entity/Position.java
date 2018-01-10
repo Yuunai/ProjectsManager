@@ -23,12 +23,16 @@ public class Position {
     @Column(name = "lending_time")
     private int lendingTime;
 
+    @Column(name = "last_update")
+    private String lastUpdate;
+
     public Position() {
     }
 
-    public Position(String name, int lendingTime) {
+    public Position(String name, int lendingTime, String lastUpdate) {
         this.name = name;
         this.lendingTime = lendingTime;
+        this.lastUpdate = lastUpdate;
     }
 
     public int getId() {
@@ -55,12 +59,21 @@ public class Position {
         this.lendingTime = lendingTime;
     }
 
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     @Override
     public String toString() {
         return "Position{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lendingTime=" + lendingTime +
+                ", lastUpdate='" + lastUpdate + '\'' +
                 '}';
     }
 }

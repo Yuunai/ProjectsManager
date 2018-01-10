@@ -8,6 +8,8 @@ import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.orm.hibernate5.HibernateJdbcException;
+import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -68,7 +70,7 @@ public class EventController {
     }
 
     @PostMapping("/addEvent")
-    public String addEvent(@ModelAttribute("event") @Valid Event event, BindingResult result) {
+    public String addEvent(@ModelAttribute("event") @Valid Event event, BindingResult result, Model model) {
 
         if(result.hasErrors()) {
             return "add-event-form";
@@ -83,6 +85,19 @@ public class EventController {
         }catch (JDBCException e) {
             result.reject(String.valueOf(e.getErrorCode()), e.getSQLException().getMessage());
             return "add-event-form";
+        } catch (HibernateJdbcException e) {
+
+            if(e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
+                Event ev = eventService.getEvent(event.getId());
+                model.addAttribute("event", ev);
+                model.addAttribute("message", e.getSQLException().getMessage());
+            } else {
+                model.addAttribute("event", event);
+                model.addAttribute("message", "Nieznany błąd, skontaktuj się administratorem!");
+            }
+            return "add-event-form";
+        } catch (HibernateOptimisticLockingFailureException e) {
+            return "redirect:/home";
         }
 //TODO add database errors handling(everywhere)
 
