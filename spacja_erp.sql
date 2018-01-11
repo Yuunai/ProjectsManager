@@ -12,15 +12,11 @@ CREATE TABLE `position` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(48) NOT NULL,
   `lending_time` int NOT NULL,
-  `last_update` TIMESTAMP NOT NULL,
+  `last_update` TIMESTAMP DEFAULT now(),
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `employee`;
-
-UPDATE `employee`
-set last_update = now()
-where id > 0;
 
 CREATE TABLE `employee` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -34,7 +30,7 @@ CREATE TABLE `employee` (
   `student_index` varchar(10) NOT NULL,
   `office_entrance` tinyint(1) DEFAULT 0,
   `active` tinyint(1) DEFAULT 1,
-  `last_update` TIMESTAMP NOT NULL,
+  `last_update` TIMESTAMP DEFAULT now(),
   
   PRIMARY KEY(`id`),
   CONSTRAINT `FK_POSITION`
@@ -58,7 +54,7 @@ CREATE TABLE `event` (
   `archived` bool DEFAULT false,
   `video_type` varchar(40) NOT NULL,
   `value` decimal(14,2) DEFAULT NULL,
-  `last_update` TIMESTAMP NOT NULL,
+  `last_update` TIMESTAMP DEFAULT now(),
   
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
@@ -68,7 +64,8 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(48) NOT NULL,
-  `last_update` TIMESTAMP NOT NULL,
+  `last_update` TIMESTAMP DEFAULT now()
+  ,
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
@@ -106,7 +103,7 @@ CREATE TABLE `lending` (
   `comments` varchar(256) DEFAULT NULL,
   `event_id` int NOT NULL,
   `employee_id` int NOT NULL,
-  `last_update` TIMESTAMP NOT NULL,
+  `last_update` TIMESTAMP DEFAULT now(),
   
   PRIMARY KEY(`id`),
   CONSTRAINT `FK_EVENT_LENDING`
@@ -126,7 +123,8 @@ CREATE TABLE `equipment` (
   `name` varchar(45) NOT NULL,
   `state` varchar(45) DEFAULT "Dobry",
   `comments` varchar(256) DEFAULT NULL,
-  `last_update` TIMESTAMP NOT NULL,
+  `last_update` TIMESTAMP DEFAULT now(),
+  
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
