@@ -126,7 +126,7 @@ public class LendingController {
 
             if(e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
                 Lending len = lendingService.getLending(lending.getId());
-                model.addAttribute("position", len);
+                model.addAttribute("lending", len);
                 model.addAttribute("message", e.getSQLException().getMessage());
             } else {
                 model.addAttribute("lending", lending);
