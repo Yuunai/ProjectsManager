@@ -21,6 +21,8 @@
     <link type="text/css"
           rel="stylesheet"
           href="${pageContext.request.contextPath}/resources/css/header-style.css" />
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/add-forms.js"></script>
 </head>
 <body>
 
@@ -51,7 +53,10 @@
                                 <th scope="col" colspan="2" class="text-center">${message}</th>
                             </tr>
                         </c:if>
-                        <tr><td colspan="2"><form:errors/></td></tr>
+                        <tr id="errorRow"><td colspan="2" id="errors"><form:errors /></td></tr>
+                        <script>
+                            hideEmptyErrorsRow();
+                        </script>
                         <tr>
                             <td><label>Nazwa</label></td>
                             <td>

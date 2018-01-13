@@ -21,6 +21,8 @@
     <link type="text/css"
           rel="stylesheet"
           href="${pageContext.request.contextPath}/resources/css/header-style.css" />
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/add-forms.js"></script>
 </head>
 <body>
 
@@ -46,12 +48,15 @@
                     </thead>
                     <tbody>
                     <%--Error field for sql errors--%>
-                    <tr><td colspan="2"><form:errors/></td></tr>
                     <c:if test="${!empty message}" >
                         <tr>
                             <th scope="col" colspan="2" class="text-center">${message}</th>
                         </tr>
                     </c:if>
+                    <tr id="errorRow"><td colspan="2" id="errors"><form:errors /></td></tr>
+                    <script>
+                        hideEmptyErrorsRow();
+                    </script>
                     <tr>
                         <td><label>Nazwa:</label></td>
                         <td><form:input path="name" /></td>
