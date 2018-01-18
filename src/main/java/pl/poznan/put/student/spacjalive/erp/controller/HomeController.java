@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.poznan.put.student.spacjalive.erp.entity.Event;
 import pl.poznan.put.student.spacjalive.erp.entity.MostActiveEmployeeView;
+import pl.poznan.put.student.spacjalive.erp.mongo.dao.LogDAO;
+import pl.poznan.put.student.spacjalive.erp.mongo.entity.Log;
 import pl.poznan.put.student.spacjalive.erp.service.EventService;
 import pl.poznan.put.student.spacjalive.erp.service.MostActiveEmployeeViewService;
 
@@ -20,6 +22,9 @@ public class HomeController {
     @Autowired
     MostActiveEmployeeViewService mostActiveEmployeeViewService;
 
+    @Autowired
+    LogDAO logDAO;
+
     @GetMapping("/home")
     public String home(Model model) {
 
@@ -32,6 +37,15 @@ public class HomeController {
         model.addAttribute("mostActiveEmployees", mostActiveEmployees);
 
         return "home";
+    }
+
+    @GetMapping("/logs")
+    public String logs(Model model) {
+        List<Log> logs = logDAO.getLogs();
+
+        model.addAttribute("logs", logs);
+
+        return "list-logs";
     }
 
 }
