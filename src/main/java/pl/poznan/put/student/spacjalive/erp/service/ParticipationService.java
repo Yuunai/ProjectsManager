@@ -1,9 +1,6 @@
 package pl.poznan.put.student.spacjalive.erp.service;
 
-import pl.poznan.put.student.spacjalive.erp.entity.Employee;
-import pl.poznan.put.student.spacjalive.erp.entity.Event;
 import pl.poznan.put.student.spacjalive.erp.entity.Participation;
-import pl.poznan.put.student.spacjalive.erp.entity.Role;
 
 import java.util.List;
 

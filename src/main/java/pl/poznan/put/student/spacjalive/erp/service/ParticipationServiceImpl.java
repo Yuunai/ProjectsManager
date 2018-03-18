@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.poznan.put.student.spacjalive.erp.dao.ParticipationDAO;
-import pl.poznan.put.student.spacjalive.erp.entity.Employee;
-import pl.poznan.put.student.spacjalive.erp.entity.Event;
 import pl.poznan.put.student.spacjalive.erp.entity.Participation;
-import pl.poznan.put.student.spacjalive.erp.entity.Role;
 
 import java.util.List;
 

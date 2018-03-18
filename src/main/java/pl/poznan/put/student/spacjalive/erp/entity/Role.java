@@ -1,8 +1,6 @@
 package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "role")

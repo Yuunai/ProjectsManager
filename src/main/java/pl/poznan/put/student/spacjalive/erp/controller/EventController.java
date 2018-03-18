@@ -1,9 +1,6 @@
 package pl.poznan.put.student.spacjalive.erp.controller;
 
-import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
-import org.hibernate.HibernateException;
 import org.hibernate.JDBCException;
-import org.hibernate.exception.DataException;
 import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,6 @@ import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureExcep
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.Employee;
@@ -27,10 +23,7 @@ import pl.poznan.put.student.spacjalive.erp.service.RoleService;
 import pl.poznan.put.student.spacjalive.erp.viewmodel.ParticipationViewModel;
 
 import javax.validation.Valid;
-import java.sql.SQLDataException;
-import java.sql.SQLException;
 import java.text.ParseException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 

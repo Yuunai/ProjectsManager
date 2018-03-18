@@ -2,8 +2,6 @@ package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "employee")

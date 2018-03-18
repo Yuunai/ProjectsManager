@@ -3,7 +3,6 @@ package pl.poznan.put.student.spacjalive.erp.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.hibernate.sql.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.poznan.put.student.spacjalive.erp.entity.Employee;

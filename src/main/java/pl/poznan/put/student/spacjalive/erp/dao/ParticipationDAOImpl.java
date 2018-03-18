@@ -5,10 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import pl.poznan.put.student.spacjalive.erp.entity.Employee;
-import pl.poznan.put.student.spacjalive.erp.entity.Event;
 import pl.poznan.put.student.spacjalive.erp.entity.Participation;
-import pl.poznan.put.student.spacjalive.erp.entity.Role;
 
 import java.util.List;
 import java.util.logging.Logger;

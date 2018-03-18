@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
 
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
 import java.util.List;
 
 @Repository
