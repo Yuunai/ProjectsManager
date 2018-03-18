@@ -4,20 +4,13 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.poznan.put.student.spacjalive.erp.mongo.dao.LogDAO;
-import pl.poznan.put.student.spacjalive.erp.mongo.entity.Log;
-
 import java.time.LocalDateTime;
 import java.util.logging.Logger;
 
 @Aspect
 @Component
 public class LoggingAspect {
-
-    @Autowired
-    LogDAO logDao;
 
     private Logger logger = Logger.getLogger(LoggingAspect.class.getSimpleName());
 
@@ -33,14 +26,12 @@ public class LoggingAspect {
 
         String method = joinPoint.getSignature().toShortString();
 
-        Log log = new Log();
-
-        String message = "";
+        String message = LocalDateTime.now().toString();
 
         if(method.contains("save")) {
-            message += "Zapisano: ";
+            message += "Saved: ";
         } else {
-            message += "Usunięto: ";
+            message += "Deleted: ";
         }
 
         Object[] args = joinPoint.getArgs();
@@ -48,10 +39,8 @@ public class LoggingAspect {
             message += obj.toString() + "\n";
         }
 
-        log.setDateTime(LocalDateTime.now());
-        log.setLog(message);
+        logger.info(message);
 
-        logDao.saveLog(log);
     }
 
 }
