@@ -8,7 +8,7 @@ public interface EmployeeDAO {
 
     public List<Employee> getEmployees();
 
-    public List<Employee> getEmployees(boolean active);
+    public List<Employee> getEmployees(boolean enabled);
 
     public void saveEmployee(Employee employee);
 

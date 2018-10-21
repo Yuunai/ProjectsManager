@@ -2,6 +2,8 @@ package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "employee")
@@ -30,7 +32,7 @@ public class Employee {
 
     @NotNull(message = "Pole nie może być puste!")
     @Size(min = 1, message = "Pole nie może być puste!")
-    @Size(max = 45, message = "Długość pola nie może przekroczyć 45 znaków!")
+    @Size(max = 128, message = "Długość pola nie może przekroczyć 128 znaków!")
     @Pattern(regexp = "^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$", message = "Niepoprawny email!")
     @Column(name = "email")
     private String email;
@@ -56,8 +58,8 @@ public class Employee {
     @Column(name = "office_entrance")
     private int officeEntrance;
 
-    @Column(name = "active")
-    private int active;
+    @Column(name = "enabled")
+    private int enabled;
 
     @ManyToOne(cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
@@ -69,11 +71,17 @@ public class Employee {
     @Column(name = "last_update")
     private String lastUpdate;
 
+    @JoinTable(name = "user_authorities",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Authority> authorities;
+
     public Employee() {
 
     }
 
-    public Employee(String firstName, String lastName, String email, String phoneNumber, String userType, double marioDollars, String studentIndex, int officeEntrance, int active, String lastUpdate) {
+    public Employee( String firstName, String lastName, String email, String phoneNumber, String userType, double marioDollars, String studentIndex, int officeEntrance, int enabled, String lastUpdate, Set<Authority> authorities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -82,8 +90,9 @@ public class Employee {
         this.marioDollars = marioDollars;
         this.studentIndex = studentIndex;
         this.officeEntrance = officeEntrance;
-        this.active = active;
+        this.enabled = enabled;
         this.lastUpdate = lastUpdate;
+        this.authorities = authorities;
     }
 
     public int getId() {
@@ -158,12 +167,12 @@ public class Employee {
         this.officeEntrance = officeEntrance;
     }
 
-    public int getActive() {
-        return active;
+    public int getEnabled() {
+        return enabled;
     }
 
-    public void setActive(int active) {
-        this.active = active;
+    public void setEnabled(int active) {
+        this.enabled = active;
     }
 
     public Position getPosition() {
@@ -182,6 +191,14 @@ public class Employee {
         this.lastUpdate = lastUpdate;
     }
 
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -194,9 +211,10 @@ public class Employee {
                 ", marioDollars=" + marioDollars +
                 ", studentIndex='" + studentIndex + '\'' +
                 ", officeEntrance=" + officeEntrance +
-                ", active=" + active +
+                ", enabled=" + enabled +
                 ", position=" + position +
                 ", lastUpdate='" + lastUpdate + '\'' +
+                ", authorities=" + authorities +
                 '}';
     }
 }

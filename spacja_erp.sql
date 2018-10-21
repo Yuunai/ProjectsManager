@@ -16,20 +16,23 @@ CREATE TABLE `position` (
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
+INSERT INTO `position` VALUES
+  (1, 'Adept', 0, now());
+
 DROP TABLE IF EXISTS `employee`;
 
 CREATE TABLE `employee` (
   `id` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(45) NOT NULL,
   `last_name` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
+  `email` varchar(128) NOT NULL,
   `phone_number` varchar(15) NOT NULL,
   `position_id` int NOT NULL,
   `user_type` varchar(10) DEFAULT "user",
   `mario_dollars` decimal(14,2) DEFAULT 0.0,
   `student_index` varchar(10) NOT NULL,
   `office_entrance` tinyint(1) DEFAULT 0,
-  `active` tinyint(1) DEFAULT 1,
+  `enabled` tinyint(1) DEFAULT 1,
   `last_update` TIMESTAMP DEFAULT now(),
   
   PRIMARY KEY(`id`),
@@ -37,6 +40,32 @@ CREATE TABLE `employee` (
   FOREIGN KEY(`position_id`) REFERENCES `position`(`id`) 
   ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+DROP TABLE IF EXISTS `authorities`;
+
+CREATE TABLE `authorities` (
+  `id` int NOT NULL,
+  `authority` varchar(50),
+
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS `user_authorities`;
+
+CREATE TABLE `user_authorities` (
+  `user_id` int NOT NULL,
+  `authority_id` int NOT NULL,
+
+  PRIMARY KEY (`user_id`, `authority_id`),
+
+  CONSTRAINT `FK_USER_ID` FOREIGN KEY (`user_id`)
+  REFERENCES `employee` (`id`)
+  ON DELETE NO ACTION ON UPDATE NO ACTION,
+
+  CONSTRAINT `FK_AUTHORITY_ID` FOREIGN KEY (`authority_id`)
+  REFERENCES `authorities` (`id`)
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS `event`;
 
@@ -64,8 +93,8 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(48) NOT NULL,
-  `last_update` TIMESTAMP DEFAULT now()
-  ,
+  `last_update` TIMESTAMP DEFAULT now(),
+  
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
@@ -149,7 +178,7 @@ create view most_active_employees
 AS
 (SELECT e.id, e.first_name, e.last_name, e.mario_dollars
 FROM employee e
-WHERE e.active = 1
+WHERE e.enabled = 1
 ORDER BY e.mario_dollars DESC
 LIMIT 5
 );

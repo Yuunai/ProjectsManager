@@ -36,7 +36,7 @@
             <form:hidden path="id"/>
             <form:hidden path="userType"/>
             <form:hidden path="marioDollars"/>
-            <form:hidden path="active"/>
+            <form:hidden path="enabled"/>
             <form:hidden path="lastUpdate"/>
             <table class="table col-4 table-bordered">
                 <thead class="thead-dark">

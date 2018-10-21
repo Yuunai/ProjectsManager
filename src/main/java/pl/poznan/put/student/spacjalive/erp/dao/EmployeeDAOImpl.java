@@ -27,15 +27,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public List<Employee> getEmployees(boolean active) {
+    public List<Employee> getEmployees(boolean enabled) {
         Session session = sessionFactory.getCurrentSession();
 
-        Query<Employee> query = session.createQuery("FROM Employee e WHERE e.active=:active ORDER BY e.firstName, e.lastName");
+        Query<Employee> query = session.createQuery("FROM Employee e WHERE e.enabled=:enabled ORDER BY e.firstName, e.lastName");
 
-        if(active) {
-            query.setParameter("active", 1);
+        if(enabled) {
+            query.setParameter("enabled", 1);
         } else {
-            query.setParameter("active", 0);
+            query.setParameter("enabled", 0);
         }
 
         List<Employee> employees = query.getResultList();

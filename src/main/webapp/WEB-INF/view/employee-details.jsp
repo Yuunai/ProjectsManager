@@ -87,10 +87,10 @@
                 </tr>
                 <tr>
                     <td><label>Aktywny</label></td>
-                    <c:if test="${employee.active == 1}">
+                    <c:if test="${employee.enabled == 1}">
                         <td>Tak</td>
                     </c:if>
-                    <c:if test="${employee.active != 1}">
+                    <c:if test="${employee.enabled != 1}">
                         <td>Nie</td>
                     </c:if>
                 </tr>

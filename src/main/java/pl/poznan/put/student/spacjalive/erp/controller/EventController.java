@@ -119,4 +119,22 @@ public class EventController {
         return "event-details";
     }
 
+    @GetMapping("/updateEventForm")
+    public String updateEventForm(Model model, @RequestParam("eventId") int eventId) {
+
+        Event event = eventService.getEvent(eventId);
+
+        model.addAttribute("event", event);
+
+        return "add-event-form";
+    }
+
+    @GetMapping("/deleteEvent")
+    public String deleteEvent(@RequestParam("eventId") int eventId) {
+
+        eventService.deleteEvent(eventId);
+
+        return "redirect:/home";
+    }
+
 }

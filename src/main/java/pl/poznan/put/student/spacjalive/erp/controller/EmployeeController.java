@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import pl.poznan.put.student.spacjalive.erp.entity.Authority;
 import pl.poznan.put.student.spacjalive.erp.entity.Employee;
 import pl.poznan.put.student.spacjalive.erp.entity.Participation;
 import pl.poznan.put.student.spacjalive.erp.entity.Position;
@@ -20,6 +21,8 @@ import pl.poznan.put.student.spacjalive.erp.service.ParticipationService;
 import pl.poznan.put.student.spacjalive.erp.service.PositionService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -72,7 +75,7 @@ public class EmployeeController {
     @GetMapping("/addEmployeeForm")
     public String addEmployeeForm(Model model) {
 
-        Employee employee = new Employee(null, null, null, null, "USER", 0, null, 0, 1, null);
+        Employee employee = new Employee(null, null, null, null, "USER", 0, null, 0, 1, null, new HashSet<>());
         model.addAttribute("employee", employee);
 
         List<Position> positions = positionService.getPositions();
