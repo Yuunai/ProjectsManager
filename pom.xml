@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <springframework.version>4.3.4.RELEASE</springframework.version>
         <hibernate.version>5.2.5.Final</hibernate.version>
-        <mysql.connector.version>6.0.4</mysql.connector.version>
+        <mysql.connector.version>8.0.13</mysql.connector.version>
         <springsecurity.version>4.2.3.RELEASE</springsecurity.version>
     </properties>
 
