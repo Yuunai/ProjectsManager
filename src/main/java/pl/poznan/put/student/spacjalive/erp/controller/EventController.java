@@ -25,116 +25,105 @@ import pl.poznan.put.student.spacjalive.erp.viewmodel.ParticipationViewModel;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/event")
 public class EventController {
-
-    Logger logger = Logger.getLogger(EventController.class.getName());
-
-    @Autowired
-    EventService eventService;
-
-    @Autowired
-    ParticipationService participationService;
-
-    @Autowired
-    RoleService roleService;
-
-    @Autowired
-    EmployeeService employeeService;
-
-    @InitBinder
-    public void initBinder(WebDataBinder webDataBinder) {
-        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-
-        webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-    }
-
-    @GetMapping("/addEventForm")
-    public String addEventForm(Model model) throws ParseException {
-
-        Event event = new Event();
-
-        model.addAttribute("event", event);
-
-        return "add-event-form";
-    }
-
-    @PostMapping("/addEvent")
-    public String addEvent(@ModelAttribute("event") @Valid Event event, BindingResult result, Model model) {
-
-        if(result.hasErrors()) {
-            return "add-event-form";
-        }
-
-        try {
-            eventService.saveEvent(event);
-        } catch(JDBCConnectionException e) {
-            result.reject(String.valueOf(e.getErrorCode()), "Brak połączenia z bazą danych, skontaktuj się z administratorem.");
-        } catch(SQLGrammarException e) {
-            result.reject(String.valueOf(e.getErrorCode()), "Niepoprawna składnia zapytania, skontaktuj się z administratorem.");
-        }catch (JDBCException e) {
-            result.reject(String.valueOf(e.getErrorCode()), e.getSQLException().getMessage());
-            return "add-event-form";
-        } catch (HibernateJdbcException e) {
-
-            if(e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
-                Event ev = eventService.getEvent(event.getId());
-                model.addAttribute("event", ev);
-                model.addAttribute("message", e.getSQLException().getMessage());
-            } else {
-                model.addAttribute("event", event);
-                model.addAttribute("message", "Nieznany błąd, skontaktuj się administratorem!");
-            }
-            return "add-event-form";
-        } catch (HibernateOptimisticLockingFailureException e) {
-            return "redirect:/home";
-        }
+	
+	@Autowired
+	EventService eventService;
+	
+	@Autowired
+	ParticipationService participationService;
+	
+	@Autowired
+	RoleService roleService;
+	
+	@Autowired
+	EmployeeService employeeService;
+	
+	@InitBinder
+	public void initBinder(WebDataBinder webDataBinder) {
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
+	
+	@GetMapping("/addEventForm")
+	public String addEventForm(Model model) throws ParseException {
+		Event event = new Event();
+		model.addAttribute("event", event);
+		
+		return "add-event-form";
+	}
+	
+	@PostMapping("/addEvent")
+	public String addEvent(@ModelAttribute("event") @Valid Event event, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "add-event-form";
+		}
+		
+		try {
+			eventService.saveEvent(event);
+		} catch (JDBCConnectionException e) {
+			result.reject(String.valueOf(e.getErrorCode()), "Brak połączenia z bazą danych, skontaktuj się z administratorem.");
+		} catch (SQLGrammarException e) {
+			result.reject(String.valueOf(e.getErrorCode()), "Niepoprawna składnia zapytania, skontaktuj się z administratorem.");
+		} catch (JDBCException e) {
+			result.reject(String.valueOf(e.getErrorCode()), e.getSQLException().getMessage());
+			return "add-event-form";
+		} catch (HibernateJdbcException e) {
+			
+			if (e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
+				Event ev = eventService.getEvent(event.getId());
+				model.addAttribute("event", ev);
+				model.addAttribute("message", e.getSQLException().getMessage());
+			} else {
+				model.addAttribute("event", event);
+				model.addAttribute("message", "Nieznany błąd, skontaktuj się administratorem!");
+			}
+			return "add-event-form";
+		} catch (HibernateOptimisticLockingFailureException e) {
+			return "redirect:/home";
+		}
 //TODO add database errors handling(everywhere)
-
-        return "redirect:/home";
-    }
-
-    @GetMapping("/eventDetails")
-    public String eventDetails(Model model, @RequestParam("eventId") int eventId) {
-
-        Event event = eventService.getEvent(eventId);
-        model.addAttribute("event", event);
-
-        List<Participation> participations = participationService.getParticipationsByEventId(eventId);
-        model.addAttribute("participations", participations);
-
-        ParticipationViewModel participation = new ParticipationViewModel();
-        participation.setEventId(eventId);
-        model.addAttribute("participation", participation);
-
-        List<Role> roles = roleService.getRoles();
-        model.addAttribute("roles", roles);
-
-        List<Employee> employees = employeeService.getEmployees();
-        model.addAttribute("employees", employees);
-
-        return "event-details";
-    }
-
-    @GetMapping("/updateEventForm")
-    public String updateEventForm(Model model, @RequestParam("eventId") int eventId) {
-
-        Event event = eventService.getEvent(eventId);
-
-        model.addAttribute("event", event);
-
-        return "add-event-form";
-    }
-
-    @GetMapping("/deleteEvent")
-    public String deleteEvent(@RequestParam("eventId") int eventId) {
-
-        eventService.deleteEvent(eventId);
-
-        return "redirect:/home";
-    }
-
+		
+		return "redirect:/home";
+	}
+	
+	@GetMapping("/eventDetails")
+	public String eventDetails(Model model, @RequestParam("eventId") int eventId) {
+		Event event = eventService.getEvent(eventId);
+		model.addAttribute("event", event);
+		
+		List<Participation> participations = participationService.getParticipationsByEventId(eventId);
+		model.addAttribute("participations", participations);
+		
+		ParticipationViewModel participation = new ParticipationViewModel();
+		participation.setEventId(eventId);
+		model.addAttribute("participation", participation);
+		
+		List<Role> roles = roleService.getRoles();
+		model.addAttribute("roles", roles);
+		
+		List<Employee> employees = employeeService.getEmployees();
+		model.addAttribute("employees", employees);
+		
+		return "event-details";
+	}
+	
+	@GetMapping("/updateEventForm")
+	public String updateEventForm(Model model, @RequestParam("eventId") int eventId) {
+		Event event = eventService.getEvent(eventId);
+		model.addAttribute("event", event);
+		
+		return "add-event-form";
+	}
+	
+	@GetMapping("/deleteEvent")
+	public String deleteEvent(@RequestParam("eventId") int eventId) {
+		eventService.deleteEvent(eventId);
+		
+		return "redirect:/home";
+	}
+	
 }

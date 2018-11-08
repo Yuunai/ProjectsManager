@@ -174,50 +174,6 @@ CREATE TABLE `eq_lending` (
   ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB;
 
-create view most_active_employees
-AS
-(SELECT e.id, e.first_name, e.last_name, e.mario_dollars
-FROM employee e
-WHERE e.enabled = 1
-ORDER BY e.mario_dollars DESC
-LIMIT 5
-);
-
-delimiter //
-create procedure get_positions()
-BEGIN
-SELECT *
-FROM position
-order by position.lending_time;
-END//
-delimiter ;
-
-delimiter //
-create procedure delete_position(id int)
-BEGIN
-DELETE
-FROM position
-WHERE position.id=id;
-END//
-delimiter ;
-
-delimiter //
-create procedure add_position(name varchar(48), lending_time int)
-BEGIN
-insert into position (position.name, position.lending_time)
-value(name, lending_time);
-END//
-delimiter ;
-
-delimiter //
-create procedure update_position(id int, name varchar(48), lending_time int)
-BEGIN
-update position p
-set p.name = name, p.lending_time = lending_time
-where p.id = id;
-END//
-delimiter ;
-
 delimiter //
 create procedure select_equipment_from_given_lending(id int)
 BEGIN

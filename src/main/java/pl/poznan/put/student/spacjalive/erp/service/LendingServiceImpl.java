@@ -11,27 +11,27 @@ import java.util.List;
 @Transactional
 @Service("lendingService")
 public class LendingServiceImpl implements LendingService {
-
-    @Autowired
-    LendingDAO lendingDAO;
-
-    @Override
-    public List<Lending> getLendings() {
-        return lendingDAO.getLendings();
-    }
-
-    @Override
-    public void saveLending(Lending lending) {
-        lendingDAO.saveLending(lending);
-    }
-
-    @Override
-    public void deleteLending(int id) {
-        lendingDAO.deleteLending(id);
-    }
-
-    @Override
-    public Lending getLending(int id) {
-        return lendingDAO.getLending(id);
-    }
+	
+	@Autowired
+	LendingDAO lendingDAO;
+	
+	@Override
+	public List<Lending> getLendings() {
+		return lendingDAO.getLendings();
+	}
+	
+	@Override
+	public void saveLending(Lending lending) {
+		lendingDAO.saveLending(lending);
+	}
+	
+	@Override
+	public void deleteLending(int id) {
+		lendingDAO.deleteLending(id);
+	}
+	
+	@Override
+	public Lending getLending(int id) {
+		return lendingDAO.getLending(id);
+	}
 }

@@ -11,32 +11,32 @@ import java.util.List;
 @Service("equipmentService")
 @Transactional
 public class EquipmentServiceImpl implements EquipmentService {
-
-    @Autowired
-    EquipmentDAO equipmentDAO;
-
-    @Override
-    public List<Equipment> getFreeEquipment() {
-        return equipmentDAO.getFreeEquipment();
-    }
-
-    @Override
-    public List<Equipment> getEquipmentList() {
-        return equipmentDAO.getEquipmentList();
-    }
-
-    @Override
-    public void saveEquipment(Equipment equipment) {
-        equipmentDAO.saveEquipment(equipment);
-    }
-
-    @Override
-    public Equipment getEquipment(int id) {
-        return equipmentDAO.getEquipment(id);
-    }
-
-    @Override
-    public void deleteEquipment(int id) {
-        equipmentDAO.deleteEquipment(id);
-    }
+	
+	@Autowired
+	EquipmentDAO equipmentDAO;
+	
+	@Override
+	public List<Equipment> getFreeEquipment() {
+		return equipmentDAO.getFreeEquipment();
+	}
+	
+	@Override
+	public List<Equipment> getEquipmentList() {
+		return equipmentDAO.getEquipmentList();
+	}
+	
+	@Override
+	public void saveEquipment(Equipment equipment) {
+		equipmentDAO.saveEquipment(equipment);
+	}
+	
+	@Override
+	public Equipment getEquipment(int id) {
+		return equipmentDAO.getEquipment(id);
+	}
+	
+	@Override
+	public void deleteEquipment(int id) {
+		equipmentDAO.deleteEquipment(id);
+	}
 }

@@ -6,24 +6,24 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 import javax.servlet.Filter;
 
 public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-    @Override
-    protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{SecurityConfig.class, DatabaseConfiguration.class};
-    }
-
-    @Override
-    protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{Configuration.class };
-    }
-
-    @Override
-    protected String[] getServletMappings() {
-        return new String[] {"/"};
-    }
-
-    @Override
-    protected Filter[] getServletFilters() {
-        return new Filter[] {new CharacterEncodingFilter("UTF-8", true)};
-    }
+	
+	@Override
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class[]{SecurityConfig.class, DatabaseConfiguration.class};
+	}
+	
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
+		return new Class[]{Configuration.class};
+	}
+	
+	@Override
+	protected String[] getServletMappings() {
+		return new String[]{"/"};
+	}
+	
+	@Override
+	protected Filter[] getServletFilters() {
+		return new Filter[]{new CharacterEncodingFilter("UTF-8", true)};
+	}
 }

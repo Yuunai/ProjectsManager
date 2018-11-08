@@ -7,62 +7,62 @@ import java.io.Serializable;
 @Table(name = "participation")
 @IdClass(Participation.class)
 public class Participation implements Serializable {
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
-
-    public Participation() {
-
-    }
-
-    public Participation(Event event, Employee employee, Role role) {
-        this.event = event;
-        this.employee = employee;
-        this.role = role;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "Participation{" +
-                "event=" + event +
-                ", employee=" + employee +
-                ", role=" + role +
-                '}';
-    }
+	
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "event_id")
+	private Event event;
+	
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "employee_id")
+	private Employee employee;
+	
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "role_id")
+	private Role role;
+	
+	public Participation() {
+	
+	}
+	
+	public Participation(Event event, Employee employee, Role role) {
+		this.event = event;
+		this.employee = employee;
+		this.role = role;
+	}
+	
+	public Event getEvent() {
+		return event;
+	}
+	
+	public void setEvent(Event event) {
+		this.event = event;
+	}
+	
+	public Employee getEmployee() {
+		return employee;
+	}
+	
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+	
+	public Role getRole() {
+		return role;
+	}
+	
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
+	@Override
+	public String toString() {
+		return "Participation{" +
+				"event=" + event +
+				", employee=" + employee +
+				", role=" + role +
+				'}';
+	}
 }

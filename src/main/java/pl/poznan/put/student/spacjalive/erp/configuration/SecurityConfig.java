@@ -12,22 +12,22 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-//    TODO Create real logging using database connection
-    @Autowired
-    DataSource dataSource;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery("")
-                .authoritiesByUsernameQuery("");
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable();
-    }
+	
+	//    TODO Create real logging using database connection
+	@Autowired
+	DataSource dataSource;
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.jdbcAuthentication()
+				.dataSource(dataSource)
+				.usersByUsernameQuery("")
+				.authoritiesByUsernameQuery("");
+	}
+	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+				.csrf().disable();
+	}
 }

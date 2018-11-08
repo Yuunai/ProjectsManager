@@ -11,32 +11,32 @@ import java.util.List;
 @Service("eventService")
 @Transactional
 public class EventServiceImpl implements EventService {
-
-    @Autowired
-    EventDAO eventDAO;
-
-    @Override
-    public List<Event> getEvents() {
-        return eventDAO.getEvents();
-    }
-
-    @Override
-    public List<Event> getEvents(int archived) {
-        return eventDAO.getEvents(archived);
-    }
-
-    @Override
-    public void saveEvent(Event event) {
-        eventDAO.saveEvent(event);
-    }
-
-    @Override
-    public void deleteEvent(int id) {
-        eventDAO.deleteEvent(id);
-    }
-
-    @Override
-    public Event getEvent(int id) {
-        return eventDAO.getEvent(id);
-    }
+	
+	@Autowired
+	EventDAO eventDAO;
+	
+	@Override
+	public List<Event> getEvents() {
+		return eventDAO.getEvents();
+	}
+	
+	@Override
+	public List<Event> getEvents(int archived) {
+		return eventDAO.getEvents(archived);
+	}
+	
+	@Override
+	public void saveEvent(Event event) {
+		eventDAO.saveEvent(event);
+	}
+	
+	@Override
+	public void deleteEvent(int id) {
+		eventDAO.deleteEvent(id);
+	}
+	
+	@Override
+	public Event getEvent(int id) {
+		return eventDAO.getEvent(id);
+	}
 }

@@ -16,50 +16,50 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
 @ComponentScans(value = {
-        @ComponentScan("pl.poznan.put.student.spacjalive.erp.dao"),
-        @ComponentScan("pl.poznan.put.student.spacjalive.erp.service")
+		@ComponentScan("pl.poznan.put.student.spacjalive.erp.dao"),
+		@ComponentScan("pl.poznan.put.student.spacjalive.erp.service")
 })
 public class DatabaseConfiguration {
-
-    @Autowired
-    private Environment env;
-
-    @Bean(destroyMethod = "close")
-    public ComboPooledDataSource dataSource() throws PropertyVetoException {
-        ComboPooledDataSource dataSource = new ComboPooledDataSource();
-        dataSource.setDriverClass(env.getProperty("db.driver"));
-        dataSource.setJdbcUrl(env.getProperty("db.url"));
-        dataSource.setUser(env.getProperty("db.username"));
-        dataSource.setPassword(env.getProperty("db.password"));
-
-        dataSource.setMaxIdleTime(30000);
-        dataSource.setMinPoolSize(5);
-        dataSource.setMaxPoolSize(20);
-
-        return dataSource;
-    }
-
-    @Bean
-    public LocalSessionFactoryBean sessionFactoryBean() throws PropertyVetoException {
-        LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-        factoryBean.setDataSource(dataSource());
-
-        Properties properties = new Properties();
-        properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-        properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
-
-        factoryBean.setHibernateProperties(properties);
-        factoryBean.setPackagesToScan("pl.poznan.put.student.spacjalive.erp.entity");
-
-        return factoryBean;
-    }
-
-    @Bean
-    public HibernateTransactionManager transactionManager() throws PropertyVetoException {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactoryBean().getObject());
-
-        return transactionManager;
-    }
-
+	
+	@Autowired
+	private Environment env;
+	
+	@Bean(destroyMethod = "close")
+	public ComboPooledDataSource dataSource() throws PropertyVetoException {
+		ComboPooledDataSource dataSource = new ComboPooledDataSource();
+		dataSource.setDriverClass(env.getProperty("db.driver"));
+		dataSource.setJdbcUrl(env.getProperty("db.url"));
+		dataSource.setUser(env.getProperty("db.username"));
+		dataSource.setPassword(env.getProperty("db.password"));
+		
+		dataSource.setMaxIdleTime(30000);
+		dataSource.setMinPoolSize(5);
+		dataSource.setMaxPoolSize(20);
+		
+		return dataSource;
+	}
+	
+	@Bean
+	public LocalSessionFactoryBean sessionFactoryBean() throws PropertyVetoException {
+		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
+		factoryBean.setDataSource(dataSource());
+		
+		Properties properties = new Properties();
+		properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+		properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+		
+		factoryBean.setHibernateProperties(properties);
+		factoryBean.setPackagesToScan("pl.poznan.put.student.spacjalive.erp.entity");
+		
+		return factoryBean;
+	}
+	
+	@Bean
+	public HibernateTransactionManager transactionManager() throws PropertyVetoException {
+		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+		transactionManager.setSessionFactory(sessionFactoryBean().getObject());
+		
+		return transactionManager;
+	}
+	
 }

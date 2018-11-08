@@ -11,58 +11,49 @@ import java.util.List;
 
 @Repository
 public class EventDAOImpl implements EventDAO {
-
-    @Autowired
-    SessionFactory sessionFactory;
-
-    @Override
-    public List<Event> getEvents() {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query<Event> query = session.createQuery("FROM Event e ORDER BY e.date ASC ", Event.class);
-
-        List<Event> events = query.getResultList();
-
-        return events;
-    }
-
-    @Override
-    public List<Event> getEvents(int archived) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query<Event> query = session.createQuery("FROM Event WHERE archived=:archiv", Event.class);
-
-        query.setParameter("archiv", archived);
-
-        List<Event> events = query.getResultList();
-
-        return events;
-    }
-
-    @Override
-    public void saveEvent(Event event) {
-        Session session = sessionFactory.getCurrentSession();
-
-        session.saveOrUpdate(event);
-    }
-
-    @Override
-    public void deleteEvent(int id) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query query = session.createQuery("DELETE FROM Event WHERE id=:eventId");
-
-        query.setParameter("eventId", id);
-
-        query.executeUpdate();
-    }
-
-    @Override
-    public Event getEvent(int id) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Event event = session.get(Event.class, id);
-
-        return event;
-    }
+	
+	@Autowired
+	SessionFactory sessionFactory;
+	
+	@Override
+	public List<Event> getEvents() {
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query<Event> query = session.createQuery("FROM Event e ORDER BY e.date ASC ", Event.class);
+		List<Event> events = query.getResultList();
+		
+		return events;
+	}
+	
+	@Override
+	public List<Event> getEvents(int archived) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query<Event> query = session.createQuery("FROM Event WHERE archived=:archived", Event.class);
+		query.setParameter("archived", archived);
+		
+		return query.getResultList();
+	}
+	
+	@Override
+	public void saveEvent(Event event) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(event);
+	}
+	
+	@Override
+	public void deleteEvent(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query query = session.createQuery("DELETE FROM Event WHERE id=:eventId");
+		query.setParameter("eventId", id);
+		
+		query.executeUpdate();
+	}
+	
+	@Override
+	public Event getEvent(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(Event.class, id);
+	}
 }

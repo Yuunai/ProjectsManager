@@ -11,45 +11,37 @@ import java.util.List;
 
 @Repository
 public class LendingDAOImpl implements LendingDAO {
-
-    @Autowired
-    SessionFactory sessionFactory;
-
-    @Override
-    public List<Lending> getLendings() {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query<Lending> query = session.createQuery("FROM Lending l order by l.since", Lending.class);
-
-        List<Lending> lendings = query.getResultList();
-
-        return lendings;
-    }
-
-    @Override
-    public void saveLending(Lending lending) {
-        Session session = sessionFactory.getCurrentSession();
-
-        session.saveOrUpdate(lending);
-    }
-
-    @Override
-    public void deleteLending(int id) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query query = session.createQuery("DELETE FROM Lending WHERE id=:lendingId");
-
-        query.setParameter("lendingId", id);
-
-        query.executeUpdate();
-    }
-
-    @Override
-    public Lending getLending(int id) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Lending lending = session.get(Lending.class, id);
-
-        return lending;
-    }
+	
+	@Autowired
+	SessionFactory sessionFactory;
+	
+	@Override
+	public List<Lending> getLendings() {
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query<Lending> query = session.createQuery("FROM Lending l order by l.since", Lending.class);
+		return query.getResultList();
+	}
+	
+	@Override
+	public void saveLending(Lending lending) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(lending);
+	}
+	
+	@Override
+	public void deleteLending(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query query = session.createQuery("DELETE FROM Lending WHERE id=:lendingId");
+		query.setParameter("lendingId", id);
+		
+		query.executeUpdate();
+	}
+	
+	@Override
+	public Lending getLending(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(Lending.class, id);
+	}
 }

@@ -11,55 +11,45 @@ import java.util.List;
 
 @Repository
 public class EquipmentDAOImpl implements EquipmentDAO {
-    @Autowired
-    SessionFactory sessionFactory;
-
-    @Override
-    public List<Equipment> getFreeEquipment() {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query<Equipment> query = session.getNamedQuery("getFreeEquipment");
-
-        List<Equipment> equipmentList = query.getResultList();
-
-        return equipmentList;
-    }
-
-    @Override
-    public List<Equipment> getEquipmentList() {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query<Equipment> query = session.createQuery("from Equipment " + "ORDER BY name", Equipment.class);
-
-        List<Equipment> equipment = query.getResultList();
-
-        return equipment;
-    }
-
-    @Override
-    public void saveEquipment(Equipment equipment) {
-        Session session = sessionFactory.getCurrentSession();
-
-        session.saveOrUpdate(equipment);
-    }
-
-    @Override
-    public Equipment getEquipment(int id) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Equipment equipment = session.get(Equipment.class, id);
-
-        return equipment;
-    }
-
-    @Override
-    public void deleteEquipment(int id) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query query = session.createQuery("DELETE FROM Equipment WHERE id=:equipmentId");
-
-        query.setParameter("equipmentId", id);
-
-        query.executeUpdate();
-    }
+	@Autowired
+	SessionFactory sessionFactory;
+	
+	@Override
+	public List<Equipment> getFreeEquipment() {
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query<Equipment> query = session.getNamedQuery("getFreeEquipment");
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<Equipment> getEquipmentList() {
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query<Equipment> query = session.createQuery("from Equipment " + "ORDER BY name", Equipment.class);
+		return query.getResultList();
+		
+	}
+	
+	@Override
+	public void saveEquipment(Equipment equipment) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(equipment);
+	}
+	
+	@Override
+	public Equipment getEquipment(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(Equipment.class, id);
+	}
+	
+	@Override
+	public void deleteEquipment(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query query = session.createQuery("DELETE FROM Equipment WHERE id=:equipmentId");
+		query.setParameter("equipmentId", id);
+		
+		query.executeUpdate();
+	}
 }

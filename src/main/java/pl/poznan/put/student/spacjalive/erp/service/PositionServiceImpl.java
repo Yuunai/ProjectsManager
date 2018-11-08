@@ -11,27 +11,27 @@ import java.util.List;
 @Service("positionService")
 @Transactional
 public class PositionServiceImpl implements PositionService {
-
-    @Autowired
-    PositionDAO positionDAO;
-
-    @Override
-    public List<Position> getPositions() {
-        return positionDAO.getPositions();
-    }
-
-    @Override
-    public void savePosition(Position position) {
-        positionDAO.savePosition(position);
-    }
-
-    @Override
-    public void deletePosition(int id) {
-        positionDAO.deletePosition(id);
-    }
-
-    @Override
-    public Position getPosition(int id) {
-        return positionDAO.getPosition(id);
-    }
+	
+	@Autowired
+	PositionDAO positionDAO;
+	
+	@Override
+	public List<Position> getPositions() {
+		return positionDAO.getPositions();
+	}
+	
+	@Override
+	public void savePosition(Position position) {
+		positionDAO.savePosition(position);
+	}
+	
+	@Override
+	public void deletePosition(int id) {
+		positionDAO.deletePosition(id);
+	}
+	
+	@Override
+	public Position getPosition(int id) {
+		return positionDAO.getPosition(id);
+	}
 }

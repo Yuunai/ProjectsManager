@@ -5,18 +5,18 @@ import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
 import pl.poznan.put.student.spacjalive.erp.service.EquipmentService;
 
 public class StringEquipmentIdToEquipmentConverter implements Converter<String, Equipment> {
-
-    private final EquipmentService equipmentService;
-
-    public StringEquipmentIdToEquipmentConverter(EquipmentService equipmentService) {
-        this.equipmentService = equipmentService;
-    }
-
-    @Override
-    public Equipment convert(String s) {
-        Equipment equipment;
-        equipment = equipmentService.getEquipment(Integer.valueOf(s));
-
-        return equipment;
-    }
+	
+	private final EquipmentService equipmentService;
+	
+	public StringEquipmentIdToEquipmentConverter(EquipmentService equipmentService) {
+		this.equipmentService = equipmentService;
+	}
+	
+	@Override
+	public Equipment convert(String s) {
+		Equipment equipment;
+		equipment = equipmentService.getEquipment(Integer.valueOf(s));
+		
+		return equipment;
+	}
 }
