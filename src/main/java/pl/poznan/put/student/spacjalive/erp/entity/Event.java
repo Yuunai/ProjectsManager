@@ -79,11 +79,6 @@ public class Event {
 	@Column(name = "video_type")
 	private String videoType;
 	
-	@Min(value = 0, message = "Wybierz liczbę większą lub równą 0!")
-	@Digits(integer = 5, fraction = 2, message = "Wyłącznie liczby!")
-	@Column(name = "value")
-	private double value;
-	
 	@Column(name = "last_update")
 	private String lastUpdate;
 	
@@ -91,7 +86,8 @@ public class Event {
 	
 	}
 	
-	public Event(String name, String place, LocalDateTime date, String organizer, String phoneNumber, String email, String comments, int priority, LocalDateTime deadline, int archived, String videoType, double value, String lastUpdate) {
+	public Event(String name, String place, LocalDateTime date, String organizer, String phoneNumber, String email,
+	             String comments, int priority, LocalDateTime deadline, int archived, String videoType, String lastUpdate) {
 		this.name = name;
 		this.place = place;
 		this.date = date;
@@ -103,7 +99,6 @@ public class Event {
 		this.deadline = deadline;
 		this.archived = archived;
 		this.videoType = videoType;
-		this.value = value;
 		this.lastUpdate = lastUpdate;
 	}
 	
@@ -203,14 +198,6 @@ public class Event {
 		this.videoType = videoType;
 	}
 	
-	public double getValue() {
-		return value;
-	}
-	
-	public void setValue(double value) {
-		this.value = value;
-	}
-	
 	public String getLastUpdate() {
 		return lastUpdate;
 	}
@@ -234,7 +221,6 @@ public class Event {
 				", deadline=" + deadline +
 				", archived=" + archived +
 				", videoType='" + videoType + '\'' +
-				", value=" + value +
 				", lastUpdate='" + lastUpdate + '\'' +
 				'}';
 	}

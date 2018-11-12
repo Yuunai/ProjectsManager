@@ -109,11 +109,6 @@
                     <td><form:input path="videoType" />
                     <form:errors path="videoType" /></td>
                 </tr>
-                <tr>
-                    <td><label>Wartość</label></td>
-                    <td><form:input path="value" />
-                    <form:errors path="value" /></td>
-                </tr>
 
                 <tr>
                     <td><label></label></td>

@@ -15,14 +15,18 @@ public class Authority {
 	@Column(name = "authority")
 	private String authority;
 	
+	@Column(name = "label")
+	private String label;
+	
 	@JoinTable(name = "user_authorities",
 			joinColumns = @JoinColumn(name = "authority_id"),
 			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Employee> employees;
 	
-	public Authority(String authority, Set<Employee> employees) {
+	public Authority(String authority, String label, Set<Employee> employees) {
 		this.authority = authority;
+		this.label = label;
 		this.employees = employees;
 	}
 	
@@ -43,6 +47,14 @@ public class Authority {
 	
 	public void setAuthority(String authority) {
 		this.authority = authority;
+	}
+	
+	public String getLabel() {
+		return label;
+	}
+	
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	public Set<Employee> getEmployees() {

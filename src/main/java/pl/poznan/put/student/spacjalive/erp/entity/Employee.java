@@ -36,20 +36,15 @@ public class Employee {
 	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "password")
+	private String password;
+	
 	@NotNull(message = "Pole nie może być puste!")
 	@Size(min = 1, message = "Pole nie może być puste!")
 	@Size(max = 15, message = "Długość pola nie może przekroczyć 15 znaków!")
 	@Pattern(regexp = "\\+?([0-9]+\\ ?\\-?)+", message = "Niepoprawny format numeru!")
 	@Column(name = "phone_number")
 	private String phoneNumber;
-	
-	@Column(name = "user_type")
-	private String userType;
-	
-	@PositiveOrZero(message = "Wartość musi być wieksza lub równa 0.")
-	@Digits(integer = 10, fraction = 2, message = "Dozwolone są wyłącznie liczby!")
-	@Column(name = "mario_dollars")
-	private double marioDollars;
 	
 	@Column(name = "student_index")
 	private String studentIndex;
@@ -60,12 +55,8 @@ public class Employee {
 	@Column(name = "enabled")
 	private int enabled;
 	
-	@ManyToOne(cascade = {CascadeType.DETACH,
-			CascadeType.MERGE,
-			CascadeType.PERSIST,
-			CascadeType.REFRESH})
-	@JoinColumn(name = "position_id")
-	private Position position;
+	@Column(name = "car")
+	private int car;
 	
 	@Column(name = "last_update")
 	private String lastUpdate;
@@ -80,16 +71,17 @@ public class Employee {
 	
 	}
 	
-	public Employee(String firstName, String lastName, String email, String phoneNumber, String userType, double marioDollars, String studentIndex, int officeEntrance, int enabled, String lastUpdate, Set<Authority> authorities) {
+	public Employee(String firstName, String lastName, String email, String phoneNumber, String studentIndex, String
+			password, int	officeEntrance, int enabled, int car, String lastUpdate, Set<Authority> authorities) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.password = password;
 		this.phoneNumber = phoneNumber;
-		this.userType = userType;
-		this.marioDollars = marioDollars;
 		this.studentIndex = studentIndex;
 		this.officeEntrance = officeEntrance;
 		this.enabled = enabled;
+		this.car = car;
 		this.lastUpdate = lastUpdate;
 		this.authorities = authorities;
 	}
@@ -126,28 +118,20 @@ public class Employee {
 		this.email = email;
 	}
 	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 	
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-	
-	public String getUserType() {
-		return userType;
-	}
-	
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-	
-	public double getMarioDollars() {
-		return marioDollars;
-	}
-	
-	public void setMarioDollars(double marioDollars) {
-		this.marioDollars = marioDollars;
 	}
 	
 	public String getStudentIndex() {
@@ -174,12 +158,12 @@ public class Employee {
 		this.enabled = active;
 	}
 	
-	public Position getPosition() {
-		return position;
+	public int getCar() {
+		return car;
 	}
 	
-	public void setPosition(Position position) {
-		this.position = position;
+	public void setCar(int car) {
+		this.car = car;
 	}
 	
 	public String getLastUpdate() {
@@ -205,13 +189,12 @@ public class Employee {
 				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
 				", email='" + email + '\'' +
+				", password='" + password + '\'' +
 				", phoneNumber='" + phoneNumber + '\'' +
-				", userType='" + userType + '\'' +
-				", marioDollars=" + marioDollars +
 				", studentIndex='" + studentIndex + '\'' +
 				", officeEntrance=" + officeEntrance +
 				", enabled=" + enabled +
-				", position=" + position +
+				", car=" + car +
 				", lastUpdate='" + lastUpdate + '\'' +
 				", authorities=" + authorities +
 				'}';

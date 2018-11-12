@@ -34,8 +34,6 @@
         <form:form action="saveEmployee" modelAttribute="employee" method="POST" acceptCharset="utf8">
 
             <form:hidden path="id"/>
-            <form:hidden path="userType"/>
-            <form:hidden path="marioDollars"/>
             <form:hidden path="enabled"/>
             <form:hidden path="lastUpdate"/>
             <table class="table col-4 table-bordered">
@@ -88,6 +86,11 @@
                         <form:errors path="email" /></td>
                 </tr>
                 <tr>
+                    <td><label>Hasło</label></td>
+                    <td><form:password path="password" />
+                        <form:errors path="lastName" /></td>
+                </tr>
+                <tr>
                     <td><label>Wejście do biura</label></td>
                     <td><form:select path="officeEntrance" >
                         <form:option value="1" label="Tak" />
@@ -95,18 +98,13 @@
                     </form:select>
                     </td>
                 </tr>
-                <td><label>Pozycja początkowa</label></td>
-                <td><form:select path="position" >
-                    <c:if test="${employee.position != null}">
-                        <form:option value="${employee.position.id}" label="${employee.position.name}"/>
-                    </c:if>
-                    <c:forEach var="position" items="${positions}">
-                        <c:if test="${employee.position.id != position.id}">
-                            <form:option value="${position.id}" label="${position.name}"/>
-                        </c:if>
-                    </c:forEach>
-                </form:select>
-                </td>
+                <tr>
+                    <td><label>Samochód</label></td>
+                    <td><form:select path="car" >
+                        <form:option value="1" label="Tak" />
+                        <form:option value="0" label="Nie" />
+                    </form:select>
+                    </td>
                 </tr>
                 <tr>
                     <td><label></label></td>

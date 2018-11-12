@@ -21,8 +21,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication()
 				.dataSource(dataSource)
-				.usersByUsernameQuery("")
-				.authoritiesByUsernameQuery("");
+				.usersByUsernameQuery("SELECT email, password, enabled FROM employee")
+				.authoritiesByUsernameQuery("SELECT authority FROM authorities a" +
+						"joins user_authorities ua on a.id = ua.authority_id" +
+						"joins employee e on e.id = ua.user_id");
 	}
 	
 	@Override

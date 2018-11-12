@@ -6,19 +6,6 @@ use `spacja_erp`;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS `position`;
-
-CREATE TABLE `position` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(48) NOT NULL,
-  `lending_time` int NOT NULL,
-  `last_update` TIMESTAMP DEFAULT now(),
-  PRIMARY KEY(`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1;
-
-INSERT INTO `position` VALUES
-  (1, 'Adept', 0, now());
-
 DROP TABLE IF EXISTS `employee`;
 
 CREATE TABLE `employee` (
@@ -26,19 +13,15 @@ CREATE TABLE `employee` (
   `first_name` varchar(45) NOT NULL,
   `last_name` varchar(45) NOT NULL,
   `email` varchar(128) NOT NULL,
+  `password` VARCHAR(256) NOT NULL,
   `phone_number` varchar(15) NOT NULL,
-  `position_id` int NOT NULL,
-  `user_type` varchar(10) DEFAULT "user",
-  `mario_dollars` decimal(14,2) DEFAULT 0.0,
   `student_index` varchar(10) NOT NULL,
+  `car` tinyint(1) NOT NULL DEFAULT 0,
   `office_entrance` tinyint(1) DEFAULT 0,
   `enabled` tinyint(1) DEFAULT 1,
   `last_update` TIMESTAMP DEFAULT now(),
   
-  PRIMARY KEY(`id`),
-  CONSTRAINT `FK_POSITION`
-  FOREIGN KEY(`position_id`) REFERENCES `position`(`id`) 
-  ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `authorities`;
@@ -46,6 +29,7 @@ DROP TABLE IF EXISTS `authorities`;
 CREATE TABLE `authorities` (
   `id` int NOT NULL,
   `authority` varchar(50),
+  `label` VARCHAR(50),
 
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
@@ -76,13 +60,13 @@ CREATE TABLE `event` (
   `date` datetime NOT NULL,
   `organizer` varchar(60) NOT NULL,
   `phone_number` varchar(20) NOT NULL,
-  `email` varchar(40) NOT NULL,
+  `email` varchar(128) NOT NULL,
   `comments` varchar(256) DEFAULT NULL,
   `priority` int DEFAULT 5,
   `deadline` datetime DEFAULT NULL,
+  `confirmed` bool DEFAULT false,
   `archived` bool DEFAULT false,
   `video_type` varchar(40) NOT NULL,
-  `value` decimal(14,2) DEFAULT NULL,
   `last_update` TIMESTAMP DEFAULT now(),
   
   PRIMARY KEY(`id`)
@@ -221,22 +205,7 @@ BEGIN
             SET MESSAGE_TEXT = 'Nie przyjmujemy maili w domenie .eu';
     END IF;
 END$$   
-DELIMITER ; 
-
-DELIMITER $$
-CREATE TRIGGER `set_lending_time` BEFORE INSERT ON `lending`
-FOR EACH ROW
-BEGIN
-	set NEW.since = now();
-    set NEW.end = date_add(NEW.since, INTERVAL (
-    select p.lending_time
-    from position p
-    where p.id = 
-    (select e.position_id
-    from employee e
-    where e.id = NEW.employee_id)) DAY);
-END$$   
-DELIMITER ; 
+DELIMITER ;
 
 DELIMITER $$
 CREATE TRIGGER `optimistic_locking_employee` BEFORE UPDATE ON `employee`
@@ -291,21 +260,6 @@ BEGIN
     select l.last_update
     from lending l
     where l.id = NEW.id) THEN
-        SIGNAL SQLSTATE '12346'
-            SET MESSAGE_TEXT = 'Edycja nieudana, ponów próbę!';
-	ELSE set new.last_update = now();
-    END IF;
-END$$   
-DELIMITER ;
-
-DELIMITER $$
-CREATE TRIGGER `optimistic_locking_position` BEFORE UPDATE ON `position`
-FOR EACH ROW
-BEGIN
-	IF NEW.last_update != (
-    select p.last_update
-    from position p
-    where p.id = NEW.id) THEN
         SIGNAL SQLSTATE '12346'
             SET MESSAGE_TEXT = 'Edycja nieudana, ponów próbę!';
 	ELSE set new.last_update = now();

@@ -65,23 +65,20 @@
                     <td>${employee.phoneNumber}</td>
                 </tr>
                 <tr>
-                    <td><label>Pozycja</label></td>
-                    <td>${employee.position.name}</td>
-                </tr>
-                <tr>
-                    <td><label>Typ użytkownika</label></td>
-                    <td>${employee.userType}</td>
-                </tr>
-                <tr>
-                    <td><label>Mario dollary</label></td>
-                    <td>${employee.marioDollars}</td>
-                </tr>
-                <tr>
                     <td><label>Wejście do biura</label></td>
                     <c:if test="${employee.officeEntrance == 1}">
                         <td>Tak</td>
                     </c:if>
                     <c:if test="${employee.officeEntrance != 1}">
+                        <td>Nie</td>
+                    </c:if>
+                </tr>
+                <tr>
+                    <td><label>Samochód</label></td>
+                    <c:if test="${employee.car == 1}">
+                        <td>Tak</td>
+                    </c:if>
+                    <c:if test="${employee.car != 1}">
                         <td>Nie</td>
                     </c:if>
                 </tr>

@@ -12,15 +12,11 @@ import pl.poznan.put.student.spacjalive.erp.converter.*;
 import pl.poznan.put.student.spacjalive.erp.service.EmployeeService;
 import pl.poznan.put.student.spacjalive.erp.service.EquipmentService;
 import pl.poznan.put.student.spacjalive.erp.service.EventService;
-import pl.poznan.put.student.spacjalive.erp.service.PositionService;
 
 @EnableWebMvc
 @org.springframework.context.annotation.Configuration
 @ComponentScan(basePackages = "pl.poznan.put.student.spacjalive.erp")
 public class Configuration extends WebMvcConfigurerAdapter {
-	
-	@Autowired
-	PositionService positionService;
 	
 	@Autowired
 	EmployeeService employeeService;
@@ -51,7 +47,6 @@ public class Configuration extends WebMvcConfigurerAdapter {
 	public void addFormatters(FormatterRegistry registry) {
 		registry.addConverter(new StringToLocalDateTimeConverter());
 		registry.addConverter(new StringToBooleanConverter());
-		registry.addConverter(new StringPositionIdToPositionConverter(positionService));
 		registry.addConverter(new StringEmployeeIdToEmployeeConverter(employeeService));
 		registry.addConverter(new StringEquipmentIdToEquipmentConverter(equipmentService));
 		registry.addConverter(new StringEventIdToEventConverter(eventService));

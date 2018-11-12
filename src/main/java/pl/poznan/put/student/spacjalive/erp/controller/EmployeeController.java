@@ -14,10 +14,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.Employee;
 import pl.poznan.put.student.spacjalive.erp.entity.Participation;
-import pl.poznan.put.student.spacjalive.erp.entity.Position;
 import pl.poznan.put.student.spacjalive.erp.service.EmployeeService;
 import pl.poznan.put.student.spacjalive.erp.service.ParticipationService;
-import pl.poznan.put.student.spacjalive.erp.service.PositionService;
 
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -29,9 +27,6 @@ public class EmployeeController {
 	
 	@Autowired
 	EmployeeService employeeService;
-	
-	@Autowired
-	PositionService positionService;
 	
 	@Autowired
 	ParticipationService participationService;
@@ -63,23 +58,16 @@ public class EmployeeController {
 	
 	@GetMapping("/addEmployeeForm")
 	public String addEmployeeForm(Model model) {
-		Employee employee = new Employee(null, null, null, null, "USER", 0, null, 0, 1, null, new HashSet<>());
+		Employee employee = new Employee(null, null, null, null, null, null, 0, 1, 0, null, new HashSet<>());
 		model.addAttribute("employee", employee);
-		
-		List<Position> positions = positionService.getPositions();
-		model.addAttribute("positions", positions);
 		
 		return "add-employee-form";
 	}
 	
 	@PostMapping("/saveEmployee")
 	public String saveEmployee(@ModelAttribute("employee") @Valid Employee employee, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			List<Position> positions = positionService.getPositions();
-			model.addAttribute("positions", positions);
-			
+		if (result.hasErrors())
 			return "add-employee-form";
-		}
 		
 		try {
 			employeeService.saveEmployee(employee);
@@ -88,8 +76,6 @@ public class EmployeeController {
 		} catch (SQLGrammarException e) {
 			result.reject(String.valueOf(e.getErrorCode()), "Niepoprawna składnia zapytania, skontaktuj się z administratorem.");
 		} catch (GenericJDBCException e) {
-			List<Position> positions = positionService.getPositions();
-			model.addAttribute("positions", positions);
 			
 			if (e.getSQLState().equalsIgnoreCase("12345")) {
 				result.reject(String.valueOf(e.getErrorCode()), e.getSQLException().getMessage());
@@ -98,8 +84,6 @@ public class EmployeeController {
 			}
 			return "add-employee-form";
 		} catch (HibernateJdbcException e) {
-			List<Position> positions = positionService.getPositions();
-			model.addAttribute("positions", positions);
 			
 			if (e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
 				Employee emp = employeeService.getEmployee(employee.getId());
@@ -143,9 +127,6 @@ public class EmployeeController {
 	public String updateEmployee(@RequestParam("employeeId") int employeeId, Model model) {
 		Employee employee = employeeService.getEmployee(employeeId);
 		model.addAttribute("employee", employee);
-		
-		List<Position> positions = positionService.getPositions();
-		model.addAttribute("positions", positions);
 		
 		return "add-employee-form";
 	}

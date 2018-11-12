@@ -85,10 +85,6 @@
                     <td>${event.videoType}</td>
                 </tr>
                 <tr>
-                    <td><label>Wartość</label></td>
-                    <td>${event.value}</td>
-                </tr>
-                <tr>
                     <td><label>Archiwizowane</label></td>
                     <td>${event.archived}</td>
                 </tr>
