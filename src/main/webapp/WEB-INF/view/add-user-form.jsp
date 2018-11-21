@@ -12,7 +12,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Add Employee</title>
+    <title>Add User</title>
 
     <link type="text/css"
           rel="stylesheet"
@@ -31,7 +31,7 @@
     <%@include file="header.jsp"%>
 
     <div class="row justify-content-center">
-        <form:form action="saveEmployee" modelAttribute="employee" method="POST" acceptCharset="utf8">
+        <form:form action="saveUser" modelAttribute="user" method="POST" acceptCharset="utf8">
 
             <form:hidden path="id"/>
             <form:hidden path="enabled"/>
@@ -117,7 +117,7 @@
 
 
         <p>
-            <a href="${pageContext.request.contextPath}/employee/list">Wróć do listy</a>
+            <a href="${pageContext.request.contextPath}/user/list">Wróć do listy</a>
         </p>
 
     </div>

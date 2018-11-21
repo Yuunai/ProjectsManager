@@ -4,7 +4,7 @@ import pl.poznan.put.student.spacjalive.erp.entity.Event;
 
 import java.util.List;
 
-public interface EventDAO {
+public interface EventRepository {
 	
 	public List<Event> getEvents();
 	

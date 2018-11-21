@@ -3,7 +3,7 @@ package pl.poznan.put.student.spacjalive.erp.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.poznan.put.student.spacjalive.erp.dao.EquipmentDAO;
+import pl.poznan.put.student.spacjalive.erp.dao.EquipmentRepository;
 import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
 
 import java.util.List;
@@ -13,30 +13,30 @@ import java.util.List;
 public class EquipmentServiceImpl implements EquipmentService {
 	
 	@Autowired
-	EquipmentDAO equipmentDAO;
+	EquipmentRepository equipmentRepository;
 	
 	@Override
 	public List<Equipment> getFreeEquipment() {
-		return equipmentDAO.getFreeEquipment();
+		return equipmentRepository.getFreeEquipment();
 	}
 	
 	@Override
 	public List<Equipment> getEquipmentList() {
-		return equipmentDAO.getEquipmentList();
+		return equipmentRepository.getEquipmentList();
 	}
 	
 	@Override
 	public void saveEquipment(Equipment equipment) {
-		equipmentDAO.saveEquipment(equipment);
+		equipmentRepository.saveEquipment(equipment);
 	}
 	
 	@Override
 	public Equipment getEquipment(int id) {
-		return equipmentDAO.getEquipment(id);
+		return equipmentRepository.getEquipment(id);
 	}
 	
 	@Override
 	public void deleteEquipment(int id) {
-		equipmentDAO.deleteEquipment(id);
+		equipmentRepository.deleteEquipment(id);
 	}
 }

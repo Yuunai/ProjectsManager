@@ -3,7 +3,7 @@ package pl.poznan.put.student.spacjalive.erp.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.poznan.put.student.spacjalive.erp.dao.EventDAO;
+import pl.poznan.put.student.spacjalive.erp.dao.EventRepository;
 import pl.poznan.put.student.spacjalive.erp.entity.Event;
 
 import java.util.List;
@@ -13,30 +13,30 @@ import java.util.List;
 public class EventServiceImpl implements EventService {
 	
 	@Autowired
-	EventDAO eventDAO;
+	EventRepository eventRepository;
 	
 	@Override
 	public List<Event> getEvents() {
-		return eventDAO.getEvents();
+		return eventRepository.getEvents();
 	}
 	
 	@Override
 	public List<Event> getEvents(int archived) {
-		return eventDAO.getEvents(archived);
+		return eventRepository.getEvents(archived);
 	}
 	
 	@Override
 	public void saveEvent(Event event) {
-		eventDAO.saveEvent(event);
+		eventRepository.saveEvent(event);
 	}
 	
 	@Override
 	public void deleteEvent(int id) {
-		eventDAO.deleteEvent(id);
+		eventRepository.deleteEvent(id);
 	}
 	
 	@Override
 	public Event getEvent(int id) {
-		return eventDAO.getEvent(id);
+		return eventRepository.getEvent(id);
 	}
 }

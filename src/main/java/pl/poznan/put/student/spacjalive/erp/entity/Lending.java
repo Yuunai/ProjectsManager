@@ -11,24 +11,29 @@ public class Lending {
 	
 	//TODO add fields validations
 	
-	@Column(name = "comments")
-	String comments;
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name = "comments")
+	String comments;
+	
 	@Column(name = "since", columnDefinition = "TIMESTAMP")
 	private LocalDateTime since;
+	
 	@Column(name = "end", columnDefinition = "TIMESTAMP")
 	private LocalDateTime end;
+	
 	@Column(name = "return_time", columnDefinition = "TIMESTAMP")
 	private LocalDateTime return_time;
+	
 	@ManyToOne(cascade = {CascadeType.DETACH,
 			CascadeType.MERGE,
 			CascadeType.PERSIST,
 			CascadeType.REFRESH})
-	@JoinColumn(name = "employee_id")
-	private Employee employee;
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	@ManyToOne(cascade = {CascadeType.DETACH,
 			CascadeType.MERGE,
@@ -107,12 +112,12 @@ public class Lending {
 		this.comments = comments;
 	}
 	
-	public Employee getEmployee() {
-		return employee;
+	public User getUser() {
+		return user;
 	}
 	
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public Event getEvent() {
@@ -147,7 +152,7 @@ public class Lending {
 				", end=" + end +
 				", return_time=" + return_time +
 				", comments='" + comments + '\'' +
-				", employee=" + employee +
+				", user=" + user +
 				", event=" + event +
 				", equipmentList=" + equipmentList +
 				", lastUpdate='" + lastUpdate + '\'' +

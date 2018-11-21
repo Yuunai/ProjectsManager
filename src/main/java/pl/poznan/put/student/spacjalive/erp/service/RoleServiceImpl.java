@@ -3,7 +3,7 @@ package pl.poznan.put.student.spacjalive.erp.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.poznan.put.student.spacjalive.erp.dao.RoleDAO;
+import pl.poznan.put.student.spacjalive.erp.dao.RoleRepository;
 import pl.poznan.put.student.spacjalive.erp.entity.Role;
 
 import java.util.List;
@@ -13,25 +13,25 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
 	
 	@Autowired
-	RoleDAO roleDAO;
+	RoleRepository roleRepository;
 	
 	@Override
 	public List<Role> getRoles() {
-		return roleDAO.getRoles();
+		return roleRepository.getRoles();
 	}
 	
 	@Override
 	public void saveRole(Role role) {
-		roleDAO.saveRole(role);
+		roleRepository.saveRole(role);
 	}
 	
 	@Override
 	public void deleteRole(int id) {
-		roleDAO.deleteRole(id);
+		roleRepository.deleteRole(id);
 	}
 	
 	@Override
 	public Role getRole(int id) {
-		return roleDAO.getRole(id);
+		return roleRepository.getRole(id);
 	}
 }

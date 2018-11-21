@@ -10,7 +10,7 @@ import pl.poznan.put.student.spacjalive.erp.entity.Role;
 import java.util.List;
 
 @Repository
-public class RoleDAOImpl implements RoleDAO {
+public class RoleRepositoryImpl implements RoleRepository {
 	
 	@Autowired
 	SessionFactory sessionFactory;

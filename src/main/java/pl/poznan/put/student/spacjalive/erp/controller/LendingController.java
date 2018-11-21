@@ -12,11 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import pl.poznan.put.student.spacjalive.erp.entity.Employee;
+import pl.poznan.put.student.spacjalive.erp.entity.User;
 import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
 import pl.poznan.put.student.spacjalive.erp.entity.Event;
 import pl.poznan.put.student.spacjalive.erp.entity.Lending;
-import pl.poznan.put.student.spacjalive.erp.service.EmployeeService;
+import pl.poznan.put.student.spacjalive.erp.service.UserService;
 import pl.poznan.put.student.spacjalive.erp.service.EquipmentService;
 import pl.poznan.put.student.spacjalive.erp.service.EventService;
 import pl.poznan.put.student.spacjalive.erp.service.LendingService;
@@ -41,7 +41,7 @@ public class LendingController {
 	EquipmentService equipmentService;
 	
 	@Autowired
-	EmployeeService employeeService;
+	UserService userService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
@@ -69,8 +69,8 @@ public class LendingController {
 		List<Event> events = eventService.getEvents(0);
 		model.addAttribute("events", events);
 		
-		List<Employee> employees = employeeService.getEmployees(true);
-		model.addAttribute("employees", employees);
+		List<User> users = userService.getUsers(true);
+		model.addAttribute("employees", users);
 		
 		return "add-lending-form";
 	}
@@ -88,8 +88,8 @@ public class LendingController {
 			List<Event> events = eventService.getEvents(0);
 			model.addAttribute("events", events);
 			
-			List<Employee> employees = employeeService.getEmployees(true);
-			model.addAttribute("employees", employees);
+			List<User> users = userService.getUsers(true);
+			model.addAttribute("employees", users);
 			
 			return "add-lending-form";
 		}
@@ -116,8 +116,8 @@ public class LendingController {
 			List<Event> events = eventService.getEvents(0);
 			model.addAttribute("events", events);
 			
-			List<Employee> employees = employeeService.getEmployees(true);
-			model.addAttribute("employees", employees);
+			List<User> users = userService.getUsers(true);
+			model.addAttribute("employees", users);
 			
 			if (e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
 				Lending len = lendingService.getLending(lending.getId());
@@ -147,9 +147,9 @@ public class LendingController {
 		events.remove(lending.getEvent());
 		model.addAttribute("events", events);
 		
-		List<Employee> employees = employeeService.getEmployees(true);
-		employees.remove(lending.getEmployee());
-		model.addAttribute("employees", employees);
+		List<User> users = userService.getUsers(true);
+		users.remove(lending.getUser());
+		model.addAttribute("employees", users);
 		
 		return "add-lending-form";
 	}

@@ -1,22 +1,22 @@
 package pl.poznan.put.student.spacjalive.erp.converter;
 
 import org.springframework.core.convert.converter.Converter;
-import pl.poznan.put.student.spacjalive.erp.entity.Employee;
-import pl.poznan.put.student.spacjalive.erp.service.EmployeeService;
+import pl.poznan.put.student.spacjalive.erp.entity.User;
+import pl.poznan.put.student.spacjalive.erp.service.UserService;
 
-public class StringEmployeeIdToEmployeeConverter implements Converter<String, Employee> {
+public class StringEmployeeIdToEmployeeConverter implements Converter<String, User> {
 	
-	private final EmployeeService employeeService;
+	private final UserService userService;
 	
-	public StringEmployeeIdToEmployeeConverter(EmployeeService employeeService) {
-		this.employeeService = employeeService;
+	public StringEmployeeIdToEmployeeConverter(UserService userService) {
+		this.userService = userService;
 	}
 	
 	@Override
-	public Employee convert(String s) {
-		Employee employee;
-		employee = employeeService.getEmployee(Integer.valueOf(s));
+	public User convert(String s) {
+		User user;
+		user = userService.getUser(Integer.valueOf(s));
 		
-		return employee;
+		return user;
 	}
 }

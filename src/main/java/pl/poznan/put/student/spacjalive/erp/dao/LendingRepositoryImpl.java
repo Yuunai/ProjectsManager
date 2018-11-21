@@ -10,7 +10,7 @@ import pl.poznan.put.student.spacjalive.erp.entity.Lending;
 import java.util.List;
 
 @Repository
-public class LendingDAOImpl implements LendingDAO {
+public class LendingRepositoryImpl implements LendingRepository {
 	
 	@Autowired
 	SessionFactory sessionFactory;

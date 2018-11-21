@@ -4,7 +4,7 @@ import pl.poznan.put.student.spacjalive.erp.entity.Role;
 
 import java.util.List;
 
-public interface RoleDAO {
+public interface RoleRepository {
 	
 	public List<Role> getRoles();
 	

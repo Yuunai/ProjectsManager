@@ -10,7 +10,7 @@ import pl.poznan.put.student.spacjalive.erp.entity.Participation;
 import java.util.List;
 
 @Repository
-public class ParticipationDAOImpl implements ParticipationDAO {
+public class ParticipationRepositoryImpl implements ParticipationRepository {
 	
 	@Autowired
 	SessionFactory sessionFactory;
@@ -26,7 +26,7 @@ public class ParticipationDAOImpl implements ParticipationDAO {
 	}
 	
 	@Override
-	public List<Participation> getParticipationsByEmployeeId(int id) {
+	public List<Participation> getParticipationsByUserId(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		
 		Query<Participation> query = session.createQuery("FROM Participation WHERE employee.id=:employeeId");

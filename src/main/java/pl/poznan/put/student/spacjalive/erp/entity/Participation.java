@@ -16,7 +16,7 @@ public class Participation implements Serializable {
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "employee_id")
-	private Employee employee;
+	private User user;
 	
 	@Id
 	@ManyToOne
@@ -27,9 +27,9 @@ public class Participation implements Serializable {
 	
 	}
 	
-	public Participation(Event event, Employee employee, Role role) {
+	public Participation(Event event, User user, Role role) {
 		this.event = event;
-		this.employee = employee;
+		this.user = user;
 		this.role = role;
 	}
 	
@@ -41,12 +41,12 @@ public class Participation implements Serializable {
 		this.event = event;
 	}
 	
-	public Employee getEmployee() {
-		return employee;
+	public User getUser() {
+		return user;
 	}
 	
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public Role getRole() {
@@ -61,7 +61,7 @@ public class Participation implements Serializable {
 	public String toString() {
 		return "Participation{" +
 				"event=" + event +
-				", employee=" + employee +
+				", user=" + user +
 				", role=" + role +
 				'}';
 	}

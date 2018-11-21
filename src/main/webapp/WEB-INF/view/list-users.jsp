@@ -14,7 +14,7 @@
     <meta charset="utf-8">
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.css" />" rel="stylesheet">
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/header-style.css" />" rel="stylesheet">
-    <title>Employees list</title>
+    <title>Users list</title>
 </head>
 <body>
 
@@ -42,25 +42,25 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="employee" items="${employees}">
+            <c:forEach var="user" items="${users}">
 
-                <c:url var="detailsLink" value="/employee/employeeDetails">
-                    <c:param name="employeeId" value="${employee.id}" />
+                <c:url var="detailsLink" value="/user/userDetails">
+                    <c:param name="employeeId" value="${user.id}" />
                 </c:url>
 
-                <c:url var="deleteLink" value="/employee/deleteEmployee">
-                    <c:param name="employeeId" value="${employee.id}" />
+                <c:url var="deleteLink" value="/user/deleteUser">
+                    <c:param name="employeeId" value="${user.id}" />
                 </c:url>
 
-                <c:url var="editLink" value="/employee/updateEmployeeForm">
-                    <c:param name="employeeId" value="${employee.id}" />
+                <c:url var="editLink" value="/user/updateUserForm">
+                    <c:param name="employeeId" value="${user.id}" />
                 </c:url>
 
                 <tr>
-                    <td>${employee.firstName}</td>
-                    <td>${employee.lastName}</td>
-                    <td>${employee.studentIndex}</td>
-                    <td>${employee.phoneNumber}</td>
+                    <td>${user.firstName}</td>
+                    <td>${user.lastName}</td>
+                    <td>${user.studentIndex}</td>
+                    <td>${user.phoneNumber}</td>
                     <td><a href="${detailsLink}">Szczegóły</a> |
                         <a href="${deleteLink}"
                            onclick="if (!(confirm('Czy na pewno chcesz usunąć tego członka?'))) return false">Usuń</a> |
@@ -70,7 +70,7 @@
             </c:forEach>
             <tr>
                 <td colspan="5">
-                    <a class="btn btn-primary" href="/employee/addEmployeeForm" role="button">Dodaj członka</a>
+                    <a class="btn btn-primary" href="/user/addUserForm" role="button">Dodaj członka</a>
                 </td>
             </tr>
             </tbody>

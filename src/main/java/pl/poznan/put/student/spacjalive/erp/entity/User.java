@@ -5,8 +5,8 @@ import javax.validation.constraints.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "employee")
-public class Employee {
+@Table(name = "user")
+public class User {
 	
 	//TODO add fields validations
 	
@@ -50,29 +50,29 @@ public class Employee {
 	private String studentIndex;
 	
 	@Column(name = "office_entrance")
-	private int officeEntrance;
+	private boolean officeEntrance;
 	
 	@Column(name = "enabled")
-	private int enabled;
+	private boolean enabled;
 	
 	@Column(name = "car")
-	private int car;
+	private boolean car;
 	
 	@Column(name = "last_update")
 	private String lastUpdate;
 	
-	@JoinTable(name = "user_authorities",
+	@JoinTable(name = "user_adm_role",
 			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "authority_id"))
+			inverseJoinColumns = @JoinColumn(name = "adm_role_id"))
 	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<Authority> authorities;
+	private Set<AdministrativeRole> admRoles;
 	
-	public Employee() {
+	public User() {
 	
 	}
 	
-	public Employee(String firstName, String lastName, String email, String phoneNumber, String studentIndex, String
-			password, int	officeEntrance, int enabled, int car, String lastUpdate, Set<Authority> authorities) {
+	public User(String firstName, String lastName, String email, String phoneNumber, String studentIndex, String
+			password, boolean officeEntrance, boolean enabled, boolean car, String lastUpdate, Set<AdministrativeRole> admRoles) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -83,7 +83,7 @@ public class Employee {
 		this.enabled = enabled;
 		this.car = car;
 		this.lastUpdate = lastUpdate;
-		this.authorities = authorities;
+		this.admRoles = admRoles;
 	}
 	
 	public int getId() {
@@ -142,27 +142,27 @@ public class Employee {
 		this.studentIndex = studentIndex;
 	}
 	
-	public int getOfficeEntrance() {
+	public boolean isOfficeEntrance() {
 		return officeEntrance;
 	}
 	
-	public void setOfficeEntrance(int officeEntrance) {
+	public void setOfficeEntrance(boolean officeEntrance) {
 		this.officeEntrance = officeEntrance;
 	}
 	
-	public int getEnabled() {
+	public boolean isEnabled() {
 		return enabled;
 	}
 	
-	public void setEnabled(int active) {
+	public void setEnabled(boolean active) {
 		this.enabled = active;
 	}
 	
-	public int getCar() {
+	public boolean isCar() {
 		return car;
 	}
 	
-	public void setCar(int car) {
+	public void setCar(boolean car) {
 		this.car = car;
 	}
 	
@@ -174,17 +174,17 @@ public class Employee {
 		this.lastUpdate = lastUpdate;
 	}
 	
-	public Set<Authority> getAuthorities() {
-		return authorities;
+	public Set<AdministrativeRole> getAdmRoles() {
+		return admRoles;
 	}
 	
-	public void setAuthorities(Set<Authority> authorities) {
-		this.authorities = authorities;
+	public void setAdmRoles(Set<AdministrativeRole> admRoles) {
+		this.admRoles = admRoles;
 	}
 	
 	@Override
 	public String toString() {
-		return "Employee{" +
+		return "User{" +
 				"id=" + id +
 				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
@@ -196,7 +196,7 @@ public class Employee {
 				", enabled=" + enabled +
 				", car=" + car +
 				", lastUpdate='" + lastUpdate + '\'' +
-				", authorities=" + authorities +
+				", admRoles=" + admRoles +
 				'}';
 	}
 }

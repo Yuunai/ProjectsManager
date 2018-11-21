@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import pl.poznan.put.student.spacjalive.erp.converter.*;
-import pl.poznan.put.student.spacjalive.erp.service.EmployeeService;
+import pl.poznan.put.student.spacjalive.erp.service.UserService;
 import pl.poznan.put.student.spacjalive.erp.service.EquipmentService;
 import pl.poznan.put.student.spacjalive.erp.service.EventService;
 
@@ -19,7 +19,7 @@ import pl.poznan.put.student.spacjalive.erp.service.EventService;
 public class Configuration extends WebMvcConfigurerAdapter {
 	
 	@Autowired
-	EmployeeService employeeService;
+	UserService userService;
 	
 	@Autowired
 	EquipmentService equipmentService;
@@ -47,7 +47,7 @@ public class Configuration extends WebMvcConfigurerAdapter {
 	public void addFormatters(FormatterRegistry registry) {
 		registry.addConverter(new StringToLocalDateTimeConverter());
 		registry.addConverter(new StringToBooleanConverter());
-		registry.addConverter(new StringEmployeeIdToEmployeeConverter(employeeService));
+		registry.addConverter(new StringEmployeeIdToEmployeeConverter(userService));
 		registry.addConverter(new StringEquipmentIdToEquipmentConverter(equipmentService));
 		registry.addConverter(new StringEventIdToEventConverter(eventService));
 	}

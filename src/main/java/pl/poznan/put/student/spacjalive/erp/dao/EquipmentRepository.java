@@ -4,7 +4,7 @@ import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
 
 import java.util.List;
 
-public interface EquipmentDAO {
+public interface EquipmentRepository {
 	
 	public List<Equipment> getFreeEquipment();
 	

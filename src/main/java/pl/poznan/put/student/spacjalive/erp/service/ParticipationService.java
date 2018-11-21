@@ -8,7 +8,7 @@ public interface ParticipationService {
 	
 	public List<Participation> getParticipationsByEventId(int id);
 	
-	public List<Participation> getParticipationsByEmployeeId(int id);
+	public List<Participation> getParticipationsByUserId(int id);
 	
 	public List<Participation> getParticipationsByRoleId(int id);
 	

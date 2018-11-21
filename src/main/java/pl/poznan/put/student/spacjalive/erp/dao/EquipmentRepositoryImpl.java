@@ -10,7 +10,7 @@ import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
 import java.util.List;
 
 @Repository
-public class EquipmentDAOImpl implements EquipmentDAO {
+public class EquipmentRepositoryImpl implements EquipmentRepository {
 	@Autowired
 	SessionFactory sessionFactory;
 	

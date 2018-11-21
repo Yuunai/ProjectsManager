@@ -55,7 +55,7 @@
 
                 <tr>
                     <td>${lending.event.name}</td>
-                    <td>${lending.employee.firstName} ${lending.employee.lastName}</td>
+                    <td>${lending.user.firstName} ${lending.user.lastName}</td>
                     <td>${lending.since}</td>
                     <td>${lending.end}</td>
                     <c:if test="${lending.return_time == null}">

@@ -3,7 +3,7 @@ package pl.poznan.put.student.spacjalive.erp.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.poznan.put.student.spacjalive.erp.dao.ParticipationDAO;
+import pl.poznan.put.student.spacjalive.erp.dao.ParticipationRepository;
 import pl.poznan.put.student.spacjalive.erp.entity.Participation;
 
 import java.util.List;
@@ -13,30 +13,30 @@ import java.util.List;
 public class ParticipationServiceImpl implements ParticipationService {
 	
 	@Autowired
-	ParticipationDAO participationDAO;
+	ParticipationRepository participationRepository;
 	
 	@Override
 	public List<Participation> getParticipationsByEventId(int id) {
-		return participationDAO.getParticipationsByEventId(id);
+		return participationRepository.getParticipationsByEventId(id);
 	}
 	
 	@Override
-	public List<Participation> getParticipationsByEmployeeId(int id) {
-		return participationDAO.getParticipationsByEmployeeId(id);
+	public List<Participation> getParticipationsByUserId(int id) {
+		return participationRepository.getParticipationsByUserId(id);
 	}
 	
 	@Override
 	public List<Participation> getParticipationsByRoleId(int id) {
-		return participationDAO.getParticipationsByRoleId(id);
+		return participationRepository.getParticipationsByRoleId(id);
 	}
 	
 	@Override
-	public void deleteParticipation(int eventId, int roleId, int employeeId) {
-		participationDAO.deleteParticipation(eventId, roleId, employeeId);
+	public void deleteParticipation(int eventId, int roleId, int userId) {
+		participationRepository.deleteParticipation(eventId, roleId, userId);
 	}
 	
 	@Override
 	public void addParticipation(Participation participation) {
-		participationDAO.addParticipation(participation);
+		participationRepository.addParticipation(participation);
 	}
 }

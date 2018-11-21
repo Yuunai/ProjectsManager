@@ -73,12 +73,12 @@
                     </tr>
                     <tr>
                         <td><label>Wypożyczający</label></td>
-                        <td><form:select path="employee">
-                            <c:if test="${lending.employee != null}">
-                                <form:option value="${lending.employee.id}" label="${lending.employee.firstName} ${lending.employee.lastName}"/>
+                        <td><form:select path="user">
+                            <c:if test="${lending.user != null}">
+                                <form:option value="${lending.user.id}" label="${lending.user.firstName} ${lending.user.lastName}"/>
                             </c:if>
-                            <c:forEach items="${employees}" var="employee">
-                                <form:option value="${employee.id}" label="${employee.firstName} ${employee.lastName}"/>
+                            <c:forEach items="${users}" var="user">
+                                <form:option value="${user.id}" label="${user.firstName} ${user.lastName}"/>
                             </c:forEach>
                         </form:select></td>
                     </tr>

@@ -4,7 +4,7 @@ import pl.poznan.put.student.spacjalive.erp.entity.Lending;
 
 import java.util.List;
 
-public interface LendingDAO {
+public interface LendingRepository {
 	
 	public List<Lending> getLendings();
 	

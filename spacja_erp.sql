@@ -6,13 +6,13 @@ use `spacja_erp`;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS `employee`;
+DROP TABLE IF EXISTS `user`;
 
-CREATE TABLE `employee` (
+CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(45) NOT NULL,
   `last_name` varchar(45) NOT NULL,
-  `email` varchar(128) NOT NULL,
+  `email` varchar(128) NOT NULL UNIQUE,
   `password` VARCHAR(256) NOT NULL,
   `phone_number` varchar(15) NOT NULL,
   `student_index` varchar(10) NOT NULL,
@@ -24,30 +24,55 @@ CREATE TABLE `employee` (
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-DROP TABLE IF EXISTS `authorities`;
+DROP TABLE IF EXISTS privilege;
 
-CREATE TABLE `authorities` (
+CREATE TABLE privilege (
   `id` int NOT NULL,
-  `authority` varchar(50),
+  `privilege` varchar(50),
   `label` VARCHAR(50),
 
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS `user_authorities`;
+DROP TABLE IF EXISTS adm_role;
 
-CREATE TABLE `user_authorities` (
+CREATE TABLE adm_role (
+  `id` int NOT NULL,
+  `adm_role` varchar(50),
+  `label` VARCHAR(50),
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE adm_role_privilege (
+  `adm_role_id` int NOT NULL,
+  privilege_id int NOT NULL,
+
+  PRIMARY KEY (privilege_id, `adm_role_id`),
+
+  CONSTRAINT FK_PRIVILEGE_ID FOREIGN KEY (privilege_id)
+  REFERENCES privilege (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
+
+  CONSTRAINT FK_P_ADM_ROLE_ID FOREIGN KEY (`adm_role_id`)
+  REFERENCES adm_role (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS user_adm_role;
+
+CREATE TABLE user_adm_role (
   `user_id` int NOT NULL,
-  `authority_id` int NOT NULL,
+  adm_role_id int NOT NULL,
 
-  PRIMARY KEY (`user_id`, `authority_id`),
+  PRIMARY KEY (`user_id`, adm_role_id),
 
   CONSTRAINT `FK_USER_ID` FOREIGN KEY (`user_id`)
-  REFERENCES `employee` (`id`)
+  REFERENCES `user` (`id`)
   ON DELETE NO ACTION ON UPDATE NO ACTION,
 
-  CONSTRAINT `FK_AUTHORITY_ID` FOREIGN KEY (`authority_id`)
-  REFERENCES `authorities` (`id`)
+  CONSTRAINT FK_U_ADM_ROLE_ID FOREIGN KEY (adm_role_id)
+  REFERENCES adm_role (`id`)
   ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB;
 
@@ -86,14 +111,14 @@ DROP TABLE IF EXISTS `participation`;
 
 CREATE TABLE `participation` (
   `event_id` int NOT NULL,
-  `employee_id` int NOT NULL,
+  user_id int NOT NULL,
   `role_id` int NOT NULL,
   
   
-  PRIMARY KEY (`event_id`, `employee_id`, `role_id`),
+  PRIMARY KEY (`event_id`, user_id, `role_id`),
   
-  CONSTRAINT `FK_EMPLOYEE_PARTICIPATION` FOREIGN KEY (`employee_id`) 
-  REFERENCES `employee` (`id`) 
+  CONSTRAINT `FK_EMPLOYEE_PARTICIPATION` FOREIGN KEY (user_id)
+  REFERENCES `user` (`id`)
   ON DELETE NO ACTION ON UPDATE NO ACTION,
   
   CONSTRAINT `FK_EVENT_PARTICIPATION` FOREIGN KEY (`event_id`) 
@@ -115,7 +140,7 @@ CREATE TABLE `lending` (
   `return_time` datetime DEFAULT NULL,
   `comments` varchar(256) DEFAULT NULL,
   `event_id` int NOT NULL,
-  `employee_id` int NOT NULL,
+  user_id int NOT NULL,
   `last_update` TIMESTAMP DEFAULT now(),
   
   PRIMARY KEY(`id`),
@@ -124,7 +149,7 @@ CREATE TABLE `lending` (
   ON DELETE NO ACTION ON UPDATE NO ACTION,
   
   CONSTRAINT `FK_EMPLOYEE_LENDING`
-  FOREIGN KEY(`employee_id`) REFERENCES `employee`(`id`) 
+  FOREIGN KEY(user_id) REFERENCES `user`(`id`)
   ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
@@ -188,7 +213,7 @@ END//
 delimiter ;
 
 DELIMITER $$
-CREATE TRIGGER `makeUserInactive` BEFORE DELETE ON `employee`
+CREATE TRIGGER `makeUserInactive` BEFORE DELETE ON `user`
 FOR EACH ROW
 BEGIN
     SIGNAL SQLSTATE '12345'
@@ -197,7 +222,7 @@ END$$
 DELIMITER ; 
 
 DELIMITER $$
-CREATE TRIGGER `Europe_email_test` BEFORE INSERT ON `employee`
+CREATE TRIGGER `Europe_email_test` BEFORE INSERT ON `user`
 FOR EACH ROW
 BEGIN
     IF NEW.email like '%.eu' THEN
@@ -208,12 +233,12 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE TRIGGER `optimistic_locking_employee` BEFORE UPDATE ON `employee`
+CREATE TRIGGER optimistic_locking_user BEFORE UPDATE ON `user`
 FOR EACH ROW
 BEGIN
 	IF NEW.last_update != (
     select e.last_update
-    from employee e
+    from user e
     where e.id = NEW.id) THEN
         SIGNAL SQLSTATE '12346'
             SET MESSAGE_TEXT = 'Edycja nieudana, ponów próbę!';

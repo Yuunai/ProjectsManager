@@ -4,11 +4,11 @@ import pl.poznan.put.student.spacjalive.erp.entity.Participation;
 
 import java.util.List;
 
-public interface ParticipationDAO {
+public interface ParticipationRepository {
 	
 	public List<Participation> getParticipationsByEventId(int id);
 	
-	public List<Participation> getParticipationsByEmployeeId(int id);
+	public List<Participation> getParticipationsByUserId(int id);
 	
 	public List<Participation> getParticipationsByRoleId(int id);
 	

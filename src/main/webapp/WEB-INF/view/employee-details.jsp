@@ -46,48 +46,48 @@
                 <tbody>
                 <tr>
                     <td><label>Imię</label></td>
-                    <td>${employee.firstName}</td>
+                    <td>${user.firstName}</td>
                 </tr>
                 <tr>
                     <td><label>Nazwisko</label></td>
-                    <td>${employee.lastName}</td>
+                    <td>${user.lastName}</td>
                 </tr>
                 <tr>
                     <td><label>Indeks</label></td>
-                    <td>${employee.studentIndex}</td>
+                    <td>${user.studentIndex}</td>
                 </tr>
                 <tr>
                     <td><label>Email</label></td>
-                    <td>${employee.email}</td>
+                    <td>${user.email}</td>
                 </tr>
                 <tr>
                     <td><label>Numer telefonu</label></td>
-                    <td>${employee.phoneNumber}</td>
+                    <td>${user.phoneNumber}</td>
                 </tr>
                 <tr>
                     <td><label>Wejście do biura</label></td>
-                    <c:if test="${employee.officeEntrance == 1}">
+                    <c:if test="${user.officeEntrance == 1}">
                         <td>Tak</td>
                     </c:if>
-                    <c:if test="${employee.officeEntrance != 1}">
+                    <c:if test="${user.officeEntrance != 1}">
                         <td>Nie</td>
                     </c:if>
                 </tr>
                 <tr>
                     <td><label>Samochód</label></td>
-                    <c:if test="${employee.car == 1}">
+                    <c:if test="${user.car == 1}">
                         <td>Tak</td>
                     </c:if>
-                    <c:if test="${employee.car != 1}">
+                    <c:if test="${user.car != 1}">
                         <td>Nie</td>
                     </c:if>
                 </tr>
                 <tr>
                     <td><label>Aktywny</label></td>
-                    <c:if test="${employee.enabled == 1}">
+                    <c:if test="${user.enabled == 1}">
                         <td>Tak</td>
                     </c:if>
-                    <c:if test="${employee.enabled != 1}">
+                    <c:if test="${user.enabled != 1}">
                         <td>Nie</td>
                     </c:if>
                 </tr>
@@ -116,7 +116,7 @@
                 <c:forEach var="participation" items="${participations}">
                     <c:url var="deleteLink" value="/participation/deleteParticipation">
                         <c:param name="roleId" value="${participation.role.id}" />
-                        <c:param name="employeeId" value="${participation.employee.id}" />
+                        <c:param name="employeeId" value="${participation.user.id}" />
                         <c:param name="eventId" value="${participation.event.id}" />
                     </c:url>
                     <tr>
@@ -133,7 +133,7 @@
         </div>
 
         <p>
-            <a href="${pageContext.request.contextPath}/employee/list">Wróc do listy</a>
+            <a href="${pageContext.request.contextPath}/user/list">Wróc do listy</a>
         </p>
 
 
