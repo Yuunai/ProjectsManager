@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.poznan.put.student.spacjalive.erp.security.TVoeAuthenticationProvider;
+import pl.poznan.put.student.spacjalive.erp.security.TVoeSimpleUrlAuthenticationSuccessHandler;
 
 import javax.sql.DataSource;
 
@@ -24,10 +25,10 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
-	DataSource dataSource;
+	private UserDetailsService userDetailsService;
 	
 	@Autowired
-	UserDetailsService userDetailsService;
+	private TVoeSimpleUrlAuthenticationSuccessHandler tvoeSimpleUrlAuthenticationSuccessHandler;
 	
 	@Override
 	public void configure(final WebSecurity web) throws Exception {
@@ -55,7 +56,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http
-				.csrf().disable();
+				.csrf().disable()
+				.authorizeRequests()
+					.antMatchers("/login*").permitAll()
+					.anyRequest().authenticated()
+				.and()
+				.formLogin()
+					.loginPage("/loginPage")
+					.loginProcessingUrl("/authUser")
+					.defaultSuccessUrl("/home")
+					.successHandler(tvoeSimpleUrlAuthenticationSuccessHandler)
+					.permitAll()
+				.and()
+				.logout().permitAll();
 	}
 	
 }

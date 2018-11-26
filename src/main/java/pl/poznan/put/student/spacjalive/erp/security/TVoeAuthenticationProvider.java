@@ -10,6 +10,8 @@ import org.springframework.security.core.AuthenticationException;
 import pl.poznan.put.student.spacjalive.erp.entity.User;
 import pl.poznan.put.student.spacjalive.erp.service.UserService;
 
+import java.util.ArrayList;
+
 public class TVoeAuthenticationProvider extends DaoAuthenticationProvider {
 	
 	@Autowired
@@ -22,7 +24,7 @@ public class TVoeAuthenticationProvider extends DaoAuthenticationProvider {
 			throw new BadCredentialsException("Invalid username or password");
 		
 		final Authentication result = super.authenticate(authentication);
-		return new UsernamePasswordAuthenticationToken(user, result.getCredentials());
+		return new UsernamePasswordAuthenticationToken(user, result.getCredentials(), result.getAuthorities());
 	}
 	
 	@Override

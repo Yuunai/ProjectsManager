@@ -23,8 +23,8 @@
 
     <%@include file="header.jsp"%>
 
-    <div class="row">
-        <div id="event_section" class="col-6">
+    <div class="row justify-content-center">
+        <div id="event_section">
             <table class="table table-bordered">
                 <thead class="thead-dark">
                 <tr>

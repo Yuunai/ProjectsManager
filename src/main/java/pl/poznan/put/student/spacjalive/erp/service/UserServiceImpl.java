@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
 			throw new EmailAlreadyTakenException();
 		
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		userRepository.saveUser(user);
 	}
 	
 	@Override

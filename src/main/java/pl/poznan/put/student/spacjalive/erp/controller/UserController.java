@@ -69,7 +69,7 @@ public class UserController {
 			return "add-user-form";
 		
 		try {
-			userService.saveUser(user);
+			userService.saveNewUser(user);
 		} catch (JDBCConnectionException e) {
 			result.reject(String.valueOf(e.getErrorCode()), "Brak połączenia z bazą danych, skontaktuj się z administratorem.");
 		} catch (SQLGrammarException e) {
@@ -94,6 +94,8 @@ public class UserController {
 				model.addAttribute("message", "Nieznany błąd, skontaktuj się administratorem!");
 			}
 			return "add-user-form";
+		} catch (Exception e) {
+		
 		}
 		return "redirect:/user/list";
 	}
