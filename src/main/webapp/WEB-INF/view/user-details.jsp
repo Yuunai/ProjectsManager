@@ -7,7 +7,7 @@
 --%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,28 +66,28 @@
                 </tr>
                 <tr>
                     <td><label>Wejście do biura</label></td>
-                    <c:if test="${user.officeEntrance == 1}">
+                    <c:if test="${user.officeEntrance}">
                         <td>Tak</td>
                     </c:if>
-                    <c:if test="${user.officeEntrance != 1}">
+                    <c:if test="${user.officeEntrance == false}">
                         <td>Nie</td>
                     </c:if>
                 </tr>
                 <tr>
                     <td><label>Samochód</label></td>
-                    <c:if test="${user.car == 1}">
+                    <c:if test="${user.car}">
                         <td>Tak</td>
                     </c:if>
-                    <c:if test="${user.car != 1}">
+                    <c:if test="${user.car == false}">
                         <td>Nie</td>
                     </c:if>
                 </tr>
                 <tr>
                     <td><label>Aktywny</label></td>
-                    <c:if test="${user.enabled == 1}">
+                    <c:if test="${user.enabled}">
                         <td>Tak</td>
                     </c:if>
-                    <c:if test="${user.enabled != 1}">
+                    <c:if test="${user.enabled == false}">
                         <td>Nie</td>
                     </c:if>
                 </tr>

@@ -12,7 +12,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Add User</title>
+    <title>Edit User</title>
 
     <link type="text/css"
           rel="stylesheet"
@@ -31,7 +31,7 @@
     <%@include file="header.jsp"%>
 
     <div class="row justify-content-center">
-        <form:form action="saveUser" modelAttribute="user" method="POST" acceptCharset="utf8">
+        <form:form action="updateUser" modelAttribute="user" method="POST" acceptCharset="utf8">
 
             <form:hidden path="id"/>
             <form:hidden path="enabled"/>
@@ -86,23 +86,36 @@
                         <form:errors path="email" /></td>
                 </tr>
                 <tr>
-                    <td><label>Hasło</label></td>
-                    <td><form:password path="password" />
-                        <form:errors path="password" /></td>
-                </tr>
-                <tr>
                     <td><label>Wejście do biura</label></td>
                     <td><form:select path="officeEntrance" >
-                        <form:option value="true" label="Tak" />
-                        <form:option value="false" label="Nie" />
+                        <c:choose>
+                            <c:when test="${user.officeEntrance}">
+                                <form:option value="true" selected="selected" label="Tak" />
+                                <form:option value="false" label="Nie" />
+                            </c:when>
+
+                            <c:otherwise>
+                                <form:option value="true" label="Tak" />
+                                <form:option value="false" selected="selected" label="Nie" />
+                            </c:otherwise>
+                        </c:choose>
                     </form:select>
                     </td>
                 </tr>
                 <tr>
                     <td><label>Samochód</label></td>
                     <td><form:select path="car" >
-                        <form:option value="true" label="Tak" />
-                        <form:option value="false" label="Nie" />
+                        <c:choose>
+                            <c:when test="${user.car}">
+                                <form:option value="true" selected="selected" label="Tak" />
+                                <form:option value="false" label="Nie" />
+                            </c:when>
+
+                            <c:otherwise>
+                                <form:option value="true" label="Tak" />
+                                <form:option value="false" selected="selected" label="Nie" />
+                            </c:otherwise>
+                        </c:choose>
                     </form:select>
                     </td>
                 </tr>

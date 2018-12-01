@@ -19,10 +19,13 @@ import pl.poznan.put.student.spacjalive.erp.service.ParticipationService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.logging.Logger;
 
 @RequestMapping("/user")
 @Controller
 public class UserController {
+	
+	Logger logger = Logger.getLogger(UserController.class.getSimpleName());
 	
 	@Autowired
 	UserService userService;
@@ -95,7 +98,52 @@ public class UserController {
 			}
 			return "add-user-form";
 		} catch (Exception e) {
+			logger.warning(e.getStackTrace().toString());
+		}
+		return "redirect:/user/list";
+	}
+	
+	@GetMapping("/updateUserForm")
+	public String updateUser(@RequestParam("userId") int userId, Model model) {
+		User user = userService.getUser(userId);
+		model.addAttribute("user", user);
 		
+		return "update-user-form";
+	}
+	
+	@PostMapping("/updateUser")
+	public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult result, Model model) {
+		if (result.hasErrors())
+			return "update-user-form";
+		
+		try {
+			userService.updateUserData(user);
+		} catch (JDBCConnectionException e) {
+			result.reject(String.valueOf(e.getErrorCode()), "Brak połączenia z bazą danych, skontaktuj się z administratorem.");
+		} catch (SQLGrammarException e) {
+			result.reject(String.valueOf(e.getErrorCode()), "Niepoprawna składnia zapytania, skontaktuj się z administratorem.");
+		} catch (GenericJDBCException e) {
+			
+			if (e.getSQLState().equalsIgnoreCase("12345")) {
+				result.reject(String.valueOf(e.getErrorCode()), e.getSQLException().getMessage());
+			} else {
+				result.reject(String.valueOf(e.getErrorCode()), "Niepoprawne dane!");
+			}
+			return "update-user-form";
+		} catch (HibernateJdbcException e) {
+			
+			if (e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
+				User emp = userService.getUser(user.getId());
+				model.addAttribute("user", emp);
+				
+				model.addAttribute("message", e.getSQLException().getMessage());
+			} else {
+				model.addAttribute("user", user);
+				model.addAttribute("message", "Nieznany błąd, skontaktuj się administratorem!");
+			}
+			return "update-user-form";
+		} catch (Exception e) {
+			logger.warning(e.getStackTrace().toString());
 		}
 		return "redirect:/user/list";
 	}
@@ -123,13 +171,4 @@ public class UserController {
 		
 		return "redirect:/user/list";
 	}
-	
-	@GetMapping("/updateUserForm")
-	public String updateUser(@RequestParam("userId") int userId, Model model) {
-		User user = userService.getUser(userId);
-		model.addAttribute("user", user);
-		
-		return "add-user-form";
-	}
-	
 }

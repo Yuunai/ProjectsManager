@@ -29,8 +29,8 @@ public class ParticipationRepositoryImpl implements ParticipationRepository {
 	public List<Participation> getParticipationsByUserId(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		
-		Query<Participation> query = session.createQuery("FROM Participation WHERE employee.id=:employeeId");
-		query.setParameter("employeeId", id);
+		Query<Participation> query = session.createQuery("FROM Participation WHERE user.id=:userId");
+		query.setParameter("userId", id);
 		
 		return query.getResultList();
 	}
@@ -46,13 +46,14 @@ public class ParticipationRepositoryImpl implements ParticipationRepository {
 	}
 	
 	@Override
-	public void deleteParticipation(int eventId, int roleId, int employeeId) {
+	public void deleteParticipation(int eventId, int roleId, int userId) {
 		Session session = sessionFactory.getCurrentSession();
 		
-		Query query = session.createQuery("DELETE FROM Participation WHERE event.id=:eventId AND role.id=:roleId AND employee.id=:employeeId");
+		Query query = session.createQuery("DELETE FROM Participation WHERE event.id=:eventId AND role.id=:roleId AND" +
+				" user.id=:userId");
 		query.setParameter("eventId", eventId);
 		query.setParameter("roleId", roleId);
-		query.setParameter("employeeId", employeeId);
+		query.setParameter("userId", userId);
 		
 		query.executeUpdate();
 	}

@@ -13,6 +13,8 @@ public interface UserRepository {
 	
 	public void saveUser(User user);
 	
+	public void updateUserData(User user);
+	
 	public void deleteUser(int id);
 	
 	public User getUser(int id);

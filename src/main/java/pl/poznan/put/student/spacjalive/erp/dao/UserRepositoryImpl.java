@@ -46,6 +46,23 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 	
 	@Override
+	public void updateUserData(User user) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query query = session.createQuery("UPDATE User SET firstName=:firstName, lastName=:lastName, email=:email, " +
+				"phoneNumber=:phoneNumber, studentIndex=:studentIndex, car=:car WHERE id=:userId");
+		query.setParameter("userId", user.getId());
+		query.setParameter("firstName", user.getFirstName());
+		query.setParameter("lastName", user.getLastName());
+		query.setParameter("email", user.getEmail());
+		query.setParameter("phoneNumber", user.getPhoneNumber());
+		query.setParameter("studentIndex", user.getStudentIndex());
+		query.setParameter("car", user.isCar());
+		
+		query.executeUpdate();
+	}
+	
+	@Override
 	public void deleteUser(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		

@@ -45,15 +45,15 @@
             <c:forEach var="user" items="${users}">
 
                 <c:url var="detailsLink" value="/user/userDetails">
-                    <c:param name="employeeId" value="${user.id}" />
+                    <c:param name="userId" value="${user.id}" />
                 </c:url>
 
                 <c:url var="deleteLink" value="/user/deleteUser">
-                    <c:param name="employeeId" value="${user.id}" />
+                    <c:param name="userId" value="${user.id}" />
                 </c:url>
 
                 <c:url var="editLink" value="/user/updateUserForm">
-                    <c:param name="employeeId" value="${user.id}" />
+                    <c:param name="userId" value="${user.id}" />
                 </c:url>
 
                 <tr>

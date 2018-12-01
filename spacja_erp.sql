@@ -24,6 +24,9 @@ CREATE TABLE `user` (
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
+insert into user value
+(1, 'admin', 'admin', 'admin@admin.pl', '$2a$11$oqL/hV4TyOoI37.D1nBj9.Ud1sJbWhar0OwXsHk.kn.xz4KAIg7cG', 000000000, 000000, 1, 1, 1, now());
+
 DROP TABLE IF EXISTS privilege;
 
 CREATE TABLE privilege (

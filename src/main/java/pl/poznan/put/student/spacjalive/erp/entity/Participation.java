@@ -15,7 +15,7 @@ public class Participation implements Serializable {
 	
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "employee_id")
+	@JoinColumn(name = "user_id")
 	private User user;
 	
 	@Id
