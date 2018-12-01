@@ -79,6 +79,20 @@
                             </td>
                         </tr>
                         <tr>
+                            <td><label>Kategoria</label>
+                            <td><form:select path="category">
+                                <c:if test="${equipment.category != null}">
+                                    <form:option value="${equipment.category.id}"
+                                                 label="${equipment.category.name}"/>
+                                </c:if>
+                                <c:forEach items="${categories}" var="category">
+                                    <form:option value="${category.id}" label="${category.name}"/>
+                                </c:forEach>
+                            </form:select></td>
+                            <form:errors path="category" />
+                            </td>
+                        </tr>
+                        <tr>
                             <td><label></label></td>
                             <td><input type="submit" value="Zapisz przedmiot"/></td>
                         </tr>

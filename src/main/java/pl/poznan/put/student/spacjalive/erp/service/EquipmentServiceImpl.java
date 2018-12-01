@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.poznan.put.student.spacjalive.erp.dao.EquipmentRepository;
 import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
+import pl.poznan.put.student.spacjalive.erp.entity.EquipmentCategory;
 
 import java.util.List;
 
@@ -23,6 +24,21 @@ public class EquipmentServiceImpl implements EquipmentService {
 	@Override
 	public List<Equipment> getEquipmentList() {
 		return equipmentRepository.getEquipmentList();
+	}
+	
+	@Override
+	public EquipmentCategory getCategory(int id) {
+		return equipmentRepository.getCategory(id);
+	}
+	
+	@Override
+	public List<Equipment> getEquipmentByCategory(int id) {
+		return equipmentRepository.getEquipmentByCategory(id);
+	}
+	
+	@Override
+	public List<EquipmentCategory> getCategories() {
+		return equipmentRepository.getCategories();
 	}
 	
 	@Override

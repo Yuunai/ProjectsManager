@@ -110,6 +110,14 @@ CREATE TABLE `role` (
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
+INSERT INTO role(`name`) values
+('Operator'),
+('Montazysta'),
+('Reporter'),
+('Socialmedia'),
+('Tech'),
+('Realizator');
+
 DROP TABLE IF EXISTS `participation`;
 
 CREATE TABLE `participation` (
@@ -160,14 +168,34 @@ CREATE TABLE `lending` (
 DROP TABLE IF EXISTS `equipment`;
 
 CREATE TABLE `equipment` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `state` varchar(45) DEFAULT "Dobry",
   `comments` varchar(256) DEFAULT NULL,
+  `category` INT NOT NULL,
   `last_update` TIMESTAMP DEFAULT now(),
   
+  PRIMARY KEY (`id`),
+
+  CONSTRAINT `FK_EQ_CAT` FOREIGN KEY (`category`)
+  REFERENCES `equipment_category` (`id`)
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+DROP TABLE IF EXISTS `equipment_category`;
+
+CREATE TABLE `equipment_category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+INSERT INTO equipment_category(`name`) VALUES
+  ('Video'),
+  ('Audio'),
+  ('Live'),
+  ('Akcesoria');
 
 DROP TABLE IF EXISTS `eq_lending`;
 
@@ -177,8 +205,8 @@ CREATE TABLE `eq_lending` (
   
   PRIMARY KEY (`equipment_id`,`lending_id`),
   
-  CONSTRAINT `FK_EQUIPMENT` FOREIGN KEY (`equipment_id`) 
-  REFERENCES `equipment` (`id`) 
+  CONSTRAINT `FK_EQUIPMENT` FOREIGN KEY (`equipment_id`)
+  REFERENCES `equipment` (`id`)
   ON DELETE NO ACTION ON UPDATE NO ACTION,
   
   CONSTRAINT `FK_LENDING_EQ` FOREIGN KEY (`lending_id`) 

@@ -26,6 +26,13 @@ public class Equipment {
 	@Column(name = "comments")
 	private String comments;
 	
+	@JoinColumn(name = "category")
+	@ManyToOne(cascade = {CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH})
+	private EquipmentCategory category;
+	
 	@JoinTable(name = "eq_lending",
 			joinColumns = @JoinColumn(name = "equipment_id"),
 			inverseJoinColumns = @JoinColumn(name = "lending_id"))
@@ -39,10 +46,11 @@ public class Equipment {
 	
 	}
 	
-	public Equipment(String name, String state, String comments, String lastUpdate) {
+	public Equipment(String name, String state, String comments, EquipmentCategory category, String lastUpdate) {
 		this.name = name;
 		this.state = state;
 		this.comments = comments;
+		this.category = category;
 		this.lastUpdate = lastUpdate;
 	}
 	
@@ -87,6 +95,14 @@ public class Equipment {
 		this.comments = comments;
 	}
 	
+	public EquipmentCategory getCategory() {
+		return category;
+	}
+	
+	public void setCategory(EquipmentCategory category) {
+		this.category = category;
+	}
+	
 	public List<Lending> getLendings() {
 		return lendings;
 	}
@@ -110,6 +126,8 @@ public class Equipment {
 				", name='" + name + '\'' +
 				", state='" + state + '\'' +
 				", comments='" + comments + '\'' +
+				", category=" + category +
+				", lendings=" + lendings +
 				", lastUpdate='" + lastUpdate + '\'' +
 				'}';
 	}

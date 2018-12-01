@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
+import pl.poznan.put.student.spacjalive.erp.entity.EquipmentCategory;
 import pl.poznan.put.student.spacjalive.erp.service.EquipmentService;
 
 import javax.validation.Valid;
@@ -43,6 +44,7 @@ public class EquipmentController {
 	public String addEquipmentForm(Model model) {
 		Equipment equipment = new Equipment();
 		model.addAttribute("equipment", equipment);
+		model.addAttribute("categories", equipmentService.getCategories());
 		
 		return "add-equipment-form";
 	}
@@ -50,6 +52,7 @@ public class EquipmentController {
 	@PostMapping("/addEquipment")
 	public String addEquipment(@ModelAttribute("equipment") @Valid Equipment equipment, BindingResult result, Model model) {
 		if (result.hasErrors()) {
+			model.addAttribute("categories", equipmentService.getCategories());
 			return "add-equipment-form";
 		}
 		
@@ -97,6 +100,9 @@ public class EquipmentController {
 	public String updateEquipmentForm(@RequestParam("itemId") int itemId, Model model) {
 		Equipment equipment = equipmentService.getEquipment(itemId);
 		model.addAttribute("equipment", equipment);
+		List<EquipmentCategory> categories = equipmentService.getCategories();
+		categories.removeIf(e -> e.getId() == equipment.getCategory().getId());
+		model.addAttribute("categories", categories);
 		
 		return "add-equipment-form";
 	}

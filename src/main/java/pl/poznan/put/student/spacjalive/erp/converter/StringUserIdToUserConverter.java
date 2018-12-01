@@ -4,11 +4,11 @@ import org.springframework.core.convert.converter.Converter;
 import pl.poznan.put.student.spacjalive.erp.entity.User;
 import pl.poznan.put.student.spacjalive.erp.service.UserService;
 
-public class StringEmployeeIdToEmployeeConverter implements Converter<String, User> {
+public class StringUserIdToUserConverter implements Converter<String, User> {
 	
 	private final UserService userService;
 	
-	public StringEmployeeIdToEmployeeConverter(UserService userService) {
+	public StringUserIdToUserConverter(UserService userService) {
 		this.userService = userService;
 	}
 	

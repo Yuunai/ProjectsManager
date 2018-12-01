@@ -47,9 +47,10 @@ public class Configuration extends WebMvcConfigurerAdapter {
 	public void addFormatters(FormatterRegistry registry) {
 		registry.addConverter(new StringToLocalDateTimeConverter());
 		registry.addConverter(new StringToBooleanConverter());
-		registry.addConverter(new StringEmployeeIdToEmployeeConverter(userService));
+		registry.addConverter(new StringUserIdToUserConverter(userService));
 		registry.addConverter(new StringEquipmentIdToEquipmentConverter(equipmentService));
 		registry.addConverter(new StringEventIdToEventConverter(eventService));
+		registry.addConverter(new StringCategoryIdToCategoryConverter(equipmentService));
 	}
 	
 }
