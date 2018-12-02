@@ -1,5 +1,6 @@
 package pl.poznan.put.student.spacjalive.erp.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -7,6 +8,7 @@ import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import pl.poznan.put.student.spacjalive.erp.entity.User;
+import pl.poznan.put.student.spacjalive.erp.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,12 +31,14 @@ public class TVoeSimpleUrlAuthenticationSuccessHandler implements Authentication
 			
 			String username;
 			if (authentication.getPrincipal() instanceof User) {
-				username = ((User)authentication.getPrincipal()).getEmail();
+				User user = (User) authentication.getPrincipal();
+				username = user.getEmail();
+				session.setAttribute("userId", user.getId());
 			}
 			else {
 				username = authentication.getName();
 			}
-			session.setAttribute("user", username);
+			session.setAttribute("username", username);
 		}
 		clearAuthenticationAttributes(httpServletRequest);
 	}

@@ -7,6 +7,9 @@
     <a href="/equipment/list" class="menu-button">Wyposażenie</a>
     <a href="/role/list" class="menu-button">Role</a>
     <a href="/lending/list" class="menu-button">Wypożyczenia</a>
+    <c:if test="${sessionScope.get('userId') != null}">
+        <a href="/user/userDetails?userId=${sessionScope.get("userId")}" class="menu-button">Profil</a>
+    </c:if>
     <form:form action="${pageContext.request.contextPath}/logout" method="POST">
         <input type="submit" value="Logout">
     </form:form>
