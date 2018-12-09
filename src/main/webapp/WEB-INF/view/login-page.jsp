@@ -1,44 +1,51 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Yuunai
-  Date: 2018-11-26
-  Time: 20:39
-  To change this template use File | Settings | File Templates.
---%>
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html>
+<html lang="pl">
+
 <head>
-	<meta charset="utf-8">
-	<link href="<c:url value="${pageContext.request.contextPath}/resources/css/login-page.css" />" rel="stylesheet">
-	<title>Login page</title>
+    <meta charset="utf-8">
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/login-page.css" />" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Maciej Jaskiewicz">
+    <title>SpacjaTV Login</title>
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />" rel="stylesheet">
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/flag-icon.min.css" />" rel="stylesheet">
+
+
 </head>
-<body>
+<body class="text-center">
+<form:form class="form-signin" action="${pageContext.request.contextPath}/authUser" method="POST">
+    <img class="mb-4 logopic" src="${pageContext.request.contextPath}/resources/img/STV_350.png" alt="SpacjaTV"></img>
+    <h1 class="h3 mb-3 font-weight-normal">Zaloguj się</h1>
+    <c:if test="${param.error != null}">
+        <span class="loginFailed">Niepoprawna nazwa użytkownika lub hasło!</span>
+    </c:if>
 
-<div id="container" class="container">
+    <c:if test="${param.logout != null}">
+        <span class="loginFailed">Zostałeś wylogowany!</span>
+    </c:if>
+    <input type="email" name="username" class="form-control" placeholder="Email" required autofocus>
+    <input type="password" name="password" class="form-control" placeholder="Hasło" required>
+    <button class="btn btn-lg btn-secondary btn-block" type="submit">Zaloguj</button>
+    <div class="mt-5 mb-3 text-muted">
+        <div class="container">
 
-	<c:if test="${param.error != null}">
-		<i class="loginFailed">Niepoprawna nazwa użytkownika lub hasło!</i>
-	</c:if>
-
-	<c:if test="${param.logout != null}">
-		<i class="loginFailed">Zostałeś wylogowany!</i>
-	</c:if>
-
-
-	<form:form action="${pageContext.request.contextPath}/authUser" method="POST">
-		<p>
-			Username: <input type="text" name="username" />
-		</p>
-		<p>
-			Password: <input type="password" name="password" />
-		</p>
-		<input type="submit" value="Login">
-	</form:form>
-</div>
-
+            <ul class="list-unstyled list-inline text-center">
+                <li class="list-inline-item">
+                    <a href="#pl"><span class="flag-icon flag-icon-pl"> </span></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#gb"><span class="flag-icon flag-icon-gb"> </span></a>
+                </li>
+            </ul>
+        </div>
+        © 2018-2019 Copyright:
+        <a href="https://www.facebook.com/SpacjaTv/"> SpacjaTV</a>
+    </div>
+</form:form>
 </body>
 </html>
