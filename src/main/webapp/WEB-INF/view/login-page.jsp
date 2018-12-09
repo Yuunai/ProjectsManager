@@ -35,10 +35,10 @@
         <div class="container">
 
             <ul class="list-unstyled list-inline text-center">
-                <li class="list-inline-item">
+                <li class="list-inline-item flagShadow">
                     <a href="#pl"><span class="flag-icon flag-icon-pl"> </span></a>
                 </li>
-                <li class="list-inline-item">
+                <li class="list-inline-item flagShadow">
                     <a href="#gb"><span class="flag-icon flag-icon-gb"> </span></a>
                 </li>
             </ul>

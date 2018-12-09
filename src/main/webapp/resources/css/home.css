@@ -1,15 +1,22 @@
-#event_section {
-    float: left;
+body {
+    font-size: .87rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    min-width: 400px;
 }
 
-#employees_section {
-    float: left;
+[role="main"] {
+    padding-top: 50px;
 }
 
-#footer {
-    float: none;
+.flagShadow {
+    max-width:160px;
+    -webkit-filter: drop-shadow(5px 3px 5px #000);
+    filter: drop-shadow(5px 3px 5px #000);
 }
 
-#header {
-    text-align: center;
+.flagShadow:hover {
+    max-width:160px;
+    -webkit-filter: drop-shadow(5px 3px 8px #000);
+    filter: drop-shadow(5px 3px 8px #000);
 }
