@@ -1,133 +1,117 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Yuunai
-  Date: 2017-11-18
-  Time: 16:04
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Add Event</title>
-
-    <link type="text/css"
-          rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
-    <link type="text/css"
-          rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/header-style.css" />
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/add-forms.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>SpacjaTV Dodaj Wydarzenie</title>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header-style.css"/>
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/home.css" />" rel="stylesheet">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/add-forms.js"></script>
 
 </head>
 <body>
 
-<div id="container" class="container">
 
-    <%@include file="header.jsp"%>
+    <%@include file="header.jsp" %>
 
-    <div class="row justify-content-center">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-6 mt-0">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <div class="btn-toolbar mb-2 mb-md-0 ml-auto">
+                <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/home'">
+                    <span data-feather="x" style="margin-bottom: 1px;"></span>
+                    Wróć
+                </button>
+            </div>
+        </div>
+        <h2>Dodaj wydarzenie</h2>
+
+    <div class="container-fluid justify-content-center">
         <form:form action="addEvent" modelAttribute="event" method="POST" acceptCharset="utf8">
 
             <form:hidden path="id"/>
             <form:hidden path="archived"/>
             <form:hidden path="lastUpdate"/>
-            <table class="table col-4 table-bordered">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col" colspan="2" class="text-center">Edytuj wydarzenie</th>
-                </tr>
 
-                <tr>
-                    <th scope="col">Właściwość</th>
-                    <th scope="col">Wartość</th>
-                </tr>
-                </thead>
-                <tbody>
-                <%--Error field for sql errors--%>
-                <c:if test="${!empty message}" >
-                    <tr>
-                        <th scope="col" colspan="2" class="text-center">${message}</th>
-                    </tr>
-                </c:if>
-                <tr id="errorRow"><td colspan="2" id="errors"><form:errors /></td></tr>
-                <script>
-                    hideEmptyErrorsRow();
-                </script>
-                <tr>
-                    <td><label>Nazwa</label></td>
-                    <td><form:input path="name" />
-                    <form:errors path="name" /></td>
-                </tr>
-                <tr>
-                    <td><label>Miejsce</label></td>
-                    <td><form:input path="place" />
-                    <form:errors path="place" /></td>
-                </tr>
-                <tr>
-                    <td><label>Data(dd.MM.yyyy hh:mm)</label></td>
-                    <td><form:input path="date" />
-                    <form:errors path="date"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label>Organizator</label></td>
-                    <td><form:input path="organizer" />
-                    <form:errors path="organizer" /></td>
-                </tr>
-                <tr>
-                    <td><label>Numer telefonu</label></td>
-                    <td><form:input path="phoneNumber" />
-                    <form:errors path="phoneNumber" /></td>
-                </tr>
-                <tr>
-                    <td><label>Email</label></td>
-                    <td><form:input path="email" />
-                    <form:errors path="email" /></td>
-                </tr>
-                <tr>
-                    <td><label>Komentarze</label></td>
-                    <td><form:input path="comments" />
-                    <form:errors path="comments" /></td>
-                </tr>
-                <tr>
-                    <td><label>Priorytet</label></td>
-                    <td><form:input path="priority" />
-                    <form:errors path="priority" /></td>
-                </tr>
-                <tr>
-                    <td><label>Deadline(dd.MM.yyyy hh:mm)</label></td>
-                    <td><form:input path="deadline" />
-                        <form:errors path="deadline"/></td>
-                </tr>
-                <tr>
-                    <td><label>Typ nagrania</label></td>
-                    <td><form:input path="videoType" />
-                    <form:errors path="videoType" /></td>
-                </tr>
+            <c:if test="${!empty message}">
+                <div class="row py-4">
+                    <div class="col-12">
+                        <span class="text-center">${message}</span>
+                    </div>
+                </div>
+            </c:if>
+            <div id="errorRow">
+                <span id="errors"><form:errors/></span>
+            </div>
+            <script>
+                hideEmptyErrorsRow();
+            </script>
 
-                <tr>
-                    <td><label></label></td>
-                    <td><input type="submit" value="Zapisz wydarzenie"/></td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="row py-4">
+                <div class="col-12 col-md-4">
+                    <form:input path="name" id="nameEvent" type="text" class="form-control" placeholder="Nazwa"/>
+                    <label class="form-note" for="nameEvent"><form:errors path="name"/></label>
+                </div>
+                <div class="col-12 col-md-4">
+                    <form:input path="place" id="placeEvent" type="text" class="form-control" placeholder="Miejsce"/>
+                    <label class="form-note" for="placeEvent"><form:errors path="place"/></label>
+                </div>
+                <div class="col-12 col-md-3">
+                    <form:input path="date" id="dateEvent" type="datetime-local" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}" class="form-control" placeholder="Data"/>
+                    <label class="form-note" for="dateEvent"><form:errors path="date"/></label>
+                </div>
+            </div>
+            <div class="row py-4">
+                <div class="col-12 col-md-4">
+                    <form:input path="organizer" id="orgNameEvent" type="text" class="form-control" placeholder="Organizator"/>
+                    <label class="form-note" for="orgNameEvent"><form:errors path="organizer"/></label>
+                </div>
+                <div class="col-12 col-md-3">
+                    <form:input path="phoneNumber" id="telOrgEvent" type="text" class="form-control" placeholder="Tel. Organizatora"/>
+                    <label class="form-note" for="telOrgEvent"><form:errors path="phoneNumber"/></label>
+                </div>
+                <div class="col-12 col-md-4">
+                    <form:input path="email" id="emailOrgEvent" type="text" class="form-control" placeholder="Email Organizatora"/>
+                    <label class="form-note" for="emailOrgEvent"><form:errors path="email"/></label>
+                </div>
+            </div>
+            <div class="row py-4">
+                <div class=" col-12 col-md-11">
+                    <form:input path="comments" id="commentEvent" type="text" class="form-control" placeholder="Komentarz"/>
+                    <label class="form-note" for="commentEvent"><form:errors path="comments"/></label>
+                </div>
+            </div>
+            <div class="row py-4 justify-content-center">
+                <div class="col-12 col-md-2">
+                    <form:input path="priority" id="prioEvent" type="number" class="form-control" placeholder="Priorytet"/>
+                    <label class="form-note" for="prioEvent"><form:errors path="priority"/></label>
+                </div>
+                <div class="col-12 col-md-3">
+                    <form:input path="deadline" id="deadlineEvent" type="datetime-local" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}" class="form-control" placeholder="Deadline"/>
+                    <label class="form-note" for="deadlineEvent"><form:errors path="deadline"/></label>
+                </div>
+                <div class="col-12 col-md-4">
+                    <form:input path="videoType" id="typeEvent" type="text" class="form-control" placeholder="Typ nagrania"/>
+                    <label class="form-note" for="typeEvent"><form:errors path="videoType"/></label>
+                </div>
+            </div>
+            <div class="row py-4 justify-content-center">
+                <div class=" col-4">
+                    <button class="btn btn-lg btn-secondary btn-block" type="submit">Wyślij</button>
+                </div>
+            </div>
+
 
         </form:form>
 
-
-        <p>
-            <a href="${pageContext.request.contextPath}/home">Wróc do listy</a>
-        </p>
-
     </div>
-
-</div>
-
+    </main>
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+        feather.replace()
+    </script>
 
 </body>
 </html>
