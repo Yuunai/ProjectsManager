@@ -51,6 +51,7 @@ public class Configuration extends WebMvcConfigurerAdapter {
 		registry.addConverter(new StringEquipmentIdToEquipmentConverter(equipmentService));
 		registry.addConverter(new StringEventIdToEventConverter(eventService));
 		registry.addConverter(new StringCategoryIdToCategoryConverter(equipmentService));
+		registry.addConverter(new StringAdmRoleIdToAdmRoleConverter(userService));
 	}
 	
 }

@@ -37,7 +37,7 @@
                 <th scope="col">Imię</th>
                 <th scope="col">Nazwisko</th>
                 <th scope="col">Indeks</th>
-                <th scope="col">Numer telefonu</th>
+                <th scope="col">Aktualnie działa</th>
                 <th scope="col">Akcja</th>
             </tr>
             </thead>
@@ -45,25 +45,27 @@
             <c:forEach var="user" items="${users}">
 
                 <c:url var="detailsLink" value="/user/userDetails">
-                    <c:param name="userId" value="${user.id}" />
-                </c:url>
-
-                <c:url var="deleteLink" value="/user/deleteUser">
-                    <c:param name="userId" value="${user.id}" />
+                    <c:param name="userId" value="${user.userId}" />
                 </c:url>
 
                 <c:url var="editLink" value="/user/updateUserForm">
-                    <c:param name="userId" value="${user.id}" />
+                    <c:param name="userId" value="${user.userId}" />
                 </c:url>
 
                 <tr>
                     <td>${user.firstName}</td>
                     <td>${user.lastName}</td>
                     <td>${user.studentIndex}</td>
-                    <td>${user.phoneNumber}</td>
+                    <td><c:choose>
+                        <c:when test="${user.active}">
+                            Tak
+                        </c:when>
+
+                        <c:otherwise>
+                            Nie
+                        </c:otherwise>
+                    </c:choose></td>
                     <td><a href="${detailsLink}">Szczegóły</a> |
-                        <a href="${deleteLink}"
-                           onclick="if (!(confirm('Czy na pewno chcesz usunąć tego członka?'))) return false">Usuń</a> |
                         <a href="${editLink}">Aktualizuj</a></td>
                 </tr>
 

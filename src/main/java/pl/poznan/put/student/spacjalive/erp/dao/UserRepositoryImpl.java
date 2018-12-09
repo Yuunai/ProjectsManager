@@ -5,8 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import pl.poznan.put.student.spacjalive.erp.entity.User;
-import pl.poznan.put.student.spacjalive.erp.exceptions.UserNotFoundException;
+import pl.poznan.put.student.spacjalive.erp.entity.*;
 
 import java.util.List;
 
@@ -17,59 +16,32 @@ public class UserRepositoryImpl implements UserRepository {
 	SessionFactory sessionFactory;
 	
 	@Override
-	public List<User> getUsers() {
+	public UserDetails getUserDetails(int id) {
 		Session session = sessionFactory.getCurrentSession();
-		
-		Query<User> query = session.createQuery("FROM User e ORDER BY e.firstName, e.lastName");
-		return query.getResultList();
+		return session.get(UserDetails.class, id);
 	}
 	
 	@Override
-	public List<User> getUsers(boolean enabled) {
+	public List<UserDetails> getUsersDetails() {
 		Session session = sessionFactory.getCurrentSession();
-		
-		Query<User> query =
-				session.createQuery("FROM User e WHERE e.enabled=:enabled ORDER BY e.firstName, e.lastName");
-		if (enabled) {
-			query.setParameter("enabled", 1);
-		} else {
-			query.setParameter("enabled", 0);
-		}
+		Query query = session.createQuery("FROM UserDetails ORDER BY firstName");
 		
 		return query.getResultList();
 	}
 	
 	@Override
-	public void saveUser(User user) {
+	public List<UserDetails> getUsersDetails(boolean active) {
 		Session session = sessionFactory.getCurrentSession();
-		session.saveOrUpdate(user);
+		Query query = session.createQuery("FROM UserDetails WHERE active=:active ORDER BY firstName");
+		query.setParameter("active", active);
+		
+		return query.getResultList();
 	}
 	
 	@Override
-	public void updateUserData(User user) {
+	public void saveUserDetails(UserDetails details) {
 		Session session = sessionFactory.getCurrentSession();
-		
-		Query query = session.createQuery("UPDATE User SET firstName=:firstName, lastName=:lastName, email=:email, " +
-				"phoneNumber=:phoneNumber, studentIndex=:studentIndex, car=:car WHERE id=:userId");
-		query.setParameter("userId", user.getId());
-		query.setParameter("firstName", user.getFirstName());
-		query.setParameter("lastName", user.getLastName());
-		query.setParameter("email", user.getEmail());
-		query.setParameter("phoneNumber", user.getPhoneNumber());
-		query.setParameter("studentIndex", user.getStudentIndex());
-		query.setParameter("car", user.isCar());
-		
-		query.executeUpdate();
-	}
-	
-	@Override
-	public void deleteUser(int id) {
-		Session session = sessionFactory.getCurrentSession();
-		
-		Query query = session.createQuery("DELETE FROM User WHERE id=:employeeId");
-		query.setParameter("employeeId", id);
-		
-		query.executeUpdate();
+		session.saveOrUpdate(details);
 	}
 	
 	@Override
@@ -81,14 +53,54 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public User getUserByEmail(String email) {
 		Session session = sessionFactory.getCurrentSession();
-		
-		Query query = session.createQuery("FROM User where email=:email", User.class);
+		Query<User> query = session.createQuery("FROM User WHERE email=:email");
 		query.setParameter("email", email);
-		List<User> result = query.getResultList();
-		if(result.isEmpty())
-			return null;
 		
+		return query.getSingleResult();
+	}
+	
+	@Override
+	public List<User> getUsers() {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM User");
 		
-		return result.get(0);
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<User> getUsers(boolean enabled) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM User WHERE enabled=:enabled");
+		query.setParameter("enabled", enabled);
+		
+		return query.getResultList();
+	}
+	
+	@Override
+	public void saveUser(User user) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(user);
+	}
+	
+	@Override
+	public void setUserEnabled(int id, boolean enabled) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("UPDATE User SET enabled=:enabled");
+		query.setParameter("enabled", enabled);
+		query.executeUpdate();
+	}
+	
+	@Override
+	public List<AdministrativeRole> getAdmRoles() {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM AdministrativeRole ORDER BY id");
+		
+		return query.getResultList();
+	}
+	
+	@Override
+	public AdministrativeRole getAdmRole(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(AdministrativeRole.class, id);
 	}
 }

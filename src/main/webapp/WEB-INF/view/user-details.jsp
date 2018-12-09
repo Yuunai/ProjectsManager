@@ -12,7 +12,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Add Event</title>
+    <title>User Details</title>
 
     <link type="text/css"
           rel="stylesheet"
@@ -29,10 +29,8 @@
 
     <%@include file="header.jsp"%>
 
-    <%--TODO add participation table--%>
     <div >
-
-        <div id="employeeDetailsTable" class="float-left w-50">
+        <div class="float-left w-50">
             <table class="table table-bordered">
                 <thead class="thead-dark">
                 <tr>
@@ -46,48 +44,44 @@
                 <tbody>
                 <tr>
                     <td><label>Imię</label></td>
-                    <td>${user.firstName}</td>
+                    <td>${details.firstName}</td>
                 </tr>
                 <tr>
                     <td><label>Nazwisko</label></td>
-                    <td>${user.lastName}</td>
+                    <td>${details.lastName}</td>
                 </tr>
                 <tr>
                     <td><label>Indeks</label></td>
-                    <td>${user.studentIndex}</td>
-                </tr>
-                <tr>
-                    <td><label>Email</label></td>
-                    <td>${user.email}</td>
+                    <td>${details.studentIndex}</td>
                 </tr>
                 <tr>
                     <td><label>Numer telefonu</label></td>
-                    <td>${user.phoneNumber}</td>
+                    <td>${details.phoneNumber}</td>
                 </tr>
                 <tr>
                     <td><label>Wejście do biura</label></td>
-                    <c:if test="${user.officeEntrance}">
+                    <c:if test="${details.officeEntrance}">
                         <td>Tak</td>
                     </c:if>
-                    <c:if test="${user.officeEntrance == false}">
+                    <c:if test="${details.officeEntrance == false}">
                         <td>Nie</td>
                     </c:if>
                 </tr>
                 <tr>
                     <td><label>Samochód</label></td>
-                    <c:if test="${user.car}">
+                    <c:if test="${details.car}">
                         <td>Tak</td>
                     </c:if>
-                    <c:if test="${user.car == false}">
+                    <c:if test="${details.car == false}">
                         <td>Nie</td>
                     </c:if>
                 </tr>
                 <tr>
                     <td><label>Aktywny</label></td>
-                    <c:if test="${user.enabled}">
+                    <c:if test="${details.active}">
                         <td>Tak</td>
                     </c:if>
-                    <c:if test="${user.enabled == false}">
+                    <c:if test="${details.active == false}">
                         <td>Nie</td>
                     </c:if>
                 </tr>

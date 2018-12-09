@@ -12,10 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import pl.poznan.put.student.spacjalive.erp.entity.User;
-import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
-import pl.poznan.put.student.spacjalive.erp.entity.Event;
-import pl.poznan.put.student.spacjalive.erp.entity.Lending;
+import pl.poznan.put.student.spacjalive.erp.entity.*;
 import pl.poznan.put.student.spacjalive.erp.service.UserService;
 import pl.poznan.put.student.spacjalive.erp.service.EquipmentService;
 import pl.poznan.put.student.spacjalive.erp.service.EventService;
@@ -69,8 +66,8 @@ public class LendingController {
 		List<Event> events = eventService.getEvents(0);
 		model.addAttribute("events", events);
 		
-		List<User> users = userService.getUsers(true);
-		model.addAttribute("employees", users);
+		List<UserDetails> users = userService.getUsersDetails(true);
+		model.addAttribute("users", users);
 		
 		return "add-lending-form";
 	}

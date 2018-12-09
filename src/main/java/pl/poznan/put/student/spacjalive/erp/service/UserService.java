@@ -1,26 +1,37 @@
 package pl.poznan.put.student.spacjalive.erp.service;
 
-import pl.poznan.put.student.spacjalive.erp.entity.User;
+import pl.poznan.put.student.spacjalive.erp.entity.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.EmailAlreadyTakenException;
-import pl.poznan.put.student.spacjalive.erp.exceptions.UserNotFoundException;
 
 import java.util.List;
 
 public interface UserService {
 	
-	public List<User> getUsers();
+	public UserDetails getUserDetails(int id);
 	
-	public List<User> getUsers(boolean active);
+	public List<UserDetails> getUsersDetails();
 	
-	public void saveNewUser(User user) throws EmailAlreadyTakenException;
+	public List<UserDetails> getUsersDetails(boolean active);
 	
-	public void saveUser(User user);
-	
-	public void updateUserData(User user);
-	
-	public void deleteUser(int id);
+	public void saveUserDetails(UserDetails details);
 	
 	public User getUser(int id);
 	
 	public User getUserByEmail(String email);
+	
+	public List<User> getUsers();
+	
+	public List<User> getUsers(boolean enabled);
+	
+	public void saveUser(User user);
+	
+	public void updateUserAdmRolesAndStatus(User user);
+	
+	public void saveNewUser(User user) throws EmailAlreadyTakenException;
+	
+	public void setUserEnabled(int id, boolean enabled);
+	
+	public List<AdministrativeRole> getAdmRoles();
+	
+	public AdministrativeRole getAdmRole(int id);
 }

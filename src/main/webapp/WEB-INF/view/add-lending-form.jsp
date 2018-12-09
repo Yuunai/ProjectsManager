@@ -78,7 +78,7 @@
                                 <form:option value="${lending.user.id}" label="${lending.user.firstName} ${lending.user.lastName}"/>
                             </c:if>
                             <c:forEach items="${users}" var="user">
-                                <form:option value="${user.id}" label="${user.firstName} ${user.lastName}"/>
+                                <form:option value="${user.userId}" label="${user.firstName} ${user.lastName}"/>
                             </c:forEach>
                         </form:select></td>
                     </tr>

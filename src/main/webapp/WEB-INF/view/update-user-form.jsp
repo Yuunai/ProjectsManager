@@ -31,10 +31,10 @@
     <%@include file="header.jsp"%>
 
     <div class="row justify-content-center">
-        <form:form action="updateUser" modelAttribute="user" method="POST" acceptCharset="utf8">
+        <form:form action="updateUser" modelAttribute="details" method="POST" acceptCharset="utf8">
 
-            <form:hidden path="id"/>
-            <form:hidden path="enabled"/>
+            <form:hidden path="userId"/>
+            <form:hidden path="active"/>
             <form:hidden path="lastUpdate"/>
             <table class="table col-4 table-bordered">
                 <thead class="thead-dark">
@@ -81,11 +81,6 @@
                         <form:errors path="phoneNumber" /></td>
                 </tr>
                 <tr>
-                    <td><label>Email</label></td>
-                    <td><form:input path="email" />
-                        <form:errors path="email" /></td>
-                </tr>
-                <tr>
                     <td><label>Wejście do biura</label></td>
                     <td><form:select path="officeEntrance" >
                         <c:choose>
@@ -127,7 +122,6 @@
             </table>
 
         </form:form>
-
 
         <p>
             <a href="${pageContext.request.contextPath}/user/list">Wróć do listy</a>

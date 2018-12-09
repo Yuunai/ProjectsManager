@@ -127,7 +127,6 @@ public class Equipment {
 				", state='" + state + '\'' +
 				", comments='" + comments + '\'' +
 				", category=" + category +
-				", lendings=" + lendings +
 				", lastUpdate='" + lastUpdate + '\'' +
 				'}';
 	}

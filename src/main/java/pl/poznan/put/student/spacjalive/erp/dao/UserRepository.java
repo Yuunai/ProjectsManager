@@ -1,11 +1,22 @@
 package pl.poznan.put.student.spacjalive.erp.dao;
 
-import pl.poznan.put.student.spacjalive.erp.entity.User;
-import pl.poznan.put.student.spacjalive.erp.exceptions.UserNotFoundException;
+import pl.poznan.put.student.spacjalive.erp.entity.*;
 
 import java.util.List;
 
 public interface UserRepository {
+	
+	public UserDetails getUserDetails(int id);
+	
+	public List<UserDetails> getUsersDetails();
+	
+	public List<UserDetails> getUsersDetails(boolean active);
+	
+	public void saveUserDetails(UserDetails details);
+	
+	public User getUser(int id);
+	
+	public User getUserByEmail(String email);
 	
 	public List<User> getUsers();
 	
@@ -13,11 +24,9 @@ public interface UserRepository {
 	
 	public void saveUser(User user);
 	
-	public void updateUserData(User user);
+	public void setUserEnabled(int id, boolean enabled);
 	
-	public void deleteUser(int id);
+	public List<AdministrativeRole> getAdmRoles();
 	
-	public User getUser(int id);
-	
-	public User getUserByEmail(String email);
+	public AdministrativeRole getAdmRole(int id);
 }
