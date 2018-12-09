@@ -55,8 +55,13 @@ public class UserRepositoryImpl implements UserRepository {
 		Session session = sessionFactory.getCurrentSession();
 		Query<User> query = session.createQuery("FROM User WHERE email=:email");
 		query.setParameter("email", email);
+		List<User> users = query.getResultList();
 		
-		return query.getSingleResult();
+		if(users.isEmpty()) {
+			return null;
+		} else {
+			return query.getSingleResult();
+		}
 	}
 	
 	@Override
