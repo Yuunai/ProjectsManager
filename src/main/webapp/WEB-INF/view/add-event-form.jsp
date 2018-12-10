@@ -58,11 +58,11 @@
                     <form:input path="place" id="placeEvent" type="text" class="form-control" placeholder="Miejsce"/>
                     <label class="form-note" for="placeEvent"><form:errors path="place"/></label>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-2">
                     <form:input path="date" id="dateEvent" type="date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" placeholder="Data rrrr-mm-dd"/>
                     <label class="form-note" for="dateEvent"><form:errors path="date"/></label>
                 </div>
-                <div class="col-12 col-md-1">
+                <div class="col-12 col-md-2">
                     <form:input path="time" id="dateEvent" type="time" pattern="[0-9]{2}:[0-9]{2}" class="form-control"
                                 placeholder="Rozpoczęcie hh:mm"/>
                     <label class="form-note" for="dateEvent"><form:errors path="time"/></label>
