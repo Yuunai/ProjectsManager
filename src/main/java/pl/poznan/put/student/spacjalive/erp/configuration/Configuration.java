@@ -45,7 +45,6 @@ public class Configuration extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
-		registry.addConverter(new StringToLocalDateTimeConverter());
 		registry.addConverter(new StringToBooleanConverter());
 		registry.addConverter(new StringUserIdToUserConverter(userService));
 		registry.addConverter(new StringEquipmentIdToEquipmentConverter(equipmentService));

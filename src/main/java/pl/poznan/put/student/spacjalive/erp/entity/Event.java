@@ -29,11 +29,13 @@ public class Event {
 	@Column(name = "place")
 	private String place;
 	
-	@NotNull(message = "Wymagany format pola: 'dd.MM.yyyy hh:mm!' Nie może być puste!")
-	@FutureOrPresent(message = "Nie można dodać wydarzenia z przeszłości!")
-	@DateTimeFormat(pattern = "d.M.u H:m")
-	@Column(name = "date", columnDefinition = "TIMESTAMP")
-	private LocalDateTime date;
+	@NotNull(message = "Pole nie może być puste!")
+	@Column(name = "date", columnDefinition = "DATE")
+	private String date;
+	
+	@NotNull(message = "Pole nie może być puste!")
+	@Column(name = "time", columnDefinition = "TIME")
+	private String time;
 	
 	@NotNull(message = "Pole nie może być puste!")
 	@Size(min = 1, message = "Pole nie może być puste!")
@@ -64,11 +66,9 @@ public class Event {
 	@Column(name = "priority")
 	private int priority;
 	
-	@NotNull(message = "Wymagany format pola: 'dd.MM.yyyy hh:mm!' Nie może być puste!")
-	@FutureOrPresent(message = "Nie można dodać wydarzenia z przeszłości!")
-	@DateTimeFormat(pattern = "d.M.u H:m")
-	@Column(name = "deadline", columnDefinition = "TIMESTAMP")
-	private LocalDateTime deadline;
+	@NotNull(message = "Wymagany format pola: 'yyyy.MM.dd!' Nie może być puste!")
+	@Column(name = "deadline", columnDefinition = "DATE")
+	private String deadline;
 	
 	@Column(name = "archived")
 	private int archived;
@@ -86,11 +86,12 @@ public class Event {
 	
 	}
 	
-	public Event(String name, String place, LocalDateTime date, String organizer, String phoneNumber, String email,
-	             String comments, int priority, LocalDateTime deadline, int archived, String videoType, String lastUpdate) {
+	public Event(String name, String place, String date, String time, String organizer, String phoneNumber, String
+			email, String comments, int priority, String deadline, int archived, String videoType, String lastUpdate) {
 		this.name = name;
 		this.place = place;
 		this.date = date;
+		this.time = time;
 		this.organizer = organizer;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
@@ -126,12 +127,20 @@ public class Event {
 		this.place = place;
 	}
 	
-	public LocalDateTime getDate() {
+	public String getDate() {
 		return date;
 	}
 	
-	public void setDate(LocalDateTime date) {
+	public void setDate(String date) {
 		this.date = date;
+	}
+	
+	public String getTime() {
+		return time;
+	}
+	
+	public void setTime(String time) {
+		this.time = time;
 	}
 	
 	public String getOrganizer() {
@@ -174,11 +183,11 @@ public class Event {
 		this.priority = priority;
 	}
 	
-	public LocalDateTime getDeadline() {
+	public String getDeadline() {
 		return deadline;
 	}
 	
-	public void setDeadline(LocalDateTime deadline) {
+	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
 	
@@ -212,13 +221,14 @@ public class Event {
 				"id=" + id +
 				", name='" + name + '\'' +
 				", place='" + place + '\'' +
-				", date=" + date +
+				", date='" + date + '\'' +
+				", time='" + time + '\'' +
 				", organizer='" + organizer + '\'' +
 				", phoneNumber='" + phoneNumber + '\'' +
 				", email='" + email + '\'' +
 				", comments='" + comments + '\'' +
 				", priority=" + priority +
-				", deadline=" + deadline +
+				", deadline='" + deadline + '\'' +
 				", archived=" + archived +
 				", videoType='" + videoType + '\'' +
 				", lastUpdate='" + lastUpdate + '\'' +

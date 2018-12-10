@@ -53,8 +53,12 @@
                     <td>${event.place}</td>
                 </tr>
                 <tr>
-                    <td><label>Data(dd.MM.yyyy hh:mm)</label></td>
+                    <td><label>Data</label></td>
                     <td>${event.date}</td>
+                </tr>
+                <tr>
+                    <td><label>Data(dd.MM.yyyy hh:mm)</label></td>
+                    <td>${event.time}</td>
                 </tr>
                 <tr>
                     <td><label>Organizator</label></td>

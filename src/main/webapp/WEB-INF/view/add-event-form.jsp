@@ -63,8 +63,9 @@
                     <label class="form-note" for="dateEvent"><form:errors path="date"/></label>
                 </div>
                 <div class="col-12 col-md-1">
-                    <form:input path="dateTime" id="dateEvent" type="date" pattern="[0-9]{2}:[0-9]{2}" class="form-control" placeholder="Rozpoczęcie hh:mm"/>
-                    <label class="form-note" for="dateEvent"><form:errors path="dateTime"/></label>
+                    <form:input path="time" id="dateEvent" type="time" pattern="[0-9]{2}:[0-9]{2}" class="form-control"
+                                placeholder="Rozpoczęcie hh:mm"/>
+                    <label class="form-note" for="dateEvent"><form:errors path="time"/></label>
                 </div>
             </div>
             <div class="row py-4">
