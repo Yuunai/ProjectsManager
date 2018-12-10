@@ -54,13 +54,17 @@
                     <form:input path="name" id="nameEvent" type="text" class="form-control" placeholder="Nazwa"/>
                     <label class="form-note" for="nameEvent"><form:errors path="name"/></label>
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-md-3">
                     <form:input path="place" id="placeEvent" type="text" class="form-control" placeholder="Miejsce"/>
                     <label class="form-note" for="placeEvent"><form:errors path="place"/></label>
                 </div>
                 <div class="col-12 col-md-3">
-                    <form:input path="date" id="dateEvent" type="datetime-local" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}" class="form-control" placeholder="Data"/>
+                    <form:input path="date" id="dateEvent" type="date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" placeholder="Data rrrr-mm-dd"/>
                     <label class="form-note" for="dateEvent"><form:errors path="date"/></label>
+                </div>
+                <div class="col-12 col-md-1">
+                    <form:input path="dateTime" id="dateEvent" type="date" pattern="[0-9]{2}:[0-9]{2}" class="form-control" placeholder="Rozpoczęcie hh:mm"/>
+                    <label class="form-note" for="dateEvent"><form:errors path="dateTime"/></label>
                 </div>
             </div>
             <div class="row py-4">
@@ -89,7 +93,7 @@
                     <label class="form-note" for="prioEvent"><form:errors path="priority"/></label>
                 </div>
                 <div class="col-12 col-md-3">
-                    <form:input path="deadline" id="deadlineEvent" type="datetime-local" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}" class="form-control" placeholder="Deadline"/>
+                    <form:input path="deadline" id="deadlineEvent" type="date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" placeholder="Deadline rrrr-mm-dd"/>
                     <label class="form-note" for="deadlineEvent"><form:errors path="deadline"/></label>
                 </div>
                 <div class="col-12 col-md-4">
