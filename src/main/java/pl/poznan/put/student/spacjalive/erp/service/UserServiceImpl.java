@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 		User oldUser = userRepository.getUser(user.getId());
 		oldUser.setAdmRoles(user.getAdmRoles());
 		oldUser.setEnabled(user.isEnabled());
-		userRepository.saveUser(user);
+		userRepository.saveUser(oldUser);
 	}
 	
 	@Override

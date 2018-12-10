@@ -9,7 +9,7 @@ public class AdministrativeRole {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private int id;
 	
 	@Column(name = "label")
 	String label;
@@ -42,11 +42,11 @@ public class AdministrativeRole {
 		this.privileges = privileges;
 	}
 	
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 	
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
@@ -89,13 +89,13 @@ public class AdministrativeRole {
 		
 		AdministrativeRole that = (AdministrativeRole) o;
 		
-		if (id != null ? !id.equals(that.id) : that.id != null) return false;
+		if (id != that.id) return false;
 		return label != null ? label.equals(that.label) : that.label == null;
 	}
 	
 	@Override
 	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
+		int result = id;
 		result = 31 * result + (label != null ? label.hashCode() : 0);
 		return result;
 	}
