@@ -22,51 +22,41 @@
 
     <%@include file="header.jsp"%>
 
-    <div id="lending-table-section">
+    <div id="reservation-table-section">
         <table class="table col-6 table-bordered">
             <thead class="thead-dark">
             <tr>
-                <th scope="col" colspan="6" class="text-center">Lista wypożyczeń</th>
+                <th scope="col" colspan="5" class="text-center">Lista rezerwacji</th>
             </tr>
             <c:if test="${!empty message}" >
                 <tr>
-                    <th scope="col" colspan="6" class="text-center">${message}</th>
+                    <th scope="col" colspan="5" class="text-center">${message}</th>
                 </tr>
             </c:if>
             <tr>
-                <th scope="col">Wydarzenie</th>
-                <th scope="col">Wypożyczający</th>
+                <th scope="col">Rezerwacja</th>
+                <th scope="col">Rezerwujacy</th>
                 <th scope="col">Od</th>
                 <th scope="col">Do</th>
                 <th scope="col">Status</th>
-                <th scope="col">Akcja</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="lending" items="${lendings}">
+            <c:forEach var="reservation" items="${reservations}">
 
-                <c:url var="updateLink" value="/lending/updateLendingForm">
-                    <c:param name="lendingId" value="${lending.id}" />
+                <c:url var="updateLink" value="/reservation/updateReservationForm">
+                    <c:param name="reservationId" value="${reservation.id}" />
                 </c:url>
 
-                <c:url var="deleteLink" value="/lending/deleteLending">
-                    <c:param name="lendingId" value="${lending.id}" />
+                <c:url var="deleteLink" value="/reservation/deleteReservation">
+                    <c:param name="reservationId" value="${reservation.id}" />
                 </c:url>
 
                 <tr>
-                    <td>${lending.event.name}</td>
-                    <td>${lending.user.firstName} ${lending.user.lastName}</td>
-                    <td>${lending.since}</td>
-                    <td>${lending.end}</td>
-                    <c:if test="${lending.return_time == null}">
-                        <td>Aktualne</td>
-                    </c:if>
-                    <c:if test="${lending.return_time != null}">
-                        <td>
-                            Zakończone<br>
-                            ${lending.return_time}
-                        </td>
-                    </c:if>
+                    <td>${reservation.event.name}</td>
+                    <td>${reservation.user.email}</td>
+                    <td>${reservation.dateSince} ${reservation.timeSince}</td>
+                    <td>${reservation.dateTo} ${reservation.timeTo}</td>
                     <td>
                         <a href="${updateLink}">Aktualizuj</a>
                         |
@@ -77,10 +67,17 @@
 
             </c:forEach>
             <tr>
-                <td colspan="6">
-                    <a class="btn btn-primary" href="/lending/addLendingForm" role="button">Nowe wypożyczenie</a>
+                <td colspan="5">
+                    <a class="btn btn-primary" href="reservation/addReservationForm" role="button">Nowe wypożyczenie</a>
                 </td>
             </tr>
+            <tr><td colspan="5">
+            <form action="${pageContext.request.contextPath}/reservation/addReservationForm" method="GET">
+                Start: <input type="date" name="date-since"/> <input type="time" name="time-since"/>
+                Koniec: <input type="date" name="date-to"/> <input type="time" name="time-to">
+                <input class="btn btn-primary" type="submit" value="Dodaj rezerwację">
+            </form>
+            </td></tr>
             </tbody>
         </table>
     </div>

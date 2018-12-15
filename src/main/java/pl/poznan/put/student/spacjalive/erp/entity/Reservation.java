@@ -1,13 +1,17 @@
 package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "lending")
-public class Lending {
+@Table(name = "reservation", schema = "spacja_erp")
+@NamedNativeQueries(
+		@NamedNativeQuery(name = "callSelectReservations",
+		query = "CALL select_reservations(:dSince, :tSince, :dTo, :tTo)",
+		resultClass = Reservation.class)
+)
+public class Reservation {
 	
 	//TODO add fields validations
 	
@@ -19,14 +23,17 @@ public class Lending {
 	@Column(name = "comments")
 	String comments;
 	
-	@Column(name = "since", columnDefinition = "TIMESTAMP")
-	private LocalDateTime since;
+	@Column(name = "date_since")
+	private String dateSince;
 	
-	@Column(name = "end", columnDefinition = "TIMESTAMP")
-	private LocalDateTime end;
+	@Column(name = "time_since")
+	private String timeSince;
 	
-	@Column(name = "return_time", columnDefinition = "TIMESTAMP")
-	private LocalDateTime return_time;
+	@Column(name = "date_to")
+	private String dateTo;
+	
+	@Column(name = "time_to")
+	private String timeTo;
 	
 	@ManyToOne(cascade = {CascadeType.DETACH,
 			CascadeType.MERGE,
@@ -42,8 +49,8 @@ public class Lending {
 	@JoinColumn(name = "event_id")
 	private Event event;
 	
-	@JoinTable(name = "eq_lending",
-			joinColumns = @JoinColumn(name = "lending_id"),
+	@JoinTable(name = "eq_reservation",
+			joinColumns = @JoinColumn(name = "reservation_id"),
 			inverseJoinColumns = @JoinColumn(name = "equipment_id"))
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Equipment> equipmentList;
@@ -51,15 +58,27 @@ public class Lending {
 	@Column(name = "last_update")
 	private String lastUpdate;
 	
-	public Lending() {
+	public Reservation() {
 	
 	}
 	
-	public Lending(LocalDateTime since, LocalDateTime end, LocalDateTime return_time, String comments, String lastUpdate) {
-		this.since = since;
-		this.end = end;
-		this.return_time = return_time;
+	public Reservation(String dateSince, String timeSince, String dateTo, String timeTo) {
+		this.dateSince = dateSince;
+		this.timeSince = timeSince;
+		this.dateTo = dateTo;
+		this.timeTo = timeTo;
+	}
+	
+	public Reservation(String comments, String dateSince, String timeSince, String dateTo, String timeTo, User user,
+	                   Event event, List<Equipment> equipmentList, String lastUpdate) {
 		this.comments = comments;
+		this.dateSince = dateSince;
+		this.timeSince = timeSince;
+		this.dateTo = dateTo;
+		this.timeTo = timeTo;
+		this.user = user;
+		this.event = event;
+		this.equipmentList = equipmentList;
 		this.lastUpdate = lastUpdate;
 	}
 	
@@ -80,28 +99,36 @@ public class Lending {
 		this.id = id;
 	}
 	
-	public LocalDateTime getSince() {
-		return since;
+	public String getDateSince() {
+		return dateSince;
 	}
 	
-	public void setSince(LocalDateTime since) {
-		this.since = since;
+	public void setDateSince(String dateSince) {
+		this.dateSince = dateSince;
 	}
 	
-	public LocalDateTime getEnd() {
-		return end;
+	public String getTimeSince() {
+		return timeSince;
 	}
 	
-	public void setEnd(LocalDateTime end) {
-		this.end = end;
+	public void setTimeSince(String timeSince) {
+		this.timeSince = timeSince;
 	}
 	
-	public LocalDateTime getReturn_time() {
-		return return_time;
+	public String getDateTo() {
+		return dateTo;
 	}
 	
-	public void setReturn_time(LocalDateTime return_time) {
-		this.return_time = return_time;
+	public void setDateTo(String dateTo) {
+		this.dateTo = dateTo;
+	}
+	
+	public String getTimeTo() {
+		return timeTo;
+	}
+	
+	public void setTimeTo(String timeTo) {
+		this.timeTo = timeTo;
 	}
 	
 	public String getComments() {
@@ -146,12 +173,13 @@ public class Lending {
 	
 	@Override
 	public String toString() {
-		return "Lending{" +
+		return "Reservation{" +
 				"id=" + id +
-				", since=" + since +
-				", end=" + end +
-				", return_time=" + return_time +
 				", comments='" + comments + '\'' +
+				", dateSince='" + dateSince + '\'' +
+				", timeSince='" + timeSince + '\'' +
+				", dateTo='" + dateTo + '\'' +
+				", timeTo='" + timeTo + '\'' +
 				", user=" + user +
 				", event=" + event +
 				", equipmentList=" + equipmentList +

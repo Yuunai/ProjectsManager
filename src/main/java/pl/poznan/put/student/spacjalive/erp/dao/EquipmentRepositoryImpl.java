@@ -16,14 +16,6 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
 	SessionFactory sessionFactory;
 	
 	@Override
-	public List<Equipment> getFreeEquipment() {
-		Session session = sessionFactory.getCurrentSession();
-		
-		Query<Equipment> query = session.getNamedQuery("getFreeEquipment");
-		return query.getResultList();
-	}
-	
-	@Override
 	public List<Equipment> getEquipmentList() {
 		Session session = sessionFactory.getCurrentSession();
 		

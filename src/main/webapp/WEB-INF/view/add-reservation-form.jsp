@@ -31,12 +31,13 @@
     <%@include file="header.jsp"%>
 
     <div class="row justify-content-center">
-        <form:form action="addLending" modelAttribute="lending" method="POST" acceptCharset="utf8">
+        <form:form action="addReservation" modelAttribute="reservation" method="POST" acceptCharset="utf8">
 
             <form:hidden path="id"/>
-            <form:hidden path="since"/>
-            <form:hidden path="end"/>
-            <form:hidden path="return_time"/>
+            <form:hidden path="dateSince"/>
+            <form:hidden path="timeSince"/>
+            <form:hidden path="dateTo"/>
+            <form:hidden path="timeTo"/>
             <form:hidden path="lastUpdate"/>
             <table class="table col-4 table-bordered">
                 <thead class="thead-dark">
@@ -63,8 +64,8 @@
                     <tr>
                         <td><label>Wydarzenie</label></td>
                         <td><form:select path="event">
-                            <c:if test="${lending.event != null}" >
-                                <form:option value="${lending.event.id}" label="${lending.event.name}"/>
+                            <c:if test="${reservation.event != null}" >
+                                <form:option value="${reservation.event.id}" label="${reservation.event.name}"/>
                             </c:if>
                             <c:forEach items="${events}" var="event">
                                 <form:option value="${event.id}" label="${event.name}"/>
@@ -74,8 +75,8 @@
                     <tr>
                         <td><label>Wypożyczający</label></td>
                         <td><form:select path="user">
-                            <c:if test="${lending.user != null}">
-                                <form:option value="${lending.user.id}" label="${lending.user.firstName} ${lending.user.lastName}"/>
+                            <c:if test="${reservation.user != null}">
+                                <form:option value="${reservation.user.id}" label="${reservation.user.email}"/>
                             </c:if>
                             <c:forEach items="${users}" var="user">
                                 <form:option value="${user.userId}" label="${user.firstName} ${user.lastName}"/>
@@ -86,7 +87,7 @@
                     <tr>
                         <td><label>Przedmioty</label></td>
                         <td>
-                            <c:forEach items="${lending.equipmentList}" var="equipment">
+                            <c:forEach items="${reservation.equipmentList}" var="equipment">
                                 <form:checkbox path="equipmentList" label="${equipment.name}" value="${equipment.id}" checked="checked"/>
                             </c:forEach>
                             <c:forEach items="${equipmentList}" var="equipment">
@@ -111,7 +112,7 @@
 
 
         <p>
-            <a href="${pageContext.request.contextPath}/lending/list">Wróc do listy</a>
+            <a href="${pageContext.request.contextPath}/reservation/list">Wróc do listy</a>
         </p>
 
     </div>

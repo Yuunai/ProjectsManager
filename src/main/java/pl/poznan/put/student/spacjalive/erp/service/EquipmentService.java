@@ -7,20 +7,20 @@ import java.util.List;
 
 public interface EquipmentService {
 	
-	public List<Equipment> getFreeEquipment();
+	List<Equipment> getEquipmentList();
 	
-	public List<Equipment> getEquipmentList();
+	EquipmentCategory getCategory(int id);
 	
-	public EquipmentCategory getCategory(int id);
+	List<Equipment> getEquipmentByCategory(int id);
 	
-	public List<Equipment> getEquipmentByCategory(int id);
+	List<EquipmentCategory> getCategories();
 	
-	public List<EquipmentCategory> getCategories();
+	void saveEquipment(Equipment equipment);
 	
-	public void saveEquipment(Equipment equipment);
+	Equipment getEquipment(int id);
 	
-	public Equipment getEquipment(int id);
+	void deleteEquipment(int id);
 	
-	public void deleteEquipment(int id);
+	List<Equipment> getFreeEquipment(String dateSince, String timeSince, String dateTo, String timeTo);
 	
 }

@@ -6,8 +6,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "equipment")
-@NamedNativeQueries({@NamedNativeQuery(name = "getEquipmentFromGivenLending", query = "CALL select_equipment_from_given_lending(:id)", resultClass = Equipment.class),
-		@NamedNativeQuery(name = "getFreeEquipment", query = "CALL select_free_equipment()", resultClass = Equipment.class)})
 public class Equipment {
 	
 	//TODO add fields validations
@@ -33,11 +31,11 @@ public class Equipment {
 			CascadeType.REFRESH})
 	private EquipmentCategory category;
 	
-	@JoinTable(name = "eq_lending",
+	@JoinTable(name = "eq_reservation",
 			joinColumns = @JoinColumn(name = "equipment_id"),
-			inverseJoinColumns = @JoinColumn(name = "lending_id"))
+			inverseJoinColumns = @JoinColumn(name = "reservation_id"))
 	@ManyToMany(fetch = FetchType.LAZY)
-	private List<Lending> lendings;
+	private List<Reservation> reservations;
 	
 	@Column(name = "last_update")
 	private String lastUpdate;
@@ -54,12 +52,12 @@ public class Equipment {
 		this.lastUpdate = lastUpdate;
 	}
 	
-	public void addLending(Lending lending) {
-		if (lendings == null) {
-			lendings = new ArrayList<>();
-			lendings.add(lending);
+	public void addLending(Reservation reservation) {
+		if (reservations == null) {
+			reservations = new ArrayList<>();
+			reservations.add(reservation);
 		} else {
-			lendings.add(lending);
+			reservations.add(reservation);
 		}
 	}
 	
@@ -103,12 +101,12 @@ public class Equipment {
 		this.category = category;
 	}
 	
-	public List<Lending> getLendings() {
-		return lendings;
+	public List<Reservation> getReservations() {
+		return reservations;
 	}
 	
-	public void setLendings(List<Lending> lendings) {
-		this.lendings = lendings;
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 	
 	public String getLastUpdate() {

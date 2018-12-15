@@ -171,24 +171,25 @@ CREATE TABLE `participation` (
   
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-DROP TABLE IF EXISTS `lending`;
+DROP TABLE IF EXISTS reservation;
 
-CREATE TABLE `lending` (
+CREATE TABLE reservation (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `since` datetime DEFAULT current_timestamp,
-  `end` datetime DEFAULT NULL,
-  `return_time` datetime DEFAULT NULL,
+  `date_since` DATE NOT NULL,
+  `time_since` TIME NOT NULL,
+  `date_to` DATE NOT NULL,
+  `time_to` TIME NOT NULL,
   `comments` VARCHAR(256) DEFAULT NULL,
   `event_id` INT NOT NULL,
-  user_id INT NOT NULL,
+  `user_id` INT NOT NULL,
   `last_update` TIMESTAMP DEFAULT now(),
   
   PRIMARY KEY(`id`),
-  CONSTRAINT `FK_EVENT_LENDING`
-  FOREIGN KEY(`event_id`) REFERENCES `event`(`id`) 
+  CONSTRAINT `FK_EVENT_RESERVATION`
+  FOREIGN KEY(`event_id`) REFERENCES `event`(`id`)
   ON DELETE NO ACTION ON UPDATE NO ACTION,
   
-  CONSTRAINT `FK_EMPLOYEE_LENDING`
+  CONSTRAINT `FK_EMPLOYEE_RESERVATION`
   FOREIGN KEY(user_id) REFERENCES `user`(`id`)
   ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
@@ -199,7 +200,7 @@ DROP TABLE IF EXISTS `equipment`;
 CREATE TABLE `equipment` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `state` VARCHAR(45) DEFAULT "Dobry",
+  `state` VARCHAR(45) DEFAULT 'Dobry',
   `comments` VARCHAR(256) DEFAULT NULL,
   `category` INT NOT NULL,
   `last_update` TIMESTAMP DEFAULT now(),
@@ -226,49 +227,48 @@ INSERT INTO equipment_category(`name`) VALUES
   ('Live'),
   ('Akcesoria');
 
-DROP TABLE IF EXISTS `eq_lending`;
+DROP TABLE IF EXISTS eq_reservation;
 
-CREATE TABLE `eq_lending` (
+CREATE TABLE eq_reservation (
   `equipment_id` INT NOT NULL,
-  `lending_id` INT NOT NULL,
+  `reservation_id` INT NOT NULL,
   
-  PRIMARY KEY (`equipment_id`,`lending_id`),
+  PRIMARY KEY (`equipment_id`, `reservation_id`),
   
   CONSTRAINT `FK_EQUIPMENT` FOREIGN KEY (`equipment_id`)
   REFERENCES `equipment` (`id`)
   ON DELETE NO ACTION ON UPDATE NO ACTION,
   
-  CONSTRAINT `FK_LENDING_EQ` FOREIGN KEY (`lending_id`) 
-  REFERENCES `lending` (`id`) 
+  CONSTRAINT `FK_RESERVATION_EQ` FOREIGN KEY (`reservation_id`)
+  REFERENCES `reservation` (`id`)
   ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB;
 
 delimiter //
-create procedure select_equipment_from_given_lending(id INT)
+create procedure select_equipment_from_given_reservation(id INT)
 BEGIN
 select *
 from equipment e
 where e.id in
 (select el.equipment_id
-from eq_lending el
-where el.lending_id=id)
+from eq_reservation el
+where el.`reservation_id`=id)
 order by e.name;
 END//
 delimiter ;
 
 delimiter //
-create procedure select_free_equipment()
+create procedure select_reservations(dSince DATE, tSince TIME, dTo DATE, tTo TIME)
 BEGIN
-select *
-from equipment e
-where e.id not in
-(select el.equipment_id
-from eq_lending el
-where el.lending_id in
-(select l.id
-from lending l
-where l.return_time is null))
-order by e.name;
+DECLARE tsSince, tsTo TIMESTAMP;
+SET tsSince = TIMESTAMP(dSince, tSince);
+SET tsTo = TIMESTAMP(dTo, tTo);
+
+SELECT *
+FROM reservation r
+WHERE TIMESTAMP(r.date_since, r.time_since) BETWEEN tsSince AND tsTo
+OR TIMESTAMP (r.date_to, r.time_to) BETWEEN tsSince AND tsTo
+OR tsSince BETWEEN TIMESTAMP(r.date_since, r.time_since) AND TIMESTAMP(r.date_to, r.time_to);
 END//
 delimiter ;
 
@@ -343,12 +343,12 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE TRIGGER `optimistic_locking_lending` BEFORE UPDATE ON `lending`
+CREATE TRIGGER optimistic_locking_reservation BEFORE UPDATE ON reservation
 FOR EACH ROW
 BEGIN
 	IF NEW.last_update != (
     select l.last_update
-    from lending l
+    from reservation l
     where l.id = NEW.id) THEN
         SIGNAL SQLSTATE '12346'
             SET MESSAGE_TEXT = 'Edycja nieudana, ponów próbę!';

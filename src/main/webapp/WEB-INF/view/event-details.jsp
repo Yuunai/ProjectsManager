@@ -29,7 +29,7 @@
 
     <%@include file="header.jsp"%>
 
-    <%--TODO add lendings table below participations table--%>
+    <%--TODO add reservations table below participations table--%>
     <div >
 
         <div id="eventDetailsTable" class="float-left w-50">

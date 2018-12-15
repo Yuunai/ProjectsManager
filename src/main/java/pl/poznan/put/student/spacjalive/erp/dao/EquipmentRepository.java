@@ -7,20 +7,18 @@ import java.util.List;
 
 public interface EquipmentRepository {
 	
-	public List<Equipment> getFreeEquipment();
+	List<Equipment> getEquipmentList();
 	
-	public List<Equipment> getEquipmentList();
+	List<Equipment> getEquipmentByCategory(int id);
 	
-	public List<Equipment> getEquipmentByCategory(int id);
+	EquipmentCategory getCategory(int id);
 	
-	public EquipmentCategory getCategory(int id);
+	List<EquipmentCategory> getCategories();
 	
-	public List<EquipmentCategory> getCategories();
+	void saveEquipment(Equipment equipment);
 	
-	public void saveEquipment(Equipment equipment);
+	Equipment getEquipment(int id);
 	
-	public Equipment getEquipment(int id);
-	
-	public void deleteEquipment(int id);
+	void deleteEquipment(int id);
 	
 }

@@ -21,6 +21,11 @@
                 </a>
             </li>
             <li class="nav-item text-nowrap">
+                <a class="nav-link" href="/reservation/list">
+                    Rezerwacje
+                </a>
+            </li>
+            <li class="nav-item text-nowrap">
                 <a class="nav-link" href="/user/list">
                     <span data-feather="users"></span>
                     Ludzie
