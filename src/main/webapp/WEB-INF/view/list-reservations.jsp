@@ -61,23 +61,20 @@
                         <a href="${updateLink}">Aktualizuj</a>
                         |
                         <a href="${deleteLink}"
-                           onclick="if (!(confirm('Czy na pewno chcesz usunąć to wypożyczenie?'))) return false">Usuń</a>
+                           onclick="if (!(confirm('Czy na pewno chcesz usunąć rezerwację?'))) return false">Usuń</a>
                     </td>
                 </tr>
 
             </c:forEach>
             <tr>
                 <td colspan="5">
-                    <a class="btn btn-primary" href="reservation/addReservationForm" role="button">Nowe wypożyczenie</a>
+                    <form action="${pageContext.request.contextPath}/reservation/addReservationForm" method="GET">
+                        Start: <input type="date" name="date-since"/> <input type="time" name="time-since"/>
+                        Koniec: <input type="date" name="date-to"/> <input type="time" name="time-to">
+                        <input class="btn btn-primary" type="submit" value="Dodaj rezerwację">
+                    </form>
                 </td>
             </tr>
-            <tr><td colspan="5">
-            <form action="${pageContext.request.contextPath}/reservation/addReservationForm" method="GET">
-                Start: <input type="date" name="date-since"/> <input type="time" name="time-since"/>
-                Koniec: <input type="date" name="date-to"/> <input type="time" name="time-to">
-                <input class="btn btn-primary" type="submit" value="Dodaj rezerwację">
-            </form>
-            </td></tr>
             </tbody>
         </table>
     </div>

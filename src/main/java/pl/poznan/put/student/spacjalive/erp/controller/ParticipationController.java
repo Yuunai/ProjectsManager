@@ -40,7 +40,7 @@ public class ParticipationController {
 	@PostMapping("/addParticipation")
 	public String addParticipation(@ModelAttribute("participation") ParticipationViewModel participationViewModel) {
 		Event event = eventService.getEvent(participationViewModel.getEventId());
-		User user = userService.getUser(participationViewModel.getEmployeeId());
+		User user = userService.getUser(participationViewModel.getUserId());
 		Role role = roleService.getRole(participationViewModel.getRoleId());
 		Participation participation = new Participation(event, user, role);
 		

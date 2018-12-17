@@ -12,10 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import pl.poznan.put.student.spacjalive.erp.entity.User;
-import pl.poznan.put.student.spacjalive.erp.entity.Event;
-import pl.poznan.put.student.spacjalive.erp.entity.Participation;
-import pl.poznan.put.student.spacjalive.erp.entity.Role;
+import pl.poznan.put.student.spacjalive.erp.entity.*;
 import pl.poznan.put.student.spacjalive.erp.service.UserService;
 import pl.poznan.put.student.spacjalive.erp.service.EventService;
 import pl.poznan.put.student.spacjalive.erp.service.ParticipationService;
@@ -105,8 +102,8 @@ public class EventController {
 		List<Role> roles = roleService.getRoles();
 		model.addAttribute("roles", roles);
 		
-		List<User> users = userService.getUsers();
-		model.addAttribute("employees", users);
+		List<UserDetails> users = userService.getUsersDetails(true);
+		model.addAttribute("users", users);
 		
 		return "event-details";
 	}

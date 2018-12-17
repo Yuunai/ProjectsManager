@@ -3,7 +3,7 @@ package pl.poznan.put.student.spacjalive.erp.viewmodel;
 public class ParticipationViewModel {
 	
 	private int eventId;
-	private int employeeId;
+	private int userId;
 	private int roleId;
 	
 	public int getEventId() {
@@ -14,12 +14,12 @@ public class ParticipationViewModel {
 		this.eventId = eventId;
 	}
 	
-	public int getEmployeeId() {
-		return employeeId;
+	public int getUserId() {
+		return userId;
 	}
 	
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	
 	public int getRoleId() {
@@ -34,7 +34,7 @@ public class ParticipationViewModel {
 	public String toString() {
 		return "ParticipationViewModel{" +
 				"eventId=" + eventId +
-				", employeeId=" + employeeId +
+				", userId=" + userId +
 				", roleId=" + roleId +
 				'}';
 	}

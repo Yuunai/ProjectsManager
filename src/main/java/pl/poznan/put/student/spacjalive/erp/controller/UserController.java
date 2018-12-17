@@ -53,14 +53,19 @@ public class UserController {
 	
 	@GetMapping("/updateUserForm")
 	public String updateUser(@RequestParam("userId") int userId, Model model) {
-		model.addAttribute("details", userService.getUserDetails(userId));
+		UserDetails userDetails = userService.getUserDetails(userId);
+		if(userDetails == null) {
+			userDetails = new UserDetails();
+			userDetails.setUserId(userId);
+		}
+		model.addAttribute("details", userDetails);
 		model.addAttribute("administrativeRoles", userService.getAdmRoles());
 		
 		return "update-user-form";
 	}
 	
 	@PostMapping("/updateUser")
-	public String updateUser(@ModelAttribute("user") @Valid UserDetails details, BindingResult result, Model model) {
+	public String updateUser(@ModelAttribute("details") @Valid UserDetails details, BindingResult result, Model model) {
 		if (result.hasErrors())
 			return "update-user-form";
 		

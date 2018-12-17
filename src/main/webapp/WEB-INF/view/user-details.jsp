@@ -110,7 +110,7 @@
                 <c:forEach var="participation" items="${participations}">
                     <c:url var="deleteLink" value="/participation/deleteParticipation">
                         <c:param name="roleId" value="${participation.role.id}" />
-                        <c:param name="employeeId" value="${participation.user.id}" />
+                        <c:param name="userId" value="${participation.user.id}" />
                         <c:param name="eventId" value="${participation.event.id}" />
                     </c:url>
                     <tr>

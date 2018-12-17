@@ -117,11 +117,12 @@
                 <c:forEach var="participation" items="${participations}">
                     <c:url var="deleteLink" value="/participation/deleteParticipation">
                         <c:param name="roleId" value="${participation.role.id}" />
-                        <c:param name="employeeId" value="${participation.user.id}" />
+                        <c:param name="userId" value="${participation.user.id}" />
                         <c:param name="eventId" value="${participation.event.id}" />
                     </c:url>
                     <tr>
-                        <td>${participation.user.firstName} ${participation.user.lastName}</td>
+                        <%--TODO replace user email with first and last names--%>
+                        <td>${participation.user.email}</td>
                         <td>${participation.role.name}</td>
                         <td>
                             <a href="${deleteLink}"
@@ -133,10 +134,10 @@
                     <form:hidden path="eventId"/>
                     <tr>
                         <td>
-                            <form:select path="employeeId">
+                            <form:select path="userId">
                                 <form:option value="0" label="Wybierz pracownika"/>
                                 <c:forEach items="${users}" var="user">
-                                    <form:option value="${user.id}" label="${user.firstName} ${user.lastName}"/>
+                                    <form:option value="${user.userId}" label="${user.firstName} ${user.lastName}"/>
                                 </c:forEach>
                             </form:select>
                         </td>

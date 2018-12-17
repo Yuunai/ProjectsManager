@@ -32,6 +32,12 @@
                 </a>
             </li>
             <li class="nav-item text-nowrap">
+                <a class="nav-link" href="/account/list">
+                    <span data-feather="users"></span>
+                    Konta
+                </a>
+            </li>
+            <li class="nav-item text-nowrap">
                 <a class="nav-link" href="/user/userDetails?userId=${sessionScope.get("userId")}">
                     <span data-feather="user"></span>
                     Mój profil
@@ -59,12 +65,6 @@
                     <span>Ważne</span>
                 </h6>
                 <ul class="nav flex-column mb-2">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/role/list">
-                            <span data-feather="users"></span>
-                            Role
-                        </a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="users"></span>
