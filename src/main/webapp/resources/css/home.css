@@ -27,3 +27,9 @@ body {
     font-size: 80%;
     color: red;
 }
+
+.form-header {
+    width: 100%;
+    font-size: 80%;
+    color: black;
+}

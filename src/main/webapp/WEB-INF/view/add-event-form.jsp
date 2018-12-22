@@ -51,54 +51,64 @@
 
             <div class="row py-4">
                 <div class="col-12 col-md-4">
-                    <form:input path="name" id="nameEvent" type="text" class="form-control" placeholder="Nazwa"/>
+                    <label class="form-header" for="nameEvent">Nazwa wydarzenia</label>
+                    <form:input path="name" id="nameEvent" type="text" class="form-control" placeholder="np. Konferencja XYZ"/>
                     <label class="form-note" for="nameEvent"><form:errors path="name"/></label>
                 </div>
-                <div class="col-12 col-md-3">
-                    <form:input path="place" id="placeEvent" type="text" class="form-control" placeholder="Miejsce"/>
+                <div class="col-12 col-md-2">
+                    <label class="form-header" for="placeEvent">Miejsce</label>
+                    <form:input path="place" id="placeEvent" type="text" class="form-control" placeholder="np. CW4"/>
                     <label class="form-note" for="placeEvent"><form:errors path="place"/></label>
                 </div>
-                <div class="col-12 col-md-2">
-                    <form:input path="date" id="dateEvent" type="date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" placeholder="Data rrrr-mm-dd"/>
+                <div class="col-12 col-md-3">
+                    <label class="form-header" for="dateEvent">Termin</label>
+                    <form:input path="date" id="dateEvent" type="date" class="form-control"/>
                     <label class="form-note" for="dateEvent"><form:errors path="date"/></label>
                 </div>
                 <div class="col-12 col-md-2">
-                    <form:input path="time" id="dateEvent" type="time" pattern="[0-9]{2}:[0-9]{2}" class="form-control"
-                                placeholder="Rozpoczęcie hh:mm"/>
+                    <label class="form-header" for="dateEvent">Godzina</label>
+                    <form:input path="time" id="dateEvent" type="time" class="form-control"/>
                     <label class="form-note" for="dateEvent"><form:errors path="time"/></label>
                 </div>
             </div>
             <div class="row py-4">
                 <div class="col-12 col-md-4">
-                    <form:input path="organizer" id="orgNameEvent" type="text" class="form-control" placeholder="Organizator"/>
+                    <label class="form-header" for="orgNameEvent">Organizator</label>
+                    <form:input path="organizer" id="orgNameEvent" type="text" class="form-control" placeholder="Imię, Nazwisko"/>
                     <label class="form-note" for="orgNameEvent"><form:errors path="organizer"/></label>
                 </div>
                 <div class="col-12 col-md-3">
-                    <form:input path="phoneNumber" id="telOrgEvent" type="text" class="form-control" placeholder="Tel. Organizatora"/>
+                    <label class="form-header" for="telOrgEvent">Telefon kontaktowy</label>
+                    <form:input path="phoneNumber" id="telOrgEvent" type="text" class="form-control" placeholder="123456789"/>
                     <label class="form-note" for="telOrgEvent"><form:errors path="phoneNumber"/></label>
                 </div>
                 <div class="col-12 col-md-4">
-                    <form:input path="email" id="emailOrgEvent" type="text" class="form-control" placeholder="Email Organizatora"/>
+                    <label class="form-header" for="emailOrgEvent">Email kontaktowy</label>
+                    <form:input path="email" id="emailOrgEvent" type="text" class="form-control" placeholder="xyz@zyx.pl"/>
                     <label class="form-note" for="emailOrgEvent"><form:errors path="email"/></label>
                 </div>
             </div>
             <div class="row py-4">
                 <div class=" col-12 col-md-11">
-                    <form:input path="comments" id="commentEvent" type="text" class="form-control" placeholder="Komentarz"/>
+                    <label class="form-header" for="emailOrgEvent">Komentarz</label>
+                    <form:input path="comments" id="commentEvent" type="text" class="form-control" placeholder="Dodatkowe informacje"/>
                     <label class="form-note" for="commentEvent"><form:errors path="comments"/></label>
                 </div>
             </div>
             <div class="row py-4 justify-content-center">
                 <div class="col-12 col-md-2">
-                    <form:input path="priority" id="prioEvent" type="number" class="form-control" placeholder="Priorytet"/>
+                    <label class="form-header" for="prioEvent">Priorytet</label>
+                    <form:input path="priority" max="10" min="0" id="prioEvent" type="number" class="form-control"/>
                     <label class="form-note" for="prioEvent"><form:errors path="priority"/></label>
                 </div>
                 <div class="col-12 col-md-3">
+                    <label class="form-header" for="deadlineEvent">Deadline</label>
                     <form:input path="deadline" id="deadlineEvent" type="date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" placeholder="Deadline rrrr-mm-dd"/>
                     <label class="form-note" for="deadlineEvent"><form:errors path="deadline"/></label>
                 </div>
                 <div class="col-12 col-md-4">
-                    <form:input path="videoType" id="typeEvent" type="text" class="form-control" placeholder="Typ nagrania"/>
+                    <label class="form-header" for="typeEvent">Typ nagrania</label>
+                    <form:input path="videoType" id="typeEvent" type="text" class="form-control" placeholder="NEWS, Repo itp."/>
                     <label class="form-note" for="typeEvent"><form:errors path="videoType"/></label>
                 </div>
             </div>
