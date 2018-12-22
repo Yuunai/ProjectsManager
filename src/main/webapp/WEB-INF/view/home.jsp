@@ -61,7 +61,7 @@
                             <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${eventDetails}'">
                                 Więcej
                             </button>
-                            <button class="btn btn-sm btn-outline-secondary">Dołącz</button>
+                            <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#joinModal">Dołącz</button>
                         </div>
                     </td>
                 </tr>
@@ -70,6 +70,82 @@
         </table>
     </div>
 </main>
+<div class="modal fade" id="joinModal" tabindex="-1" role="dialog" aria-labelledby="joinModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="joinModalLabel">Dołącz do wydarzenia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th scope="col">Imię i nazwisko</th>
+                            <th scope="col">Rola</th>
+                            <th scope="col">Akcja</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:if test="${empty participations}">
+                            <tr>
+                                <td colspan="3">Brak chętnych. Bądź pierwszy!</td>
+                            </tr>
+                        </c:if>
+                        <c:forEach var="participation" items="${participations}">
+                            <c:url var="deleteLink" value="/participation/deleteParticipation">
+                                <c:param name="roleId" value="${participation.role.id}"/>
+                                <c:param name="userId" value="${participation.user.id}"/>
+                                <c:param name="eventId" value="${participation.event.id}"/>
+                            </c:url>
+                            <tr>
+                                    <%--TODO replace user email with first and last names--%>
+                                <td>${participation.user.email}</td>
+                                <td>${participation.role.name}</td>
+                                <td>
+                                    <a href="${deleteLink}"
+                                       onclick="if (!(confirm('Are you sure you want to delete this participation?'))) return false">Usuń
+                                    </a>
+                            </tr>
+                        </c:forEach>
+                        <%--TODO no model participation--%>
+                        <%--<form:form action="/participation/addParticipation" modelAttribute="participation" method="POST"--%>
+                                   <%--acceptCharset="utf8">--%>
+                            <%--<form:hidden path="eventId"/>--%>
+                            <%--<tr>--%>
+                                <%--<td>--%>
+                                    <%--<form:select path="userId" class="form-control">--%>
+                                        <%--<form:option value="0" label="Wybierz pracownika"/>--%>
+                                        <%--<c:forEach items="${users}" var="user">--%>
+                                            <%--<form:option value="${user.userId}" label="${user.firstName} ${user.lastName}"/>--%>
+                                        <%--</c:forEach>--%>
+                                    <%--</form:select>--%>
+                                <%--</td>--%>
+                                <%--<td>--%>
+                                    <%--<form:select path="roleId" class="form-control">--%>
+                                        <%--<form:option value="0" label="Wybierz rolę"/>--%>
+                                        <%--<c:forEach items="${roles}" var="role">--%>
+                                            <%--<form:option value="${role.id}" label="${role.name}"/>--%>
+                                        <%--</c:forEach>--%>
+                                    <%--</form:select>--%>
+                                <%--</td>--%>
+                                <%--<td>--%>
+                                <%--</td>--%>
+                            <%--</tr>--%>
+                        <%--</form:form>--%>
+                        </tbody>
+                    </table>
+                </div>
+            <div class="modal-footer">
+                <%--TODO move submit button to form--%>
+                <button class="btn btn-outline-secondary" type="submit">Zapisz</button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 </div>
 <footer class="footer">
