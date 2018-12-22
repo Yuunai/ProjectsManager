@@ -1,138 +1,161 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Yuunai
-  Date: 2017-11-29
-  Time: 20:47
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>User Details</title>
-
-    <link type="text/css"
-          rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
-
-    <link type="text/css"
-          rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/header-style.css" />
-
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>SpacjaTV Profil</title>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header-style.css"/>
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/home.css" />" rel="stylesheet">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/add-forms.js"></script>
+    <script>
+        function makeEditable() {
+            var x = document.getElementsByClassName("form-control");
+            var i;
+            for (i = 0; i < x.length; i++) {
+                if (x[i].disabled == true) {
+                    x[i].disabled = false;
+                }
+            }
+            document.getElementById("updateBtn").style.display = "inline";
+        }
+    </script>
 </head>
 <body>
+
 
 <div id="container" class="container">
 
     <%@include file="header.jsp"%>
-
-    <div >
-        <div class="float-left w-50">
-            <table class="table table-bordered">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col" colspan="2" class="text-center">Członek</th>
-                </tr>
-                <tr>
-                    <th scope="col">Właściwość</th>
-                    <th scope="col">Wartość</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><label>Imię</label></td>
-                    <td>${details.firstName}</td>
-                </tr>
-                <tr>
-                    <td><label>Nazwisko</label></td>
-                    <td>${details.lastName}</td>
-                </tr>
-                <tr>
-                    <td><label>Indeks</label></td>
-                    <td>${details.studentIndex}</td>
-                </tr>
-                <tr>
-                    <td><label>Numer telefonu</label></td>
-                    <td>${details.phoneNumber}</td>
-                </tr>
-                <tr>
-                    <td><label>Wejście do biura</label></td>
-                    <c:if test="${details.officeEntrance}">
-                        <td>Tak</td>
-                    </c:if>
-                    <c:if test="${details.officeEntrance == false}">
-                        <td>Nie</td>
-                    </c:if>
-                </tr>
-                <tr>
-                    <td><label>Samochód</label></td>
-                    <c:if test="${details.car}">
-                        <td>Tak</td>
-                    </c:if>
-                    <c:if test="${details.car == false}">
-                        <td>Nie</td>
-                    </c:if>
-                </tr>
-                <tr>
-                    <td><label>Aktywny</label></td>
-                    <c:if test="${details.active}">
-                        <td>Tak</td>
-                    </c:if>
-                    <c:if test="${details.active == false}">
-                        <td>Nie</td>
-                    </c:if>
-                </tr>
-                </tbody>
-            </table>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-6 mt-0">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <button class="btn btn-outline-secondary" onclick="makeEditable()">
+                    Edytuj
+                </button>
+            </div>
+            <div class="btn-toolbar mb-2 mb-md-0 ml-auto">
+                <%--TODO if id is mine back to home else back to people--%>
+                <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/home'">
+                    <span data-feather="x" style="margin-bottom: 1px;"></span>
+                    Wróć
+                </button>
+            </div>
         </div>
+        <h2>Szczegóły Profilu</h2>
 
-        <div id="participationsTable" class="float-left w-50">
-            <table class="table table-bordered">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col" colspan="3" class="text-center">Uczestnictwa</th>
-                </tr>
-                <tr>
-                    <th scope="col">Wydarzenie</td></th>
-                    <th scope="col">Rola</th>
-                    <th scope="col">Akcja</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:if test="${empty participations}">
-                    <tr>
-                        <td colspan="3">Skryty członek, który nie lubi uczestniczyć w wydarzeniach :c</td>
-                    </tr>
+        <div class="container-fluid justify-content-center">
+            <%--TODO wrong redirection if invalid data--%>
+            <form:form action="updateUser" modelAttribute="details" method="POST" acceptCharset="utf8">
+                <form:hidden path="userId"/>
+                <form:hidden path="lastUpdate"/>
+                <c:if test="${!empty message}">
+                    <div class="row py-4">
+                        <div class="col-12">
+                            <span class="text-center">${message}</span>
+                        </div>
+                    </div>
                 </c:if>
-                <c:forEach var="participation" items="${participations}">
-                    <c:url var="deleteLink" value="/participation/deleteParticipation">
-                        <c:param name="roleId" value="${participation.role.id}" />
-                        <c:param name="userId" value="${participation.user.id}" />
-                        <c:param name="eventId" value="${participation.event.id}" />
-                    </c:url>
-                    <tr>
-                        <td>${participation.event.name}</td>
-                        <td>${participation.role.name}</td>
-                        <td>
-                            <a href="${deleteLink}"
-                               onclick="if (!(confirm('Are you sure you want to delete this participation?'))) return false">Usuń
-                            </a>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
+                <div id="errorRow">
+                    <span id="errors"><form:errors/></span>
+                </div>
+                <script>
+                    hideEmptyErrorsRow();
+                </script>
 
-        <p>
-            <a href="${pageContext.request.contextPath}/user/list">Wróc do listy</a>
-        </p>
+                <div class="row py-4">
+                    <div class="col-12 col-md-4">
+                        <label class="form-header" for="firstNameProfile">Imię</label>
+                        <form:input path="firstName" id="firstNameProfile" type="text" class="form-control" value="${details.firstName}"
+                                    disabled="true"/>
+                        <label class="form-note" for="firstNameProfile"><form:errors path="firstName"/></label>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-header" for="lastNameProfile">Nazwisko</label>
+                        <form:input path="lastName" id="lastNameProfile" type="text" class="form-control" value="${details.lastName}"
+                                    disabled="true"/>
+                        <label class="form-note" for="lastNameProfile"><form:errors path="lastName"/></label>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <label class="form-header" for="indexProfile">Numer indeksu</label>
+                        <form:input path="studentIndex" id="indexProfile" type="text" class="form-control" value="${details.studentIndex}"
+                                    disabled="true"/>
+                        <label class="form-note" for="indexProfile"><form:errors path="studentIndex"/></label>
+                    </div>
+                </div>
+                <div class="row py-4">
+                    <div class="col-12 col-md-3">
+                        <label class="form-header" for="phoneProfile">Number telefonu</label>
+                        <form:input path="phoneNumber" id="phoneProfile" type="text" class="form-control"
+                                    value="${details.phoneNumber}" disabled="true"/>
+                        <label class="form-note" for="phoneProfile"><form:errors path="phoneNumber"/></label>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <label class="form-header" for="officeProfile">Wejście do biura</label>
+                        <form:checkbox path="officeEntrance" id="officeProfile" class="form-control" disabled="true"
+                                       value="${details.officeEntrance}"/>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <label class="form-header" for="carProfile">Samochód</label>
+                        <form:checkbox path="car" id="carProfile" class="form-control" disabled="true"
+                                       value="${details.car}"/>
+                    </div>
+                </div>
+
+                <div class="row py-4 justify-content-center">
+                    <div class=" col-4">
+                        <button id="updateBtn" class="btn btn-lg btn-secondary btn-block" style="display: none"
+                                type="submit">Uaktualnij
+                        </button>
+                    </div>
+                </div>
 
 
-    </div>
+            </form:form>
 
 
+                <div id="participationsTable" class="table-responsive">
+                    <h2>Uczestnictwa</h2>
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th scope="col">Wydarzenie</th>
+                            <th scope="col">Rola</th>
+                            <th scope="col">Akcja</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:if test="${empty participations}">
+                            <tr>
+                                <td colspan="3">Członek nie brał udziału w żadnym wydarzeniu.</td>
+                            </tr>
+                        </c:if>
+                        <c:forEach var="participation" items="${participations}">
+                            <c:url var="deleteLink" value="/participation/deleteParticipation">
+                                <c:param name="roleId" value="${participation.role.id}"/>
+                                <c:param name="userId" value="${participation.user.id}"/>
+                                <c:param name="eventId" value="${participation.event.id}"/>
+                            </c:url>
+                            <tr>
+                                <td>${participation.event.name}</td>
+                                <td>${participation.role.name}</td>
+                                <td>
+                                    <a href="${deleteLink}"
+                                       onclick="if (!(confirm('Are you sure you want to delete this participation?'))) return false">Usuń
+                                    </a>
+                            </tr>
+                        </c:forEach>
+
+                        </tbody>
+                    </table>
+                </div>
+
+    </main>
+        <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+        <script>
+            feather.replace()
+        </script>
 </body>
 </html>

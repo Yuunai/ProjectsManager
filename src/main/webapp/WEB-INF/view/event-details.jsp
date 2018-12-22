@@ -30,11 +30,6 @@
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-6 mt-0">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <div class="btn-toolbar mb-2 mb-md-0 mr-3">
-            <button class="btn btn-outline-secondary" onclick="location.href='#'">
-                Dołącz
-            </button>
-        </div>
         <div class="btn-toolbar mb-2 mb-md-0">
             <button class="btn btn-outline-secondary" onclick="makeEditable()">
                 Edytuj
@@ -124,8 +119,8 @@
                     <label class="form-note" for="commentEvent"><form:errors path="comments"/></label>
                 </div>
             </div>
-            <div class="row py-4 justify-content-center">
-                <div class="col-12 col-md-2">
+            <div class="row py-4">
+                <div class="col-12 col-md-1 mr-3">
                         <%--TODO checkbox not updating--%>
                     <label class="form-header" for="archEvent">Zarchiwizowane</label>
                     <form:checkbox path="archived" id="archEvent" class="form-control" disabled="true"
@@ -227,3 +222,4 @@
     feather.replace()
 </script>
 </body>
+</html>
