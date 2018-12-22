@@ -9,6 +9,8 @@
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header-style.css"/>
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/home.css" />" rel="stylesheet">
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/flag-icon.min.css" />" rel="stylesheet">
+
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/add-forms.js"></script>
     <script>
         function makeEditable() {
@@ -153,6 +155,33 @@
                 </div>
 
     </main>
+        <footer class="footer">
+            <div class="footer-copyright text-center py-3">
+                <div class="container">
+
+                    <ul class="list-unstyled list-inline text-center">
+                        <li class="list-inline-item flagShadow">
+                            <a href="#pl"><span class="flag-icon flag-icon-pl"> </span></a>
+                        </li>
+                        <li class="list-inline-item flagShadow">
+                            <a href="#gb"><span class="flag-icon flag-icon-gb"> </span></a>
+                        </li>
+                    </ul>
+                </div>
+                © 2018-2019 Copyright:
+                <a href="https://www.facebook.com/SpacjaTv/"> SpacjaTV</a>
+            </div>
+        </footer>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+
+        <!-- Icons -->
         <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
         <script>
             feather.replace()
