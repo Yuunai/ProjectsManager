@@ -95,12 +95,12 @@
                             value="${details.phoneNumber}" disabled="true"/>
                 <label class="form-note" for="phoneProfile"><form:errors path="phoneNumber"/></label>
             </div>
-            <div class="col-12 col-md-2">
+            <div class="col-12 col-md-2 text-center">
                 <label class="form-header" for="officeProfile">Wejście do biura</label>
                 <form:checkbox path="officeEntrance" id="officeProfile" class="form-control" disabled="true"
                                value="${details.officeEntrance}"/>
             </div>
-            <div class="col-12 col-md-1">
+            <div class="col-12 col-md-1 text-center">
                 <label class="form-header" for="carProfile">Samochód</label>
                 <form:checkbox path="car" id="carProfile" class="form-control" disabled="true"
                                value="${details.car}"/>

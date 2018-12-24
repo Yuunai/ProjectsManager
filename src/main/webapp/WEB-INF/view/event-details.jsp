@@ -124,7 +124,7 @@
             <div class="row py-4">
                 <div class="col-12 col-md-1 mr-3">
                         <%--TODO checkbox not updating--%>
-                    <label class="form-header" for="archEvent">Zarchiwizowane</label>
+                    <label class="form-header text-center" for="archEvent">Zarchiwizowane</label>
                     <form:checkbox path="archived" id="archEvent" class="form-control" disabled="true"
                                    value="${event.archived}"/>
                 </div>
