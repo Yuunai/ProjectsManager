@@ -123,10 +123,18 @@
             </div>
             <div class="row py-4">
                 <div class="col-12 col-md-1 mr-3">
-                        <%--TODO checkbox not updating--%>
                     <label class="form-header text-center" for="archEvent">Zarchiwizowane</label>
-                    <form:checkbox path="archived" id="archEvent" class="form-control" disabled="true"
-                                   value="${event.archived}"/>
+                    <c:choose>
+                        <c:when test="${event.archived}">
+                            <form:checkbox path="archived" id="archEvent" class="form-control" disabled="true"
+                                           value="${event.archived}" checked="checked"/>
+                        </c:when>
+
+                        <c:otherwise>
+                            <form:checkbox path="archived" id="archEvent" class="form-control" disabled="true"
+                                           value="${event.archived}"/>
+                        </c:otherwise>
+                     </c:choose>
                 </div>
                 <div class="col-12 col-md-2">
                     <label class="form-header" for="prioEvent">Priorytet</label>

@@ -1,10 +1,7 @@
 package pl.poznan.put.student.spacjalive.erp.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "event")
@@ -71,7 +68,7 @@ public class Event {
 	private String deadline;
 	
 	@Column(name = "archived")
-	private int archived;
+	private boolean archived;
 	
 	@NotNull(message = "Pole nie może być puste!")
 	@Size(min = 1, message = "Pole nie może być puste!")
@@ -87,7 +84,7 @@ public class Event {
 	}
 	
 	public Event(String name, String place, String date, String time, String organizer, String phoneNumber, String
-			email, String comments, int priority, String deadline, int archived, String videoType, String lastUpdate) {
+			email, String comments, int priority, String deadline, boolean archived, String videoType, String lastUpdate) {
 		this.name = name;
 		this.place = place;
 		this.date = date;
@@ -191,11 +188,11 @@ public class Event {
 		this.deadline = deadline;
 	}
 	
-	public int getArchived() {
+	public boolean isArchived() {
 		return archived;
 	}
 	
-	public void setArchived(int archived) {
+	public void setArchived(boolean archived) {
 		this.archived = archived;
 	}
 	
