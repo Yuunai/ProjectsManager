@@ -123,6 +123,7 @@
 
     </div>
     </main>
+    <%@include file="footer.jsp" %>
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
         feather.replace()
