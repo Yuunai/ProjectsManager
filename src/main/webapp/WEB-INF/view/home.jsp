@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<html lang="pl">
+<c:set var="lang" value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${lang}" />
+<fmt:setBundle basename="lang"/>
+
+
+<html lang="<fmt:message key="home.language"/>">
 <head>
     <meta charset="utf-8">
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />" rel="stylesheet">
@@ -12,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Maciej Jaskiewicz, Krystian Minta">
-    <title>SpacjaTV Wydarzenia</title>
+    <title><fmt:message key="home.title"/></title>
 </head>
 <body>
 
@@ -23,26 +29,26 @@
         <div class="btn-toolbar mb-2 mb-md-0">
             <button class="btn btn-outline-secondary" onclick="location.href='event/addEventForm'">
                 <span data-feather="plus" style="margin-bottom: 1px;"></span>
-                Dodaj wydarzenie
+                <fmt:message key="home.addEventBtn"/>
             </button>
         </div>
         <div class="btn-toolbar mb-2 mb-md-0">
             <button class="btn btn-outline-secondary">
                 <span data-feather="archive" style="margin-bottom: 1px;"></span>
-                Archiwum
+                <fmt:message key="home.archiveBtn"/>
             </button>
         </div>
     </div>
 
-    <h2>Nadchodzące wydarzenia</h2>
+    <h2><fmt:message key="home.header"/></h2>
     <div class="table-responsive">
         <table class="table table-striped table-sm">
             <thead>
             <tr>
-                <th scope="col">Nazwa</th>
-                <th scope="col">Termin</th>
-                <th scope="col">Miejsce</th>
-                <th scope="col">Typ</th>
+                <th scope="col"><fmt:message key="home.colEventName"/></th>
+                <th scope="col"><fmt:message key="home.colEventDate"/></th>
+                <th scope="col"><fmt:message key="home.colEventPlace"/></th>
+                <th scope="col"><fmt:message key="home.colEventType"/></th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -59,9 +65,11 @@
                     <td>
                         <div class="btn-group mr-2">
                             <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${eventDetails}'">
-                                Więcej
+                                <fmt:message key="home.eventDetailsBtn"/>
                             </button>
-                            <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#joinModal">Dołącz</button>
+                            <button class="btn btn-sm btn-outline-secondary" data-toggle="modal"
+                                    data-target="#joinModal"><fmt:message key="home.eventJoinBtn"/>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -74,7 +82,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="joinModalLabel">Dołącz do wydarzenia</h5>
+                <h5 class="modal-title" id="joinModalLabel"><fmt:message key="home.modalHeader"/></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -84,15 +92,15 @@
                     <table class="table table-striped table-sm">
                         <thead>
                         <tr>
-                            <th scope="col">Imię i nazwisko</th>
-                            <th scope="col">Rola</th>
-                            <th scope="col">Akcja</th>
+                            <th scope="col"><fmt:message key="home.modalName"/></th>
+                            <th scope="col"><fmt:message key="home.modalRole"/></th>
+                            <th scope="col"><fmt:message key="home.modalAction"/></th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:if test="${empty participations}">
                             <tr>
-                                <td colspan="3">Brak chętnych. Bądź pierwszy!</td>
+                                <td colspan="3"><fmt:message key="home.modalNoParticipations"/></td>
                             </tr>
                         </c:if>
                         <c:forEach var="participation" items="${participations}">
@@ -107,45 +115,45 @@
                                 <td>${participation.role.name}</td>
                                 <td>
                                     <a href="${deleteLink}"
-                                       onclick="if (!(confirm('Are you sure you want to delete this participation?'))) return false">Usuń
+                                       onclick="if (!(confirm('Are you sure you want to delete this participation?'))) return false"><fmt:message key="home.modalRemoveParticipation"/>
                                     </a>
                             </tr>
                         </c:forEach>
                         <%--TODO no model participation--%>
                         <%--<form:form action="/participation/addParticipation" modelAttribute="participation" method="POST"--%>
-                                   <%--acceptCharset="utf8">--%>
-                            <%--<form:hidden path="eventId"/>--%>
-                            <%--<tr>--%>
-                                <%--<td>--%>
-                                    <%--<form:select path="userId" class="form-control">--%>
-                                        <%--<form:option value="0" label="Wybierz pracownika"/>--%>
-                                        <%--<c:forEach items="${users}" var="user">--%>
-                                            <%--<form:option value="${user.userId}" label="${user.firstName} ${user.lastName}"/>--%>
-                                        <%--</c:forEach>--%>
-                                    <%--</form:select>--%>
-                                <%--</td>--%>
-                                <%--<td>--%>
-                                    <%--<form:select path="roleId" class="form-control">--%>
-                                        <%--<form:option value="0" label="Wybierz rolę"/>--%>
-                                        <%--<c:forEach items="${roles}" var="role">--%>
-                                            <%--<form:option value="${role.id}" label="${role.name}"/>--%>
-                                        <%--</c:forEach>--%>
-                                    <%--</form:select>--%>
-                                <%--</td>--%>
-                                <%--<td>--%>
-                                <%--</td>--%>
-                            <%--</tr>--%>
+                        <%--acceptCharset="utf8">--%>
+                        <%--<form:hidden path="eventId"/>--%>
+                        <%--<tr>--%>
+                        <%--<td>--%>
+                        <%--<form:select path="userId" class="form-control">--%>
+                        <%--<form:option value="0" label="Wybierz pracownika"/>--%>
+                        <%--<c:forEach items="${users}" var="user">--%>
+                        <%--<form:option value="${user.userId}" label="${user.firstName} ${user.lastName}"/>--%>
+                        <%--</c:forEach>--%>
+                        <%--</form:select>--%>
+                        <%--</td>--%>
+                        <%--<td>--%>
+                        <%--<form:select path="roleId" class="form-control">--%>
+                        <%--<form:option value="0" label="Wybierz rolę"/>--%>
+                        <%--<c:forEach items="${roles}" var="role">--%>
+                        <%--<form:option value="${role.id}" label="${role.name}"/>--%>
+                        <%--</c:forEach>--%>
+                        <%--</form:select>--%>
+                        <%--</td>--%>
+                        <%--<td>--%>
+                        <%--</td>--%>
+                        <%--</tr>--%>
                         <%--</form:form>--%>
                         </tbody>
                     </table>
                 </div>
-            <div class="modal-footer">
-                <%--TODO move submit button to form--%>
-                <button class="btn btn-outline-secondary" type="submit">Zapisz</button>
+                <div class="modal-footer">
+                    <%--TODO move submit button to form--%>
+                    <button class="btn btn-outline-secondary" type="submit"><fmt:message key="home.modalSubmit"/></button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 </div>
 <footer class="footer">
@@ -157,7 +165,7 @@
                     <a href="#pl"><span class="flag-icon flag-icon-pl"> </span></a>
                 </li>
                 <li class="list-inline-item flagShadow">
-                    <a href="#gb"><span class="flag-icon flag-icon-gb"> </span></a>
+                    <a href="#en"><span class="flag-icon flag-icon-gb"> </span></a>
                 </li>
             </ul>
         </div>
