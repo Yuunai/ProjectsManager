@@ -3,7 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html lang="pl">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="lang" value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${lang}" />
+<fmt:setBundle basename="lang"/>
+
+
+<html lang="<fmt:message key="lang.language"/>">
 
 <head>
     <meta charset="utf-8">
@@ -20,17 +27,17 @@
 <body class="text-center">
 <form:form class="form-signin" action="${pageContext.request.contextPath}/authUser" method="POST">
     <img class="mb-4 logopic" src="${pageContext.request.contextPath}/resources/img/STV_350.png" alt="SpacjaTV"></img>
-    <h1 class="h3 mb-3 font-weight-normal">Zaloguj się</h1>
+    <h1 class="h3 mb-3 font-weight-normal"><fmt:message key="login.header"/></h1>
     <c:if test="${param.error != null}">
-        <span class="loginFailed">Niepoprawna nazwa użytkownika lub hasło!</span>
+        <span class="loginFailed"><fmt:message key="login.loginFailed"/></span>
     </c:if>
 
     <c:if test="${param.logout != null}">
-        <span class="loginFailed">Zostałeś wylogowany!</span>
+        <span class="loginFailed"><fmt:message key="login.logout"/></span>
     </c:if>
-    <input type="email" name="username" class="form-control" placeholder="Email" required autofocus>
-    <input type="password" name="password" class="form-control" placeholder="Hasło" required>
-    <button class="btn btn-lg btn-secondary btn-block" type="submit">Zaloguj</button>
+    <input type="email" name="username" class="form-control" placeholder="<fmt:message key="login.email"/>" required autofocus>
+    <input type="password" name="password" class="form-control" placeholder="<fmt:message key="login.pass"/>" required>
+    <button class="btn btn-lg btn-secondary btn-block" type="submit"><fmt:message key="login.login"/></button>
     <div class="mt-5 mb-3 text-muted">
         <div class="container">
 

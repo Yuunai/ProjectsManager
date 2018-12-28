@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<html lang="pl">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="lang" value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${lang}" />
+<fmt:setBundle basename="lang"/>
+
+
+<html lang="<fmt:message key="lang.language"/>">
 <head>
     <meta charset="utf-8">
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />" rel="stylesheet">
@@ -12,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Maciej Jaskiewicz, Krystian Minta">
-    <title>SpacjaTV Ludzie</title>
+    <title><fmt:message key="users.title"/></title>
 </head>
 <body>
 
@@ -29,15 +36,15 @@
         <%--</div>--%>
     <%--</div>--%>
 
-    <h2>Ludzie</h2>
+    <h2><fmt:message key="users.header"/></h2>
     <div class="table-responsive">
         <table class="table table-striped table-sm">
             <thead>
             <tr>
-                <th scope="col">Imię</th>
-                <th scope="col">Nazwisko</th>
-                <th scope="col">Aktywny?</th>
-                <th scope="col">Telefon</th>
+                <th scope="col"><fmt:message key="users.colName"/></th>
+                <th scope="col"><fmt:message key="users.colSurname"/></th>
+                <th scope="col"><fmt:message key="users.colActive"/></th>
+                <th scope="col"><fmt:message key="users.colPhone"/></th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -60,11 +67,11 @@
                     <td>${user.lastName}</td>
                     <td><c:choose>
                         <c:when test="${user.active}">
-                            Tak
+                            <fmt:message key="users.yes"/>
                         </c:when>
 
                         <c:otherwise>
-                            Nie
+                            <fmt:message key="users.no"/>
                         </c:otherwise>
                     </c:choose></td>
                     <td>${user.phoneNumber}</td>
@@ -72,7 +79,7 @@
                         <%--TODO--%>
                         <%--if nie admin--%>
                                 <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${detailsLink}'">
-                                Więcej
+                                    <fmt:message key="users.detailsBtn"/>
                                 </button>
                             <%--else czyli if admin--%>
                         <%--<div class="btn-group mr-2">--%>
