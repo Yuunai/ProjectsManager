@@ -178,11 +178,11 @@
 
             <ul class="list-unstyled list-inline text-center">
                 <li class="list-inline-item flagShadow">
-                    <script>var addresPl = window.location.href + '&language=pl';</script>
+                    <script>var addresPl = window.location.href.split('&',1) + '&language=pl';</script>
                     <a onclick="location.href=addresPl"><span class="flag-icon flag-icon-pl"> </span></a>
                 </li>
                 <li class="list-inline-item flagShadow">
-                    <script>var addresEn = window.location.href + '&language=en';</script>
+                    <script>var addresEn = window.location.href.split('&',1) + '&language=en';</script>
                     <a onclick="location.href=addresEn"><span class="flag-icon flag-icon-gb"> </span></a>
                 </li>
             </ul>
