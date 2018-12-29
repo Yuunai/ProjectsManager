@@ -13,10 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.*;
-import pl.poznan.put.student.spacjalive.erp.service.UserService;
-import pl.poznan.put.student.spacjalive.erp.service.EventService;
-import pl.poznan.put.student.spacjalive.erp.service.ParticipationService;
-import pl.poznan.put.student.spacjalive.erp.service.RoleService;
+import pl.poznan.put.student.spacjalive.erp.service.*;
 import pl.poznan.put.student.spacjalive.erp.viewmodel.ParticipationViewModel;
 
 import javax.validation.Valid;
@@ -43,6 +40,14 @@ public class EventController {
 	public void initBinder(WebDataBinder webDataBinder) {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
+	
+	@GetMapping("/list")
+	public String listEvents(Model model, @RequestParam("archived") boolean archived) {
+		List<Event> events = eventService.getEvents(archived);
+		model.addAttribute("events", events);
+		
+		return "home";
 	}
 	
 	@GetMapping("/addEventForm")

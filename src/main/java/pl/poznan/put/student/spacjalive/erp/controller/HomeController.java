@@ -26,7 +26,7 @@ public class HomeController {
 	
 	@GetMapping("/home")
 	public String home(Model model) {
-		List<Event> events = eventService.getEvents();
+		List<Event> events = eventService.getEvents(false);
 		model.addAttribute("events", events);
 		
 		return "home";

@@ -87,7 +87,7 @@ public class ReservationController {
 		List<Equipment> equipmentList = equipmentService.getFreeEquipment(dateSince, timeSince, dateTo, timeTo);
 		model.addAttribute("equipmentList", equipmentList);
 		
-		List<Event> events = eventService.getEvents(0);
+		List<Event> events = eventService.getEvents(false);
 		model.addAttribute("events", events);
 		
 		List<UserDetails> users = userService.getUsersDetails(true);
@@ -104,10 +104,11 @@ public class ReservationController {
 		if (result.hasErrors()) {
 			model.addAttribute("reservation", reservation);
 			
-//			List<Equipment> equipmentList = equipmentService.getFreeEquipment();
-//			model.addAttribute("equipmentList", equipmentList);
+			List<Equipment> equipmentList = equipmentService.getFreeEquipment(reservation.getDateSince(),
+					reservation.getTimeSince(), reservation.getDateTo(), reservation.getTimeTo());
+			model.addAttribute("equipmentList", equipmentList);
 			
-			List<Event> events = eventService.getEvents(0);
+			List<Event> events = eventService.getEvents(false);
 			model.addAttribute("events", events);
 			
 			List<User> users = userService.getUsers(true);
@@ -132,10 +133,11 @@ public class ReservationController {
 			return "add-reservation-form";
 		} catch (HibernateJdbcException e) {
 			
-//			List<Equipment> equipmentList = equipmentService.getFreeEquipment();
-//			model.addAttribute("equipmentList", equipmentList);
+			List<Equipment> equipmentList = equipmentService.getFreeEquipment(reservation.getDateSince(),
+					reservation.getTimeSince(), reservation.getDateTo(), reservation.getTimeTo());
+			model.addAttribute("equipmentList", equipmentList);
 			
-			List<Event> events = eventService.getEvents(0);
+			List<Event> events = eventService.getEvents(false);
 			model.addAttribute("events", events);
 			
 			List<User> users = userService.getUsers(true);
@@ -166,7 +168,7 @@ public class ReservationController {
 				.getTimeSince(), reservation.getDateTo(), reservation.getTimeTo());
 		model.addAttribute("equipmentList", equipmentList);
 		
-		List<Event> events = eventService.getEvents(0);
+		List<Event> events = eventService.getEvents(false);
 		events.remove(reservation.getEvent());
 		model.addAttribute("events", events);
 		

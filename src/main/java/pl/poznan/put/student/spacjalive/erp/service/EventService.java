@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface EventService {
 	
-	public List<Event> getEvents();
+	List<Event> getEvents();
 	
-	public List<Event> getEvents(int archived);
+	List<Event> getEvents(boolean archived);
 	
-	public void saveEvent(Event event);
+	void saveEvent(Event event);
 	
-	public void deleteEvent(int id);
+	void deleteEvent(int id);
 	
-	public Event getEvent(int id);
+	Event getEvent(int id);
 	
 }
