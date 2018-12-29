@@ -13,7 +13,7 @@
 	</h3>
 </c:if>
 
-<form action="${pageContext.request.contextPath}/setNetPassword" method="POST">
+<form action="${pageContext.request.contextPath}/setNewPassword" method="POST">
 	Nowe hasło: <input name="newPassword" type="password"/>
 	<input name="token" type="hidden" value="${paramValues.get("token")[0]}" />
 	Zatwierdź <input type="submit"/>

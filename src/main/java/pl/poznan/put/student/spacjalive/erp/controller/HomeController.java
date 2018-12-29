@@ -68,6 +68,7 @@ public class HomeController {
 		try {
 			userService.setUserPassword(token, newPassword);
 			model.addAttribute("message", "Hasło zostało zmienione! Możesz się zalogować.");
+			return loginPage(model);
 		} catch (TokenNotFound tokenNotFound) {
 			model.addAttribute("message", "Nieznany token!");
 		} catch (TokenExpiredException e) {
