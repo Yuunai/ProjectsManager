@@ -2,7 +2,16 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<html lang="pl">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="lang"
+       value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="lang"/>
+
+
+<html lang="<fmt:message key="lang.language"/>">
 <head>
     <meta charset="utf-8">
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />" rel="stylesheet">
@@ -12,7 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Maciej Jaskiewicz, Krystian Minta">
-    <title>SpacjaTV Konta</title>
+    <title><fmt:message key="acc.title"/></title>
 </head>
 <body>
 
@@ -22,19 +31,19 @@
         <div class="btn-toolbar mb-2 mb-md-0">
             <button class="btn btn-outline-secondary" onclick="location.href='/account/newAccount'">
                 <span data-feather="plus" style="margin-bottom: 1px;"></span>
-                Dodaj konto
+                <fmt:message key="acc.addAcc"/>
             </button>
         </div>
     </div>
 
-    <h2>Konta</h2>
+    <h2><fmt:message key="acc.header"/></h2>
     <div class="table-responsive">
     <table class="table table-striped table-sm">
         <thead>
         <tr>
-            <th scope="col">Email</th>
-            <th scope="col">Konto aktywne</th>
-            <th scope="col">Akcja</th>
+            <th scope="col"><fmt:message key="acc.colEmail"/></th>
+            <th scope="col"><fmt:message key="acc.colActive"/></th>
+            <th scope="col"><fmt:message key="acc.colAction"/></th>
         </tr>
         </thead>
         <tbody>
@@ -56,16 +65,16 @@
                 <td>${user.email}</td>
                 <td><c:choose>
                     <c:when test="${user.enabled}">
-                        Tak
+                        <fmt:message key="acc.yes"/>
                     </c:when>
 
                     <c:otherwise>
-                        Nie
+                        <fmt:message key="acc.no"/>
                     </c:otherwise>
                 </c:choose></td>
                 <td>
                     <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${editLink}'">
-                        Szczegóły
+                        <fmt:message key="acc.details"/>
                     </button>
                 </td>
             </tr>
