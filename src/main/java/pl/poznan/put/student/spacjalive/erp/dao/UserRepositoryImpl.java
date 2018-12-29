@@ -108,4 +108,12 @@ public class UserRepositoryImpl implements UserRepository {
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(AdministrativeRole.class, id);
 	}
+	
+	@Override
+	public void setUserPassword(int userId, String password) {
+		Session session = sessionFactory.getCurrentSession();
+		User user = session.get(User.class, userId);
+		user.setPassword(password);
+		session.saveOrUpdate(user);
+	}
 }

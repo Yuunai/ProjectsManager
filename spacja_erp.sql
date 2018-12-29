@@ -35,13 +35,27 @@ CREATE TABLE `user_details` (
   `last_update` TIMESTAMP DEFAULT now(),
 
   CONSTRAINT FK_USER_ID FOREIGN KEY (user_id)
-  REFERENCES user (`id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION
+    REFERENCES `user` (`id`)
+  ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB;
 
 insert into user_details value
   (1, 'admin', 'admin', NULL, NULL, 0, 1, 1, now());
 
+DROP TABLE IF EXISTS `token`;
+
+CREATE TABLE `token` (
+  `user_id` INT NOT NULL,
+  `type` INT NOT NULL,
+  `hash` VARCHAR(64) UNIQUE NOT NULL,
+  `expiration_date` DATETIME NOT NULL,
+
+  PRIMARY KEY (`user_id`, `type`),
+
+  CONSTRAINT FK_TOKEN_USER_ID FOREIGN KEY (user_id)
+    REFERENCES `user` (`id`)
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS `privilege`;
 

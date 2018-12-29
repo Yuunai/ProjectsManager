@@ -6,27 +6,29 @@ import java.util.List;
 
 public interface UserRepository {
 	
-	public UserDetails getUserDetails(int id);
+	UserDetails getUserDetails(int id);
 	
-	public List<UserDetails> getUsersDetails();
+	List<UserDetails> getUsersDetails();
 	
-	public List<UserDetails> getUsersDetails(boolean active);
+	List<UserDetails> getUsersDetails(boolean active);
 	
-	public void saveUserDetails(UserDetails details);
+	void saveUserDetails(UserDetails details);
 	
-	public User getUser(int id);
+	User getUser(int id);
 	
-	public User getUserByEmail(String email);
+	User getUserByEmail(String email);
 	
-	public List<User> getUsers();
+	List<User> getUsers();
 	
-	public List<User> getUsers(boolean enabled);
+	List<User> getUsers(boolean enabled);
 	
-	public void saveUser(User user);
+	void saveUser(User user);
 	
-	public void setUserEnabled(int id, boolean enabled);
+	void setUserEnabled(int id, boolean enabled);
 	
-	public List<AdministrativeRole> getAdmRoles();
+	List<AdministrativeRole> getAdmRoles();
 	
-	public AdministrativeRole getAdmRole(int id);
+	AdministrativeRole getAdmRole(int id);
+	
+	void setUserPassword(int userId, String password);
 }

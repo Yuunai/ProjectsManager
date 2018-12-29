@@ -2,36 +2,44 @@ package pl.poznan.put.student.spacjalive.erp.service;
 
 import pl.poznan.put.student.spacjalive.erp.entity.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.EmailAlreadyTakenException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenExpiredException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenNotFound;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 public interface UserService {
 	
-	public UserDetails getUserDetails(int id);
+	UserDetails getUserDetails(int id);
 	
-	public List<UserDetails> getUsersDetails();
+	List<UserDetails> getUsersDetails();
 	
-	public List<UserDetails> getUsersDetails(boolean active);
+	List<UserDetails> getUsersDetails(boolean active);
 	
-	public void saveUserDetails(UserDetails details);
+	void saveUserDetails(UserDetails details);
 	
-	public User getUser(int id);
+	User getUser(int id);
 	
-	public User getUserByEmail(String email);
+	User getUserByEmail(String email);
 	
-	public List<User> getUsers();
+	List<User> getUsers();
 	
-	public List<User> getUsers(boolean enabled);
+	List<User> getUsers(boolean enabled);
 	
-	public void saveUser(User user);
+	void saveUser(User user);
 	
-	public void updateUserAdmRolesAndStatus(User user);
+	void updateUserAdmRolesAndStatus(User user);
 	
-	public void saveNewUser(User user) throws EmailAlreadyTakenException;
+	void saveNewUser(User user) throws EmailAlreadyTakenException;
 	
-	public void setUserEnabled(int id, boolean enabled);
+	void setUserEnabled(int id, boolean enabled);
 	
-	public List<AdministrativeRole> getAdmRoles();
+	List<AdministrativeRole> getAdmRoles();
 	
-	public AdministrativeRole getAdmRole(int id);
+	AdministrativeRole getAdmRole(int id);
+	
+	void createAndSendToken(int userId, int tokenType, String contextPath) throws MessagingException;
+	
+	void setUserPassword(String tokenHash, String newPassword) throws TokenNotFound, TokenExpiredException;
+	
 }

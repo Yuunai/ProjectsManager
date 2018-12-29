@@ -5,13 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.poznan.put.student.spacjalive.erp.dao.TokenRepository;
 import pl.poznan.put.student.spacjalive.erp.dao.UserRepository;
-import pl.poznan.put.student.spacjalive.erp.entity.AdministrativeRole;
-import pl.poznan.put.student.spacjalive.erp.entity.User;
-import pl.poznan.put.student.spacjalive.erp.entity.UserDetails;
+import pl.poznan.put.student.spacjalive.erp.entity.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.EmailAlreadyTakenException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenExpiredException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenNotFound;
 
+import javax.mail.MessagingException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service("userService")
 @Transactional
@@ -19,6 +23,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	TokenRepository tokenRepository;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -100,5 +107,34 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public AdministrativeRole getAdmRole(int id) {
 		return userRepository.getAdmRole(id);
+	}
+	
+	@Override
+	public void createAndSendToken(int userId, int tokenType, String serverAddress) throws MessagingException {
+		String randomHash = UUID.randomUUID().toString();
+		User user = userRepository.getUser(userId);
+		String message = "Aby ponownie ustawić hasło kliknij poniższy link:\n" +
+				serverAddress + "/setNewPassword?token=" + randomHash;
+		
+		EmailService es = EmailService.getInstance();
+		es.sendEmail(user.getEmail(), "Reset Password Token", message);
+		tokenRepository.deleteToken(user.getId(), Token.RESET_PASSWORD_TOKEN);
+		Token token = new Token(user.getId(), Token.RESET_PASSWORD_TOKEN, randomHash,
+				LocalDateTime.now().plusMinutes(Token.TOKEN_EXPIRATION_TIME));
+		tokenRepository.saveToken(token);
+	}
+	
+	@Override
+	public void setUserPassword(String tokenHash, String newPassword) throws TokenNotFound, TokenExpiredException {
+		Token token = tokenRepository.getTokenByHash(tokenHash);
+		
+		if(token == null) {
+			throw new TokenNotFound();
+		} else if (token.getExpirationDate().isBefore(LocalDateTime.now())) {
+			throw new TokenExpiredException();
+		}
+		
+		tokenRepository.deleteToken(token.getUserId(), token.getType());
+		userRepository.setUserPassword(token.getUserId(), passwordEncoder.encode(newPassword));
 	}
 }
