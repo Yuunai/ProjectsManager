@@ -66,7 +66,7 @@ public class HomeController {
 		return "set-new-password";
 	}
 	
-	@PostMapping("/setNetPassword")
+	@PostMapping("/setNewPassword")
 	public String setNewPassword(Model model, @RequestParam("token") String token,
 	                             @RequestParam("newPassword") String newPassword) {
 //		TODO add email validation

@@ -35,6 +35,12 @@
                 Edytuj
             </button>
         </div>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#passResetModal">
+                Zmień hasło
+            </button>
+        </div>
+
         <div class="btn-toolbar mb-2 mb-md-0 ml-auto">
             <%--TODO if id is mine back to home else back to people--%>
             <button class="btn btn-outline-secondary"
@@ -157,7 +163,29 @@
 
 </main>
 <%@include file="footer.jsp" %>
-
+<div class="modal fade" id="passResetModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passResetModalLabel">Zmień hasło</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form:form id="resetPassForm" class="form-inline"
+                           action="${pageContext.request.contextPath}/setNewPassword" method="POST">
+                    <div class="form-group">
+                        <input type="password" name="newPassword" class="form-control"
+                               placeholder="Nowe hasło" required autofocus>
+                        <input name="token" type="hidden" value="${paramValues.get("token")[0]}" />
+                        <button class="btn btn-outline-secondary" type="submit">Zatwierdź</button>
+                    </div>
+                </form:form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
