@@ -37,11 +37,6 @@ public class HomeController {
 		return "login-page";
 	}
 	
-	@GetMapping("/resetPassword")
-	public String resetPasswordPage(Model model) {
-		return "reset-password-page";
-	}
-	
 	@PostMapping("/resetPassword")
 	public String resetPassword(HttpServletRequest request, Model model, @RequestParam("email") String email) {
 		try {
@@ -58,7 +53,7 @@ public class HomeController {
 			e.printStackTrace();
 		}
 		
-		return resetPasswordPage(model);
+		return loginPage(model);
 	}
 	
 	@GetMapping("/setNewPassword")
