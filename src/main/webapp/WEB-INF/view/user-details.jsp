@@ -172,25 +172,7 @@
         </div>
 
 </main>
-<footer class="footer">
-    <div class="footer-copyright text-center py-3">
-        <div class="container">
-
-            <ul class="list-unstyled list-inline text-center">
-                <li class="list-inline-item flagShadow">
-                    <script>var addresPl = window.location.href.split('&',1) + '&language=pl';</script>
-                    <a onclick="location.href=addresPl"><span class="flag-icon flag-icon-pl"> </span></a>
-                </li>
-                <li class="list-inline-item flagShadow">
-                    <script>var addresEn = window.location.href.split('&',1) + '&language=en';</script>
-                    <a onclick="location.href=addresEn"><span class="flag-icon flag-icon-gb"> </span></a>
-                </li>
-            </ul>
-        </div>
-        © 2018-2019 Copyright:
-        <a href="https://www.facebook.com/SpacjaTv/"> SpacjaTV</a>
-    </div>
-</footer>
+<%@include file="footer.jsp" %>
 <div class="modal fade" id="passResetModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">

@@ -6,10 +6,38 @@
 
             <ul class="list-unstyled list-inline text-center">
                 <li class="list-inline-item flagShadow">
-                    <a href="?language=pl"><span class="flag-icon flag-icon-pl"> </span></a>
+                    <script>
+                        var addresPl = window.location.href.split('&',1).toString();
+                        if(!addresPl.includes('language=')) {
+                            if (addresPl.includes('?')) {
+                                addresPl += '&language=pl';
+                            }
+                            else {
+                                addresPl += '?language=pl';
+                            }
+                        }
+                        else{
+                            addresPl = addresPl.substring(0,addresPl.indexOf('language=')+9) +'pl'+  addresPl.substring(addresPl.indexOf('language=')+11);
+                        }
+                    </script>
+                    <a onclick="location.href=addresPl"><span class="flag-icon flag-icon-pl"> </span></a>
                 </li>
                 <li class="list-inline-item flagShadow">
-                    <a href="?language=en"><span class="flag-icon flag-icon-gb"> </span></a>
+                    <script>
+                        var addresEn = window.location.href.split('&',1).toString();
+                        if(!addresEn.includes('language=')) {
+                            if (addresEn.includes('?')) {
+                                addresEn += '&language=en';
+                            }
+                            else {
+                                addresEn += '?language=en';
+                            }
+                        }
+                        else{
+                            addresEn = addresEn.substring(0,addresEn.indexOf('language=')+9) +'en'+  addresEn.substring(addresEn.indexOf('language=')+11);
+                        }
+                    </script>
+                    <a onclick="location.href=addresEn"><span class="flag-icon flag-icon-gb"> </span></a>
                 </li>
             </ul>
         </div>
