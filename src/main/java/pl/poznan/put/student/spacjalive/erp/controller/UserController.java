@@ -53,6 +53,7 @@ public class UserController {
 	
 	@GetMapping("/updateUserForm")
 	public String updateUser(@RequestParam("userId") int userId, Model model) {
+//		TODO check if userId == sessionUserId, if not, check if user is admin
 		UserDetails userDetails = userService.getUserDetails(userId);
 		if(userDetails == null) {
 			userDetails = new UserDetails();
@@ -66,6 +67,7 @@ public class UserController {
 	
 	@PostMapping("/updateUser")
 	public String updateUser(@ModelAttribute("details") @Valid UserDetails details, BindingResult result, Model model) {
+//		TODO check if userId == sessionUserId, if not, check if user is admin
 		if (result.hasErrors())
 			return "update-user-form";
 		

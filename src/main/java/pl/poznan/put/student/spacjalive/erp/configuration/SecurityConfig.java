@@ -52,19 +52,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http
-				.csrf().disable()
-				.authorizeRequests()
-					.antMatchers("/login*", "/resetPassword*", "/setNewPassword*").permitAll()
-					.anyRequest().authenticated()
-				.and()
-				.formLogin()
-					.loginPage("/loginPage")
-					.loginProcessingUrl("/authUser")
-					.defaultSuccessUrl("/home")
-					.successHandler(tvoeSimpleUrlAuthenticationSuccessHandler)
-					.permitAll()
-				.and()
-				.logout().permitAll();
+			.csrf().disable()
+			.authorizeRequests()
+				.antMatchers("/login*", "/resetPassword*", "/setNewPassword*").permitAll()
+				.antMatchers("/account/**").hasRole("ADMIN")
+				.antMatchers("/equipment/list", "/event/list", "/home", "/reservation/list", "/user/list",
+						"/event/eventDetails", "/participation/**")
+					.hasAnyRole("ADMIN", "MODERATOR", "TRUSTED", "USER")
+				.antMatchers("/equipment/add*", "/equipment/updateEquipmentForm",
+						"/event/add*", "/event/update*", "/reservation/add*", "/reservation/updateReservationForm")
+					.hasAnyRole("ADMIN", "MODERATOR", "TRUSTED")
+				.antMatchers("/equipment/deleteEquipment", "/event/deleteEvent", "/reservation/deleteReservation")
+					.hasAnyRole("ADMIN", "MODERATOR")
+				.anyRequest().authenticated()
+			.and()
+			.formLogin()
+				.loginPage("/loginPage")
+				.loginProcessingUrl("/authUser")
+				.defaultSuccessUrl("/home")
+				.successHandler(tvoeSimpleUrlAuthenticationSuccessHandler)
+				.permitAll()
+			.and()
+			.logout().permitAll();
 	}
 	
 }

@@ -57,16 +57,6 @@ CREATE TABLE `token` (
   ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS `privilege`;
-
-CREATE TABLE `privilege` (
-  `id` INT NOT NULL,
-  `privilege` VARCHAR(50),
-  `label` VARCHAR(50),
-
-   PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
-
 DROP TABLE IF EXISTS adm_role;
 
 CREATE TABLE adm_role (
@@ -83,23 +73,6 @@ INSERT INTO adm_role VALUES
   (3, 'ROLE_TRUSTED', 'Zaufany użytkownik'),
   (4, 'ROLE_USER', 'Użytkownik'),
   (5, 'ROLE_OUTER_USER', 'Użytkownik zewnętrzny');
-
-DROP TABLE IF EXISTS adm_role_privilege;
-
-CREATE TABLE adm_role_privilege (
-  `adm_role_id` INT NOT NULL,
-  privilege_id INT NOT NULL,
-
-  PRIMARY KEY (privilege_id, `adm_role_id`),
-
-  CONSTRAINT FK_PRIVILEGE_ID FOREIGN KEY (privilege_id)
-  REFERENCES privilege (`id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION,
-
-  CONSTRAINT FK_P_ADM_ROLE_ID FOREIGN KEY (`adm_role_id`)
-  REFERENCES adm_role (`id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS user_adm_role;
 

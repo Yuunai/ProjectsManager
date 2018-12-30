@@ -59,7 +59,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User getUserByEmail(String email) {
-		return userRepository.getUserByEmail(email);
+		User user = userRepository.getUserByEmail(email);
+		Hibernate.initialize(user.getAdmRoles());
+		return user;
 	}
 	
 	@Override

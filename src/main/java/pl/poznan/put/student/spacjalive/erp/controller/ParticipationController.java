@@ -39,6 +39,7 @@ public class ParticipationController {
 	
 	@PostMapping("/addParticipation")
 	public String addParticipation(@ModelAttribute("participation") ParticipationViewModel participationViewModel) {
+//		TODO check if userId == participationUserId, if not, check if user is admin
 		Event event = eventService.getEvent(participationViewModel.getEventId());
 		User user = userService.getUser(participationViewModel.getUserId());
 		Role role = roleService.getRole(participationViewModel.getRoleId());
@@ -53,6 +54,7 @@ public class ParticipationController {
 	public String deleteParticipation(@RequestParam("roleId") int roleId,
 	                                  @RequestParam("employeeId") int employeeId,
 	                                  @RequestParam("eventId") int eventId) {
+//		TODO check if userId == participationUserId, if not, check if user is admin
 		participationService.deleteParticipation(eventId, roleId, employeeId);
 		
 		return "redirect:/event/eventDetails?eventId=" + eventId;
