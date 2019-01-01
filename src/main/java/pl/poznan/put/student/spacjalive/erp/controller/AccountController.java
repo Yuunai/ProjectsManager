@@ -81,15 +81,7 @@ public class AccountController {
 		}
 		userService.updateUserAdmRolesAndStatus(user);
 		
-		return "redirect:/account/accountDetails?userId=" + user.getId();
-	}
-	
-	@GetMapping("/setEnabled")
-	public String setAccountEnabled(@RequestParam(name = "userId") int id, @RequestParam(name = "enabled") String
-			enabled) {
-		userService.setUserEnabled(id, Boolean.valueOf(enabled));
-		
-		return "redirect:/account/list";
+		return "redirect:/account/editAccount?userId=" + user.getId();
 	}
 	
 	@GetMapping("/accountDetails")

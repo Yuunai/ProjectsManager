@@ -97,11 +97,6 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void setUserEnabled(int id, boolean enabled) {
-		userRepository.setUserEnabled(id, enabled);
-	}
-	
-	@Override
 	public List<AdministrativeRole> getAdmRoles() {
 		return userRepository.getAdmRoles();
 	}

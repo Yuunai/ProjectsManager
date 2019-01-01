@@ -24,8 +24,6 @@ public interface UserRepository {
 	
 	void saveUser(User user);
 	
-	void setUserEnabled(int id, boolean enabled);
-	
 	List<AdministrativeRole> getAdmRoles();
 	
 	AdministrativeRole getAdmRole(int id);

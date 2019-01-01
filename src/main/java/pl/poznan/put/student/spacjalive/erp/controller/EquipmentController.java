@@ -1,12 +1,7 @@
 package pl.poznan.put.student.spacjalive.erp.controller;
 
-import org.hibernate.JDBCException;
-import org.hibernate.exception.JDBCConnectionException;
-import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.orm.hibernate5.HibernateJdbcException;
-import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,36 +50,7 @@ public class EquipmentController {
 			model.addAttribute("categories", equipmentService.getCategories());
 			return "add-equipment-form";
 		}
-		
-		try {
-			equipmentService.saveEquipment(equipment);
-		} catch (JDBCConnectionException e) {
-			result.reject(String.valueOf(e.getErrorCode()), "Brak połączenia z bazą danych, skontaktuj się z administratorem.");
-		} catch (SQLGrammarException e) {
-			result.reject(String.valueOf(e.getErrorCode()), "Niepoprawna składnia zapytania, skontaktuj się z administratorem.");
-		} catch (JDBCException e) {
-			
-			if (e.getSQLState().equalsIgnoreCase("12345")) {
-				result.reject(String.valueOf(e.getErrorCode()), e.getSQLException().getMessage());
-			} else {
-				result.reject(String.valueOf(e.getErrorCode()), "Niepoprawne dane!");
-			}
-			return "add-equipment-form";
-		} catch (HibernateJdbcException e) {
-			
-			if (e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
-				Equipment eq = equipmentService.getEquipment(equipment.getId());
-				model.addAttribute("equipment", eq);
-				
-				model.addAttribute("message", e.getSQLException().getMessage());
-			} else {
-				model.addAttribute("equipment", equipment);
-				model.addAttribute("message", "Nieznany błąd, skontaktuj się administratorem!");
-			}
-			return "add-equipment-form";
-		} catch (HibernateOptimisticLockingFailureException e) {
-			return "redirect:/equipment/list";
-		}
+		equipmentService.saveEquipment(equipment);
 		
 		return "redirect:/equipment/list";
 	}

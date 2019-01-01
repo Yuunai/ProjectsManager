@@ -1,9 +1,7 @@
 package pl.poznan.put.student.spacjalive.erp.controller;
 
-import org.hibernate.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.orm.hibernate5.HibernateJdbcException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,13 +14,10 @@ import pl.poznan.put.student.spacjalive.erp.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.logging.Logger;
 
 @RequestMapping("/user")
 @Controller
 public class UserController {
-	
-	Logger logger = Logger.getLogger(UserController.class.getSimpleName());
 	
 	@Autowired
 	UserService userService;
@@ -76,35 +71,8 @@ public class UserController {
 		if (result.hasErrors())
 			return "update-user-form";
 		
-		try {
-			userService.saveUserDetails(details);
-		} catch (JDBCConnectionException e) {
-			result.reject(String.valueOf(e.getErrorCode()), "Brak połączenia z bazą danych, skontaktuj się z administratorem.");
-		} catch (SQLGrammarException e) {
-			result.reject(String.valueOf(e.getErrorCode()), "Niepoprawna składnia zapytania, skontaktuj się z administratorem.");
-		} catch (GenericJDBCException e) {
-			
-			if (e.getSQLState().equalsIgnoreCase("12345")) {
-				result.reject(String.valueOf(e.getErrorCode()), e.getSQLException().getMessage());
-			} else {
-				result.reject(String.valueOf(e.getErrorCode()), "Niepoprawne dane!");
-			}
-			return "update-user-form";
-		} catch (HibernateJdbcException e) {
-			
-			if (e.getSQLException().getSQLState().equalsIgnoreCase("12346")) {
-				UserDetails userDetails = userService.getUserDetails(details.getUserId());
-				model.addAttribute("user", userDetails);
-				
-				model.addAttribute("message", e.getSQLException().getMessage());
-			} else {
-				model.addAttribute("user", details);
-				model.addAttribute("message", "Nieznany błąd, skontaktuj się administratorem!");
-			}
-			return "update-user-form";
-		} catch (Exception e) {
-			logger.warning(e.getStackTrace().toString());
-		}
+		userService.saveUserDetails(details);
+		
 		return "redirect:/user/list";
 	}
 	
@@ -118,28 +86,4 @@ public class UserController {
 		}
 		throw new NoAccessGrantedException();
 	}
-	
-//	@GetMapping("/deleteUser")
-//	public String deleteUser(@RequestParam("userId") int userId, Model model) {
-//		try {
-//			userService.deleteUser(userId);
-//		} catch (JDBCConnectionException e) {
-//			model.addAttribute("message", "Brak połączenia z bazą danych, skontaktuj się z administratorem.");
-//		} catch (SQLGrammarException e) {
-//			model.addAttribute("message", "Niepoprawna składnia zapytania, skontaktuj się z administratorem.");
-//		} catch (JDBCException e) {
-//			List<User> users = userService.getUsers();
-//
-//			model.addAttribute("users", users);
-//
-//			if (e.getSQLState().equalsIgnoreCase("12345")) {
-//				model.addAttribute("message", e.getSQLException().getMessage());
-//			} else {
-//				model.addAttribute("message", e.getSQLException().getMessage());
-//			}
-//			return "list-users";
-//		}
-//
-//		return "redirect:/user/list";
-//	}
 }

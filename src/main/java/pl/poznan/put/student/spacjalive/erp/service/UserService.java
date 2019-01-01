@@ -32,8 +32,6 @@ public interface UserService {
 	
 	void saveNewUser(User user) throws EmailAlreadyTakenException;
 	
-	void setUserEnabled(int id, boolean enabled);
-	
 	List<AdministrativeRole> getAdmRoles();
 	
 	AdministrativeRole getAdmRole(int id);

@@ -88,14 +88,6 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 	
 	@Override
-	public void setUserEnabled(int id, boolean enabled) {
-		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("UPDATE User SET enabled=:enabled");
-		query.setParameter("enabled", enabled);
-		query.executeUpdate();
-	}
-	
-	@Override
 	public List<AdministrativeRole> getAdmRoles() {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("FROM AdministrativeRole ORDER BY id");
