@@ -1,30 +1,24 @@
 package pl.poznan.put.student.spacjalive.erp.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.*;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import pl.poznan.put.student.spacjalive.erp.entity.User;
-import pl.poznan.put.student.spacjalive.erp.service.UserService;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @Component
-public class TVoeSimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class TVoeAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse
 			httpServletResponse, Authentication authentication) throws IOException, ServletException {
-		handle(httpServletRequest, httpServletResponse, authentication);
+		handle(httpServletRequest, httpServletResponse);
 		HttpSession session = httpServletRequest.getSession(false);
 		if (session != null) {
 			session.setMaxInactiveInterval(30 * 60);
@@ -43,8 +37,7 @@ public class TVoeSimpleUrlAuthenticationSuccessHandler implements Authentication
 		clearAuthenticationAttributes(httpServletRequest);
 	}
 	
-	protected void handle(final HttpServletRequest request, final HttpServletResponse response, final Authentication
-			authentication) throws IOException {
+	protected void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		if (response.isCommitted()) {
 			return;
 		}

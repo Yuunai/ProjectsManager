@@ -12,8 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import pl.poznan.put.student.spacjalive.erp.security.TVoeAuthenticationProvider;
-import pl.poznan.put.student.spacjalive.erp.security.TVoeSimpleUrlAuthenticationSuccessHandler;
+import pl.poznan.put.student.spacjalive.erp.security.*;
 
 @Configuration
 @EnableWebSecurity
@@ -24,7 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 	
 	@Autowired
-	private TVoeSimpleUrlAuthenticationSuccessHandler tvoeSimpleUrlAuthenticationSuccessHandler;
+	private TVoeAuthenticationSuccessHandler tvoeAuthenticationSuccessHandler;
+	
+	@Autowired
+	private TVoeLogoutSuccessHandler tvoeLogoutSuccessHandler;
 	
 	@Override
 	public void configure(final WebSecurity web) throws Exception {
@@ -70,10 +72,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/loginPage")
 				.loginProcessingUrl("/authUser")
 				.defaultSuccessUrl("/home")
-				.successHandler(tvoeSimpleUrlAuthenticationSuccessHandler)
+				.successHandler(tvoeAuthenticationSuccessHandler)
 				.permitAll()
 			.and()
-			.logout().permitAll();
+			.logout()
+				.logoutSuccessHandler(tvoeLogoutSuccessHandler)
+				.permitAll();
 	}
 	
 }
