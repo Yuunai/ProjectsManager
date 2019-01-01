@@ -9,7 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import pl.poznan.put.student.spacjalive.erp.entity.UserDetails;
+import pl.poznan.put.student.spacjalive.erp.entity.*;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NoAccessGrantedException;
 import pl.poznan.put.student.spacjalive.erp.service.ParticipationService;
 import pl.poznan.put.student.spacjalive.erp.service.UserService;
 
@@ -52,8 +53,9 @@ public class UserController {
 	}
 	
 	@GetMapping("/updateUserForm")
-	public String updateUser(@RequestParam("userId") int userId, Model model) {
-//		TODO check if userId == sessionUserId, if not, check if user is admin
+	public String updateUser(@SessionAttribute("userId") int accessorId,
+			@RequestParam("userId") int userId, Model model) throws NoAccessGrantedException {
+		checkAccess(accessorId, userId);
 		UserDetails userDetails = userService.getUserDetails(userId);
 		if(userDetails == null) {
 			userDetails = new UserDetails();
@@ -66,8 +68,11 @@ public class UserController {
 	}
 	
 	@PostMapping("/updateUser")
-	public String updateUser(@ModelAttribute("details") @Valid UserDetails details, BindingResult result, Model model) {
-//		TODO check if userId == sessionUserId, if not, check if user is admin
+	public String updateUser(@SessionAttribute("userId") int accessorId,
+	                         @ModelAttribute("details") @Valid UserDetails details,
+	                         BindingResult result, Model model)
+			throws NoAccessGrantedException {
+		checkAccess(accessorId, details.getUserId());
 		if (result.hasErrors())
 			return "update-user-form";
 		
@@ -102,7 +107,18 @@ public class UserController {
 		}
 		return "redirect:/user/list";
 	}
-
+	
+	private boolean checkAccess(int accessingUserId, int userId) throws NoAccessGrantedException {
+		if(accessingUserId == userId) {
+			return true;
+		} else {
+			User user = userService.getUser(accessingUserId);
+			if (user.getAdmRoles().stream().anyMatch(e -> e.getId() == AdministrativeRole.ADMIN))
+				return true;
+		}
+		throw new NoAccessGrantedException();
+	}
+	
 //	@GetMapping("/deleteUser")
 //	public String deleteUser(@RequestParam("userId") int userId, Model model) {
 //		try {

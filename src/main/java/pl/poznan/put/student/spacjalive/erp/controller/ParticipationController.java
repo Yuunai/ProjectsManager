@@ -5,10 +5,8 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import pl.poznan.put.student.spacjalive.erp.entity.User;
-import pl.poznan.put.student.spacjalive.erp.entity.Event;
-import pl.poznan.put.student.spacjalive.erp.entity.Participation;
-import pl.poznan.put.student.spacjalive.erp.entity.Role;
+import pl.poznan.put.student.spacjalive.erp.entity.*;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NoAccessGrantedException;
 import pl.poznan.put.student.spacjalive.erp.service.UserService;
 import pl.poznan.put.student.spacjalive.erp.service.EventService;
 import pl.poznan.put.student.spacjalive.erp.service.ParticipationService;
@@ -38,8 +36,10 @@ public class ParticipationController {
 	}
 	
 	@PostMapping("/addParticipation")
-	public String addParticipation(@ModelAttribute("participation") ParticipationViewModel participationViewModel) {
-//		TODO check if userId == participationUserId, if not, check if user is admin
+	public String addParticipation(@SessionAttribute("userId") int accessorId,
+			@ModelAttribute("participation") ParticipationViewModel participationViewModel)
+			throws NoAccessGrantedException {
+		checkAccess(accessorId, participationViewModel.getUserId());
 		Event event = eventService.getEvent(participationViewModel.getEventId());
 		User user = userService.getUser(participationViewModel.getUserId());
 		Role role = roleService.getRole(participationViewModel.getRoleId());
@@ -51,13 +51,26 @@ public class ParticipationController {
 	}
 	
 	@GetMapping("/deleteParticipation")
-	public String deleteParticipation(@RequestParam("roleId") int roleId,
-	                                  @RequestParam("employeeId") int employeeId,
-	                                  @RequestParam("eventId") int eventId) {
-//		TODO check if userId == participationUserId, if not, check if user is admin
-		participationService.deleteParticipation(eventId, roleId, employeeId);
+	public String deleteParticipation(
+			@SessionAttribute("userId") int accessorId,
+			@RequestParam("roleId") int roleId,
+	        @RequestParam("employeeId") int userId,
+	        @RequestParam("eventId") int eventId) throws NoAccessGrantedException {
+		checkAccess(accessorId, userId);
+		participationService.deleteParticipation(eventId, roleId, userId);
 		
 		return "redirect:/event/eventDetails?eventId=" + eventId;
 	}
 	
+	private boolean checkAccess(int accessingUserId, int userId) throws NoAccessGrantedException {
+		if(accessingUserId == userId) {
+			return true;
+		} else {
+			User user = userService.getUser(accessingUserId);
+			if (user.getAdmRoles().stream().anyMatch(e -> e.getId() == AdministrativeRole.ADMIN
+					|| e.getId() == AdministrativeRole.MODERATOR))
+				return true;
+		}
+		throw new NoAccessGrantedException();
+	}
 }

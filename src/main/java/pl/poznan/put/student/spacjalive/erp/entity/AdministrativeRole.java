@@ -7,6 +7,12 @@ import java.util.Collection;
 @Table(name = "adm_role")
 public class AdministrativeRole {
 	
+	public static final int ADMIN = 1;
+	public static final int MODERATOR = 2;
+	public static final int TRUSTED = 3;
+	public static final int USER = 4;
+	public static final int OUTER_USER = 5;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
