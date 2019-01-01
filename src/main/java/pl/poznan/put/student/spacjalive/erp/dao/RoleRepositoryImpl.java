@@ -24,22 +24,6 @@ public class RoleRepositoryImpl implements RoleRepository {
 	}
 	
 	@Override
-	public void saveRole(Role role) {
-		Session session = sessionFactory.getCurrentSession();
-		session.saveOrUpdate(role);
-	}
-	
-	@Override
-	public void deleteRole(int id) {
-		Session session = sessionFactory.getCurrentSession();
-		
-		Query query = session.createQuery("DELETE FROM Role WHERE id=:roleId");
-		query.setParameter("roleId", id);
-		
-		query.executeUpdate();
-	}
-	
-	@Override
 	public Role getRole(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(Role.class, id);

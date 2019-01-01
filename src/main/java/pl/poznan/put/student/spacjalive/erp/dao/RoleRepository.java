@@ -6,12 +6,8 @@ import java.util.List;
 
 public interface RoleRepository {
 	
-	public List<Role> getRoles();
+	List<Role> getRoles();
 	
-	public void saveRole(Role role);
-	
-	public void deleteRole(int id);
-	
-	public Role getRole(int id);
+	Role getRole(int id);
 	
 }
