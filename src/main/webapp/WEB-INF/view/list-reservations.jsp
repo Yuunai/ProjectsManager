@@ -1,44 +1,46 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Yuunai
-  Date: 2018-01-05
-  Time: 16:17
-  To change this template use File | Settings | File Templates.
---%>
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<html>
+<c:set var="lang" value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${lang}" />
+<fmt:setBundle basename="lang"/>
+
+
+<html lang="<fmt:message key="lang.language"/>">
 <head>
     <meta charset="utf-8">
-    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.css" />" rel="stylesheet">
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />" rel="stylesheet">
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/home.css" />" rel="stylesheet">
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/header-style.css" />" rel="stylesheet">
-    <title>Lending list</title>
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/flag-icon.min.css" />" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Maciej Jaskiewicz, Krystian Minta">
+    <title><fmt:message key="reservations.title"/></title>
 </head>
 <body>
 
-<div id="container" class="container" >
+<%@include file="header.jsp" %>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-6 mt-0">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div class="btn-toolbar mb-2 mb-md-0">
 
-    <%@include file="header.jsp"%>
+        </div>
+    </div>
 
-    <div id="reservation-table-section">
-        <table class="table col-6 table-bordered">
-            <thead class="thead-dark">
+    <h2><fmt:message key="reservations.header"/></h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
             <tr>
-                <th scope="col" colspan="5" class="text-center">Lista rezerwacji</th>
-            </tr>
-            <c:if test="${!empty message}" >
-                <tr>
-                    <th scope="col" colspan="5" class="text-center">${message}</th>
-                </tr>
-            </c:if>
-            <tr>
-                <th scope="col">Rezerwacja</th>
-                <th scope="col">Rezerwujacy</th>
-                <th scope="col">Od</th>
-                <th scope="col">Do</th>
-                <th scope="col">Status</th>
+                <th scope="col"><fmt:message key="reservations.colResName"/></th>
+                <th scope="col"><fmt:message key="reservations.colResUser"/></th>
+                <th scope="col"><fmt:message key="reservations.colSince"/></th>
+                <th scope="col"><fmt:message key="reservations.colTo"/></th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -58,24 +60,19 @@
                     <td>${reservation.dateSince} ${reservation.timeSince}</td>
                     <td>${reservation.dateTo} ${reservation.timeTo}</td>
                     <td>
-                        <a href="${updateLink}">Aktualizuj</a>
+                        <a href="${updateLink}"><fmt:message key="reservations.update"/></a>
                         |
                         <a href="${deleteLink}"
-                           onclick="if (!(confirm('Czy na pewno chcesz usunąć rezerwację?'))) return false">Usuń</a>
+                           onclick="if (!(confirm('<fmt:message key="reservations.confirmMessage"/>'))) return false"><fmt:message key="reservations.remove"/></a>
                     </td>
                 </tr>
 
             </c:forEach>
             </tbody>
+            </tbody>
         </table>
     </div>
-
-    <div id="footer">
-
-    </div>
-
-</div>
-
-
+</main>
+<%@include file="footer.jsp" %>
 </body>
 </html>

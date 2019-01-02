@@ -42,7 +42,7 @@
     <h2><fmt:message key="addReservation.header"/></h2>
 
     <div class="container-fluid justify-content-center">
-        <form:form action="addReservation" modelAttribute="reservation" method="POST" acceptCharset="utf8">
+        <form:form name="addReservation" action="addReservation" modelAttribute="reservation" method="POST" acceptCharset="utf8">
 
             <form:hidden path="id"/>
             <form:hidden path="lastUpdate"/>
@@ -65,14 +65,14 @@
             <div class="row py-4">
                 <div class="col-12 col-md-3">
                     <label class="form-header" for="dateSince"><fmt:message key="addReservation.fromDate"/></label>
-                    <form:input path="dateSince" id="dateSince" type="date" class="form-control"/>
+                    <form:input path="dateSince" id="dateSince" type="date" class="form-control" required="true"/>
                     <label class="form-note" for="dateSince">
                         <form:errors path="dateSince"/>
                     </label>
                 </div>
                 <div class="col-12 col-md-2">
                     <label class="form-header" for="timeSince"><fmt:message key="addReservation.fromTime"/></label>
-                    <form:input path="timeSince" id="timeSince" type="time" class="form-control"/>
+                    <form:input path="timeSince" id="timeSince" type="time" class="form-control" required="true"/>
                     <label class="form-note" for="timeSince">
                         <form:errors path="timeSince"/>
                     </label>
@@ -82,14 +82,14 @@
             <div class="row py-4">
                 <div class="col-12 col-md-3">
                     <label class="form-header" for="dateTo"><fmt:message key="addReservation.toDate"/></label>
-                    <form:input path="dateTo" id="dateTo" type="date" class="form-control"/>
+                    <form:input path="dateTo" id="dateTo" type="date" class="form-control" required="true"/>
                     <label class="form-note" for="dateTo">
                             <form:errors path="dateTo"/>
                     </label>
                 </div>
                 <div class="col-12 col-md-2">
                     <label class="form-header" for="timeTo"><fmt:message key="addReservation.toTime"/></label>
-                    <form:input path="timeTo" id="timeTo" type="time" class="form-control"/>
+                    <form:input path="timeTo" id="timeTo" type="time" class="form-control" required="true"/>
                     <label class="form-note" for="timeTo">
                             <form:errors path="timeTo"/>
                     </label>
@@ -99,7 +99,7 @@
             <div class="row py-4">
 
                 <div class="col-12 col-md-5">
-                    <button class="btn btn-outline-secondary" type="button" onclick="lockReserv()">
+                    <button class="btn btn-outline-secondary" type="button" onclick="lockReserv()" >
                         <fmt:message key="addReservation.lock"/>
                     </button>
                 </div>
@@ -124,7 +124,8 @@
                            data-search-contain='true'
                            multiple='multiple'
                            id='equipmentList'
-                           name='equipmentList'/>
+                           name='equipmentList'
+                           required="true" />
                     <label class="form-note" for="equipmentList">
                             <form:errors path="equipmentList"/>
                     </label>
@@ -133,7 +134,7 @@
 
             <div class="row py-4 justify-content-center">
                 <div class=" col-4">
-                    <button class="btn btn-lg btn-secondary btn-block" type="submit"><fmt:message key="addReservation.reserveSubmit"/></button>
+                    <button class="btn btn-lg btn-secondary btn-block" type="button" onclick="document.forms['addReservation'].submit()"><fmt:message key="addReservation.reserveSubmit"/></button>
                 </div>
             </div>
 
