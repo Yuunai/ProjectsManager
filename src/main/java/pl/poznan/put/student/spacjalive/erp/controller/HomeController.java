@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.*;
+import pl.poznan.put.student.spacjalive.erp.exceptions.SimplePasswordException;
 import pl.poznan.put.student.spacjalive.erp.exceptions.UserNotFoundException;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenExpiredException;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenNotFound;
@@ -64,7 +65,6 @@ public class HomeController {
 	@PostMapping("/setNewPassword")
 	public String setNewPassword(Model model, @RequestParam("token") String token,
 	                             @RequestParam("newPassword") String newPassword) {
-//		TODO add email validation
 		try {
 			userService.setUserPassword(token, newPassword);
 			model.addAttribute("message", "Hasło zostało zmienione! Możesz się zalogować.");
@@ -73,6 +73,10 @@ public class HomeController {
 			model.addAttribute("message", "Nieznany token!");
 		} catch (TokenExpiredException e) {
 			model.addAttribute("message", "Token wygasł!");
+		} catch (SimplePasswordException e) {
+			model.addAttribute("message", "Hasło musi mieć przynajmniej jedną cyfrę, wielką literę, małą literę " +
+					"oraz znak specjalny. Hasło nie może zawierać znaków białych oraz nie może być krótsze niż 8 " +
+					"znaków");
 		}
 		
 		return "set-new-password";

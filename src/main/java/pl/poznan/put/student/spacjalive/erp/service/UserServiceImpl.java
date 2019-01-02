@@ -9,6 +9,7 @@ import pl.poznan.put.student.spacjalive.erp.dao.TokenRepository;
 import pl.poznan.put.student.spacjalive.erp.dao.UserRepository;
 import pl.poznan.put.student.spacjalive.erp.entity.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.EmailAlreadyTakenException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.SimplePasswordException;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenExpiredException;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenNotFound;
 
@@ -16,6 +17,7 @@ import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
 
 @Service("userService")
 @Transactional
@@ -122,7 +124,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void setUserPassword(String tokenHash, String newPassword) throws TokenNotFound, TokenExpiredException {
+	public void setUserPassword(String tokenHash, String newPassword) throws TokenNotFound, TokenExpiredException, SimplePasswordException {
 		Token token = tokenRepository.getTokenByHash(tokenHash);
 		
 		if(token == null) {
@@ -130,8 +132,21 @@ public class UserServiceImpl implements UserService {
 		} else if (token.getExpirationDate().isBefore(LocalDateTime.now())) {
 			throw new TokenExpiredException();
 		}
-		
+		checkPasswordComplexity(newPassword);
 		tokenRepository.deleteToken(token.getUserId(), token.getType());
 		userRepository.setUserPassword(token.getUserId(), passwordEncoder.encode(newPassword));
 	}
+	
+	@Override
+	public void setUserPassword(int userId, String newPassword) throws SimplePasswordException {
+		checkPasswordComplexity(newPassword);
+		userRepository.setUserPassword(userId, passwordEncoder.encode(newPassword));
+	}
+	
+	private void checkPasswordComplexity(String password) throws SimplePasswordException {
+		Matcher matcher = User.passwordPattern.matcher(password);
+		if(!matcher.matches())
+			throw new SimplePasswordException();
+	}
+	
 }

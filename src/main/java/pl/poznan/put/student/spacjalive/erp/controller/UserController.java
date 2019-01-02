@@ -9,6 +9,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.NoAccessGrantedException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.SimplePasswordException;
 import pl.poznan.put.student.spacjalive.erp.service.ParticipationService;
 import pl.poznan.put.student.spacjalive.erp.service.UserService;
 
@@ -74,6 +75,23 @@ public class UserController {
 		userService.saveUserDetails(details);
 		
 		return "redirect:/user/list";
+	}
+	
+	@PostMapping("/setNewPassword")
+	public String setNewPassword(@SessionAttribute("userId") int userId, @RequestParam("Password") String password,
+	                              Model model) {
+		
+		try {
+			userService.setUserPassword(userId, password);
+			model.addAttribute("message", "Hasło zostało zmienione!");
+		} catch (SimplePasswordException e) {
+			model.addAttribute("message", "Hasło musi mieć przynajmniej jedną cyfrę, wielką literę, małą literę " +
+					"oraz znak specjalny. Hasło nie może zawierać znaków białych oraz nie może być krótsze niż 8 " +
+					"znaków");
+		}
+		
+		
+		return userDetails(userId, model);
 	}
 	
 	private boolean checkAccess(int accessingUserId, int userId) throws NoAccessGrantedException {

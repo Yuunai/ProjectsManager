@@ -2,6 +2,7 @@ package pl.poznan.put.student.spacjalive.erp.service;
 
 import pl.poznan.put.student.spacjalive.erp.entity.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.EmailAlreadyTakenException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.SimplePasswordException;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenExpiredException;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenNotFound;
 
@@ -38,6 +39,7 @@ public interface UserService {
 	
 	void createAndSendToken(int userId, int tokenType, String contextPath) throws MessagingException;
 	
-	void setUserPassword(String tokenHash, String newPassword) throws TokenNotFound, TokenExpiredException;
+	void setUserPassword(String tokenHash, String newPassword) throws TokenNotFound, TokenExpiredException, SimplePasswordException;
 	
+	void setUserPassword(int userId, String newPassword) throws SimplePasswordException;
 }

@@ -8,6 +8,9 @@ import java.util.List;
 @Table(name = "user")
 public class User {
 	
+	public static final java.util.regex.Pattern passwordPattern =
+			java.util.regex.Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!,.])(?=\\S+$).{8,}$");
+	
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +24,9 @@ public class User {
 	private String email;
 	
 	@Column(name = "password")
+	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!,.])(?=\\S+$).{8,}$",
+			message = "Hasło musi mieć przynajmniej jedną cyfrę, wielką literę, małą literę oraz znak specjalny. " +
+					"Hasło nie może zawierać znaków białych oraz nie może być krótsze niż 8 znaków")
 	private String password;
 	
 	@Column(name = "enabled")
