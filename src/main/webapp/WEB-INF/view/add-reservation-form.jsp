@@ -62,7 +62,7 @@
             <script>
                 hideEmptyErrorsRow();
             </script>
-            <div class="row py-4">
+            <div class="row py-4 justify-content-center">
                 <div class="col-12 col-md-3">
                     <label class="form-header" for="dateSince"><fmt:message key="addReservation.fromDate"/></label>
                     <form:input path="dateSince" id="dateSince" type="date" class="form-control" required="true"/>
@@ -79,7 +79,7 @@
                 </div>
 
             </div>
-            <div class="row py-4">
+            <div class="row py-4 justify-content-center">
                 <div class="col-12 col-md-3">
                     <label class="form-header" for="dateTo"><fmt:message key="addReservation.toDate"/></label>
                     <form:input path="dateTo" id="dateTo" type="date" class="form-control" required="true"/>
@@ -96,15 +96,15 @@
                 </div>
 
             </div>
-            <div class="row py-4">
+            <div class="row py-4 justify-content-center">
 
-                <div class="col-12 col-md-5">
-                    <button class="btn btn-outline-secondary" type="button" onclick="lockReserv()" >
+                <div class="col-12 col-md-5 text-center">
+                    <button class="btn btn-outline-secondary btn-block" type="button" onclick="lockReserv()" >
                         <fmt:message key="addReservation.lock"/>
                     </button>
                 </div>
             </div>
-            <div class="row py-4">
+            <div class="row py-4 justify-content-center">
 
 
                 <div class="col-12 col-md-5">

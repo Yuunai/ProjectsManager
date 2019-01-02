@@ -76,7 +76,7 @@ public class EquipmentController {
 		categories.removeIf(e -> e.getId() == equipment.getCategory().getId());
 		model.addAttribute("categories", categories);
 		
-		return "add-equipment-form";
+		return "update-equipment-form";
 	}
 	
 }
