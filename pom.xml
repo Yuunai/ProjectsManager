@@ -145,10 +145,20 @@
             <version>3.3.7-1</version>
         </dependency>
 
+        <!-- Logging -->
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.11.1</version>
+        </dependency>
+
+        <!-- JSON -->
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180130</version>
         </dependency>
 
     </dependencies>

@@ -1,5 +1,6 @@
 package pl.poznan.put.student.spacjalive.erp.service;
 
+import org.json.JSONArray;
 import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
 import pl.poznan.put.student.spacjalive.erp.entity.EquipmentCategory;
 
@@ -22,5 +23,7 @@ public interface EquipmentService {
 	void deleteEquipment(int id);
 	
 	List<Equipment> getFreeEquipment(String dateSince, String timeSince, String dateTo, String timeTo);
+	
+	JSONArray getFreeEquipmentJson(String dateSince, String timeSince, String dateTo, String timeTo);
 	
 }

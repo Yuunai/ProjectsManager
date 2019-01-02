@@ -34,11 +34,14 @@
         <form:form action="addReservation" modelAttribute="reservation" method="POST" acceptCharset="utf8">
 
             <form:hidden path="id"/>
+            <%--TODO pola od dat/godzin mają mieć możliwość wyboru!--%>
             <form:hidden path="dateSince"/>
             <form:hidden path="timeSince"/>
             <form:hidden path="dateTo"/>
             <form:hidden path="timeTo"/>
             <form:hidden path="lastUpdate"/>
+            <form:hidden path="eventId"/>
+            <form:hidden path="userId"/>
             <table class="table col-4 table-bordered">
                 <thead class="thead-dark">
                     <tr>
@@ -61,29 +64,6 @@
                         <script>
                             hideEmptyErrorsRow();
                         </script>
-                    <tr>
-                        <td><label>Wydarzenie</label></td>
-                        <td><form:select path="event">
-                            <c:if test="${reservation.event != null}" >
-                                <form:option value="${reservation.event.id}" label="${reservation.event.name}"/>
-                            </c:if>
-                            <c:forEach items="${events}" var="event">
-                                <form:option value="${event.id}" label="${event.name}"/>
-                            </c:forEach>
-                        </form:select></td>
-                    </tr>
-                    <tr>
-                        <td><label>Wypożyczający</label></td>
-                        <td><form:select path="user">
-                            <c:if test="${reservation.user != null}">
-                                <form:option value="${reservation.user.id}" label="${reservation.user.email}"/>
-                            </c:if>
-                            <c:forEach items="${users}" var="user">
-                                <form:option value="${user.userId}" label="${user.firstName} ${user.lastName}"/>
-                            </c:forEach>
-                        </form:select></td>
-                    </tr>
-                    
                     <tr>
                         <td><label>Przedmioty</label></td>
                         <td>

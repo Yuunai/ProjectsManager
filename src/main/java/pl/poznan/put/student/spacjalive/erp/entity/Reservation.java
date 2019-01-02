@@ -21,7 +21,7 @@ public class Reservation {
 	private int id;
 	
 	@Column(name = "comments")
-	String comments;
+	private String comments;
 	
 	@Column(name = "date_since")
 	private String dateSince;

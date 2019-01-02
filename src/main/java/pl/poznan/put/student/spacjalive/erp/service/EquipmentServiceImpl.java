@@ -1,5 +1,7 @@
 package pl.poznan.put.student.spacjalive.erp.service;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,5 +63,20 @@ public class EquipmentServiceImpl implements EquipmentService {
 		reservations.stream().forEach(r -> equipment.removeAll(r.getEquipmentList()));
 		
 		return equipment;
+	}
+	
+	@Override
+	public JSONArray getFreeEquipmentJson(String dateSince, String timeSince, String dateTo, String timeTo) {
+		List<Equipment> equipment = getFreeEquipment(dateSince, timeSince, dateTo, timeTo);
+		JSONArray result = new JSONArray();
+		for(Equipment eq : equipment) {
+			JSONObject eqToPut = new JSONObject();
+			eqToPut.put("id", eq.getId());
+			eqToPut.put("name", eq.getName());
+			eqToPut.put("state", eq.getState());
+			result.put(eqToPut);
+		}
+		
+		return result;
 	}
 }

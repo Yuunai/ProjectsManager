@@ -66,15 +66,6 @@
                 </tr>
 
             </c:forEach>
-            <tr>
-                <td colspan="5">
-                    <form action="${pageContext.request.contextPath}/reservation/addReservationForm" method="GET">
-                        Start: <input type="date" name="date-since"/> <input type="time" name="time-since"/>
-                        Koniec: <input type="date" name="date-to"/> <input type="time" name="time-to">
-                        <input class="btn btn-primary" type="submit" value="Dodaj rezerwację">
-                    </form>
-                </td>
-            </tr>
             </tbody>
         </table>
     </div>
