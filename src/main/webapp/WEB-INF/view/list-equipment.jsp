@@ -23,6 +23,12 @@
     <%@include file="header.jsp"%>
 
     <div id="role-table-section">
+        Kategorie:
+        <a href="${pageContext.request.contextPath}/equipment/list">Wszystko</a> |
+        <a href="${pageContext.request.contextPath}/equipment/list?categoryId=1">Video</a> |
+        <a href="${pageContext.request.contextPath}/equipment/list?categoryId=2">Audio</a> |
+        <a href="${pageContext.request.contextPath}/equipment/list?categoryId=3">Live</a> |
+        <a href="${pageContext.request.contextPath}/equipment/list?categoryId=4">Akcesoria</a>
         <table class="table col-4 table-bordered">
             <thead class="thead-dark">
             <tr>

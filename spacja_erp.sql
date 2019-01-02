@@ -208,11 +208,11 @@ CREATE TABLE `equipment_category` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-INSERT INTO equipment_category(`name`) VALUES
-  ('Video'),
-  ('Audio'),
-  ('Live'),
-  ('Akcesoria');
+INSERT INTO equipment_category(`id`, `name`) VALUES
+  (1, 'Video'),
+  (2, 'Audio'),
+  (3, 'Live'),
+  (4, 'Akcesoria');
 
 DROP TABLE IF EXISTS eq_reservation;
 

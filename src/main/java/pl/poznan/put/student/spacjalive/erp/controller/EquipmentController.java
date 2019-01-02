@@ -28,8 +28,13 @@ public class EquipmentController {
 	}
 	
 	@GetMapping("/list")
-	public String listEquipment(Model model) {
-		List<Equipment> equipment = equipmentService.getEquipmentList();
+	public String listEquipment(Model model, @RequestParam(name="categoryId", required = false) Integer categoryId) {
+		List<Equipment> equipment;
+		if(categoryId != null) {
+			equipment = equipmentService.getEquipmentByCategory(categoryId);
+		} else {
+			equipment = equipmentService.getEquipmentList();
+		}
 		model.addAttribute("equipment", equipment);
 		
 		return "list-equipment";
