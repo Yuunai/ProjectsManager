@@ -1,87 +1,280 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Yuunai
-  Date: 2017-12-01
-  Time: 16:20
-  To change this template use File | Settings | File Templates.
---%>
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<html>
+<c:set var="lang" value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${lang}" />
+<fmt:setBundle basename="lang"/>
+
+
+<html lang="<fmt:message key="lang.language"/>">
 <head>
     <meta charset="utf-8">
-    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.css" />" rel="stylesheet">
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />" rel="stylesheet">
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/home.css" />" rel="stylesheet">
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/header-style.css" />" rel="stylesheet">
-    <title>Equipment List</title>
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/flag-icon.min.css" />" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Maciej Jaskiewicz, Krystian Minta">
+    <title><fmt:message key="eq.title"/></title>
 </head>
 <body>
 
-<div id="container" class="container" >
 
-    <%@include file="header.jsp"%>
-
-    <div id="role-table-section">
-        Kategorie:
-        <a href="${pageContext.request.contextPath}/equipment/list">Wszystko</a> |
-        <a href="${pageContext.request.contextPath}/equipment/list?categoryId=1">Video</a> |
-        <a href="${pageContext.request.contextPath}/equipment/list?categoryId=2">Audio</a> |
-        <a href="${pageContext.request.contextPath}/equipment/list?categoryId=3">Live</a> |
-        <a href="${pageContext.request.contextPath}/equipment/list?categoryId=4">Akcesoria</a>
-        <table class="table col-4 table-bordered">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col" colspan="4" class="text-center">Lista wyposażenia</th>
-            </tr>
-            <tr>
-                <th scope="col">Nazwa</th>
-                <th scope="col">Stan</th>
-                <th scope="col">Komentarz</th>
-                <th scope="col">Akcja</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="item" items="${equipment}">
-
-                <c:url var="updateLink" value="/equipment/updateEquipmentForm">
-                    <c:param name="itemId" value="${item.id}" />
-                </c:url>
-
-                <c:url var="deleteLink" value="/equipment/deleteEquipment">
-                    <c:param name="itemId" value="${item.id}" />
-                </c:url>
-
-                <tr>
-                    <td>${item.name}</td>
-                    <td>${item.state}</td>
-                    <td>${item.comments}</td>
-                    <td>
-                        <a href="${updateLink}">Update</a>
-                        |
-                        <a href="${deleteLink}"
-                           onclick="if (!(confirm('Czy na pewno chcesz usunąć ten przedmiot?'))) return false">Delete</a>
-                    </td>
-                </tr>
-
-            </c:forEach>
-            <tr>
-                <td colspan="4">
-                    <a class="btn btn-primary" href="/equipment/addEquipmentForm" role="button">Dodaj przedmiot</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<%@include file="header.jsp" %>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-6 mt-0">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <button class="btn btn-outline-secondary" onclick="location.href='/equipment/addEquipmentForm'">
+                <span data-feather="plus" style="margin-bottom: 1px;"></span>
+                <fmt:message key="eq.addEqBtn"/>
+            </button>
+        </div>
     </div>
 
-    <div id="footer">
+    <h2><fmt:message key="eq.header"/></h2>
 
+    <ul class="nav nav-tabs" id="eqTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="everything-tab" data-toggle="tab" href="${pageContext.request.contextPath}/equipment/list" role="tab" aria-controls="home" aria-selected="true"><fmt:message key="eq.everything"/></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="video-tab" data-toggle="tab" href="${pageContext.request.contextPath}/equipment/list?categoryId=1" role="tab" aria-controls="video" aria-selected="false"><fmt:message key="eq.video"/></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="audio-tab" data-toggle="tab" href="${pageContext.request.contextPath}/equipment/list?categoryId=2" role="tab" aria-controls="audio" aria-selected="false"><fmt:message key="eq.audio"/></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="live-tab" data-toggle="tab" href="${pageContext.request.contextPath}/equipment/list?categoryId=3" role="tab" aria-controls="live" aria-selected="false"><fmt:message key="eq.live"/></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="accessory-tab" data-toggle="tab" href="${pageContext.request.contextPath}/equipment/list?categoryId=4" role="tab" aria-controls="accessory" aria-selected="false"><fmt:message key="eq.accessories"/></a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="everything" role="tabpanel" aria-labelledby="everything-tab">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col"><fmt:message key="eq.colName"/></th>
+                        <th scope="col"><fmt:message key="eq.colState"/></th>
+                        <th scope="col"><fmt:message key="eq.colComment"/></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="item" items="${equipment}">
+
+                        <c:url var="updateLink" value="/equipment/updateEquipmentForm">
+                            <c:param name="itemId" value="${item.id}" />
+                        </c:url>
+
+                        <c:url var="deleteLink" value="/equipment/deleteEquipment">
+                            <c:param name="itemId" value="${item.id}" />
+                        </c:url>
+
+                        <tr>
+                            <td>${item.name}</td>
+                            <td>${item.state}</td>
+                            <td>${item.comments}</td>
+                            <td>
+                                <div class="btn-group mr-2">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
+                                        <fmt:message key="eq.eqUpdate"/>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
+                                        <fmt:message key="eq.eqDelete"/>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col"><fmt:message key="eq.colName"/></th>
+                        <th scope="col"><fmt:message key="eq.colState"/></th>
+                        <th scope="col"><fmt:message key="eq.colComment"/></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="item" items="${equipment}">
+
+                        <c:url var="updateLink" value="/equipment/updateEquipmentForm">
+                            <c:param name="itemId" value="${item.id}" />
+                        </c:url>
+
+                        <c:url var="deleteLink" value="/equipment/deleteEquipment">
+                            <c:param name="itemId" value="${item.id}" />
+                        </c:url>
+
+                        <tr>
+                            <td>${item.name}</td>
+                            <td>${item.state}</td>
+                            <td>${item.comments}</td>
+                            <td>
+                                <div class="btn-group mr-2">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
+                                        <fmt:message key="eq.eqUpdate"/>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
+                                        <fmt:message key="eq.eqDelete"/>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="audio" role="tabpanel" aria-labelledby="audio-tab">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col"><fmt:message key="eq.colName"/></th>
+                        <th scope="col"><fmt:message key="eq.colState"/></th>
+                        <th scope="col"><fmt:message key="eq.colComment"/></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="item" items="${equipment}">
+
+                        <c:url var="updateLink" value="/equipment/updateEquipmentForm">
+                            <c:param name="itemId" value="${item.id}" />
+                        </c:url>
+
+                        <c:url var="deleteLink" value="/equipment/deleteEquipment">
+                            <c:param name="itemId" value="${item.id}" />
+                        </c:url>
+
+                        <tr>
+                            <td>${item.name}</td>
+                            <td>${item.state}</td>
+                            <td>${item.comments}</td>
+                            <td>
+                                <div class="btn-group mr-2">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
+                                        <fmt:message key="eq.eqUpdate"/>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
+                                        <fmt:message key="eq.eqDelete"/>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="live" role="tabpanel" aria-labelledby="live-tab">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col"><fmt:message key="eq.colName"/></th>
+                        <th scope="col"><fmt:message key="eq.colState"/></th>
+                        <th scope="col"><fmt:message key="eq.colComment"/></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="item" items="${equipment}">
+
+                        <c:url var="updateLink" value="/equipment/updateEquipmentForm">
+                            <c:param name="itemId" value="${item.id}" />
+                        </c:url>
+
+                        <c:url var="deleteLink" value="/equipment/deleteEquipment">
+                            <c:param name="itemId" value="${item.id}" />
+                        </c:url>
+
+                        <tr>
+                            <td>${item.name}</td>
+                            <td>${item.state}</td>
+                            <td>${item.comments}</td>
+                            <td>
+                                <div class="btn-group mr-2">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
+                                        <fmt:message key="eq.eqUpdate"/>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
+                                        <fmt:message key="eq.eqDelete"/>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="accessory" role="tabpanel" aria-labelledby="accessory-tab">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col"><fmt:message key="eq.colName"/></th>
+                        <th scope="col"><fmt:message key="eq.colState"/></th>
+                        <th scope="col"><fmt:message key="eq.colComment"/></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="item" items="${equipment}">
+
+                        <c:url var="updateLink" value="/equipment/updateEquipmentForm">
+                            <c:param name="itemId" value="${item.id}" />
+                        </c:url>
+
+                        <c:url var="deleteLink" value="/equipment/deleteEquipment">
+                            <c:param name="itemId" value="${item.id}" />
+                        </c:url>
+
+                        <tr>
+                            <td>${item.name}</td>
+                            <td>${item.state}</td>
+                            <td>${item.comments}</td>
+                            <td>
+                                <div class="btn-group mr-2">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
+                                        <fmt:message key="eq.eqUpdate"/>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
+                                        <fmt:message key="eq.eqDelete"/>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
     </div>
 
-</div>
 
 
+
+</main>
+<%@include file="footer.jsp" %>
 </body>
 </html>
-
-
