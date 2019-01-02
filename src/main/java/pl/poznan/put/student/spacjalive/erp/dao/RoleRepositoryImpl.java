@@ -6,6 +6,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.poznan.put.student.spacjalive.erp.entity.Role;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -24,8 +25,11 @@ public class RoleRepositoryImpl implements RoleRepository {
 	}
 	
 	@Override
-	public Role getRole(int id) {
+	public Role getRole(int id) throws NotFoundException {
 		Session session = sessionFactory.getCurrentSession();
-		return session.get(Role.class, id);
+		Role role = session.get(Role.class, id);
+		if(role == null)
+			throw new NotFoundException();
+		return role;
 	}
 }

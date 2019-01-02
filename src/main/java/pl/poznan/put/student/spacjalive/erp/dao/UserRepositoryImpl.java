@@ -6,6 +6,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.poznan.put.student.spacjalive.erp.entity.*;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -16,9 +17,12 @@ public class UserRepositoryImpl implements UserRepository {
 	SessionFactory sessionFactory;
 	
 	@Override
-	public UserDetails getUserDetails(int id) {
+	public UserDetails getUserDetails(int id) throws NotFoundException {
 		Session session = sessionFactory.getCurrentSession();
-		return session.get(UserDetails.class, id);
+		UserDetails details = session.get(UserDetails.class, id);
+		if(details == null)
+			throw new NotFoundException();
+		return details;
 	}
 	
 	@Override
@@ -45,20 +49,23 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 	
 	@Override
-	public User getUser(int id) {
+	public User getUser(int id) throws NotFoundException {
 		Session session = sessionFactory.getCurrentSession();
-		return session.get(User.class, id);
+		User user = session.get(User.class, id);
+		if(user == null)
+			throw new NotFoundException();
+		return user;
 	}
 	
 	@Override
-	public User getUserByEmail(String email) {
+	public User getUserByEmail(String email) throws NotFoundException {
 		Session session = sessionFactory.getCurrentSession();
 		Query<User> query = session.createQuery("FROM User WHERE email=:email");
 		query.setParameter("email", email);
 		List<User> users = query.getResultList();
 		
 		if(users.isEmpty()) {
-			return null;
+			throw new NotFoundException();
 		} else {
 			return query.getSingleResult();
 		}

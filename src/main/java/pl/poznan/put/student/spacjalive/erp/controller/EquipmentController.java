@@ -9,6 +9,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
 import pl.poznan.put.student.spacjalive.erp.entity.EquipmentCategory;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 import pl.poznan.put.student.spacjalive.erp.service.EquipmentService;
 
 import javax.validation.Valid;
@@ -68,7 +69,7 @@ public class EquipmentController {
 	}
 	
 	@GetMapping("/updateEquipmentForm")
-	public String updateEquipmentForm(@RequestParam("itemId") int itemId, Model model) {
+	public String updateEquipmentForm(@RequestParam("itemId") int itemId, Model model) throws NotFoundException {
 		Equipment equipment = equipmentService.getEquipment(itemId);
 		model.addAttribute("equipment", equipment);
 		List<EquipmentCategory> categories = equipmentService.getCategories();

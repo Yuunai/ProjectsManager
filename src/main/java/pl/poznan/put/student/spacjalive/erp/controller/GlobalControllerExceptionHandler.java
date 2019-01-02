@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.poznan.put.student.spacjalive.erp.exceptions.NoAccessGrantedException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +36,9 @@ public class GlobalControllerExceptionHandler {
 		} else if(e instanceof NoAccessGrantedException) {
 			message = "Forbidden! No access granted.";
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+		} else if(e instanceof NotFoundException) {
+			message = "Id not found!";
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		} else {
 			message = "Internal error occurred, wait some time, and contact administrator if problem persists.";
 			response.setStatus(HttpServletResponse.SC_OK);

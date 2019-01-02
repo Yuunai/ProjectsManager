@@ -1,6 +1,7 @@
 package pl.poznan.put.student.spacjalive.erp.dao;
 
 import pl.poznan.put.student.spacjalive.erp.entity.Event;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -14,6 +15,6 @@ public interface EventRepository {
 	
 	void deleteEvent(int id);
 	
-	Event getEvent(int id);
+	Event getEvent(int id) throws NotFoundException;
 	
 }

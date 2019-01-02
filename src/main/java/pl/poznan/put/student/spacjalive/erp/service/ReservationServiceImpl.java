@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.poznan.put.student.spacjalive.erp.dao.ReservationRepository;
 import pl.poznan.put.student.spacjalive.erp.entity.Reservation;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 	
 	@Override
-	public Reservation getReservation(int id) {
+	public Reservation getReservation(int id) throws NotFoundException {
 		return reservationRepository.getReservation(id);
 	}
 

@@ -5,8 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.*;
-import pl.poznan.put.student.spacjalive.erp.exceptions.SimplePasswordException;
-import pl.poznan.put.student.spacjalive.erp.exceptions.UserNotFoundException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenExpiredException;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenNotFound;
 import pl.poznan.put.student.spacjalive.erp.service.EventService;
@@ -42,14 +41,12 @@ public class HomeController {
 	public String resetPassword(HttpServletRequest request, Model model, @RequestParam("email") String email) {
 		try {
 			User user = userService.getUserByEmail(email);
-			if(user == null)
-				throw new UserNotFoundException();
 			String serverAddress = request.getRequestURL().toString();
 			serverAddress = serverAddress.substring(0, serverAddress.length() - request.getRequestURI().length());
 			userService.createAndSendToken(user.getId(), Token.RESET_PASSWORD_TOKEN, serverAddress);
 			model.addAttribute("message", "Link do zmiany hasła wysłany na podany adres email! Link będzie ważny " +
 					"przez kolejne " + Token.TOKEN_EXPIRATION_TIME + "minut.");
-		} catch (MessagingException | UserNotFoundException e) {
+		} catch (MessagingException | NotFoundException e) {
 			model.addAttribute("message", "Niepoprawny lub nieznany adres email!");
 			e.printStackTrace();
 		}

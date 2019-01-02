@@ -1,8 +1,7 @@
 package pl.poznan.put.student.spacjalive.erp.service;
 
 import pl.poznan.put.student.spacjalive.erp.entity.*;
-import pl.poznan.put.student.spacjalive.erp.exceptions.EmailAlreadyTakenException;
-import pl.poznan.put.student.spacjalive.erp.exceptions.SimplePasswordException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenExpiredException;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenNotFound;
 
@@ -11,7 +10,7 @@ import java.util.List;
 
 public interface UserService {
 	
-	UserDetails getUserDetails(int id);
+	UserDetails getUserDetails(int id) throws NotFoundException;
 	
 	List<UserDetails> getUsersDetails();
 	
@@ -19,9 +18,9 @@ public interface UserService {
 	
 	void saveUserDetails(UserDetails details);
 	
-	User getUser(int id);
+	User getUser(int id) throws NotFoundException;
 	
-	User getUserByEmail(String email);
+	User getUserByEmail(String email) throws NotFoundException;
 	
 	List<User> getUsers();
 	
@@ -29,7 +28,7 @@ public interface UserService {
 	
 	void saveUser(User user);
 	
-	void updateUserAdmRolesAndStatus(User user);
+	void updateUserAdmRolesAndStatus(User user) throws NotFoundException;
 	
 	void saveNewUser(User user) throws EmailAlreadyTakenException;
 	
@@ -37,7 +36,7 @@ public interface UserService {
 	
 	AdministrativeRole getAdmRole(int id);
 	
-	void createAndSendToken(int userId, int tokenType, String contextPath) throws MessagingException;
+	void createAndSendToken(int userId, int tokenType, String contextPath) throws MessagingException, NotFoundException;
 	
 	void setUserPassword(String tokenHash, String newPassword) throws TokenNotFound, TokenExpiredException, SimplePasswordException;
 	

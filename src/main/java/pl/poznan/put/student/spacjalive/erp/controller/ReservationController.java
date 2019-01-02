@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.*;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 import pl.poznan.put.student.spacjalive.erp.service.*;
 import pl.poznan.put.student.spacjalive.erp.viewmodel.ReservationViewModel;
 
@@ -51,7 +52,7 @@ public class ReservationController {
 	
 	@GetMapping("/addReservationForm")
 	public String addReservationForm(Model model,
-	                                 @RequestParam(name = "eventId") int eventId) {
+	                                 @RequestParam(name = "eventId") int eventId) throws NotFoundException {
 		Event event = eventService.getEvent(eventId);
 		LocalDateTime dateTimeTo = LocalDateTime.parse(event.getDate() + " " + event.getTime(), dateTimeFormatter);
 		dateTimeTo = dateTimeTo.plusHours(2);
@@ -75,7 +76,7 @@ public class ReservationController {
 	public String addReservation(
 			HttpServletRequest request,
 			@ModelAttribute("reservation") @Valid ReservationViewModel reservationViewModel,
-			BindingResult result) {
+			BindingResult result) throws NotFoundException {
 		if (result.hasErrors()) {
 			return "add-reservation-form";
 		}
@@ -97,7 +98,7 @@ public class ReservationController {
 	}
 	
 	@GetMapping("/updateReservationForm")
-	public String updateLendingForm(Model model, @RequestParam("reservationId") int reservationId) {
+	public String updateLendingForm(Model model, @RequestParam("reservationId") int reservationId) throws NotFoundException {
 		Reservation reservation = reservationService.getReservation(reservationId);
 		model.addAttribute("reservation", reservation);
 		

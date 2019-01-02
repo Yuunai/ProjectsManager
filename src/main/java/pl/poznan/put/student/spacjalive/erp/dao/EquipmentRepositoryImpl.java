@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
 import pl.poznan.put.student.spacjalive.erp.entity.EquipmentCategory;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -35,9 +36,12 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
 	}
 	
 	@Override
-	public EquipmentCategory getCategory(int id) {
+	public EquipmentCategory getCategory(int id) throws NotFoundException {
 		Session session = sessionFactory.getCurrentSession();
-		return session.get(EquipmentCategory.class, id);
+		EquipmentCategory category = session.get(EquipmentCategory.class, id);
+		if(category == null)
+			throw new NotFoundException();
+		return category;
 	}
 	
 	@Override
@@ -56,9 +60,12 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
 	}
 	
 	@Override
-	public Equipment getEquipment(int id) {
+	public Equipment getEquipment(int id) throws NotFoundException {
 		Session session = sessionFactory.getCurrentSession();
-		return session.get(Equipment.class, id);
+		Equipment equipment = session.get(Equipment.class, id);
+		if(equipment == null)
+			throw new NotFoundException();
+		return equipment;
 	}
 	
 	@Override

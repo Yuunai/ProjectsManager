@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.poznan.put.student.spacjalive.erp.dao.EquipmentRepository;
 import pl.poznan.put.student.spacjalive.erp.dao.ReservationRepository;
 import pl.poznan.put.student.spacjalive.erp.entity.*;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 	}
 	
 	@Override
-	public EquipmentCategory getCategory(int id) {
+	public EquipmentCategory getCategory(int id) throws NotFoundException {
 		return equipmentRepository.getCategory(id);
 	}
 	
@@ -47,7 +48,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 	}
 	
 	@Override
-	public Equipment getEquipment(int id) {
+	public Equipment getEquipment(int id) throws NotFoundException {
 		return equipmentRepository.getEquipment(id);
 	}
 	

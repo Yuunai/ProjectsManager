@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.AdministrativeRole;
 import pl.poznan.put.student.spacjalive.erp.entity.User;
 import pl.poznan.put.student.spacjalive.erp.exceptions.EmailAlreadyTakenException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 import pl.poznan.put.student.spacjalive.erp.service.UserService;
 
 import javax.validation.Valid;
@@ -61,7 +62,7 @@ public class AccountController {
 	}
 	
 	@GetMapping("/editAccount")
-	public String editAccount(@RequestParam(name = "userId") int userId, Model model) {
+	public String editAccount(@RequestParam(name = "userId") int userId, Model model) throws NotFoundException {
 		User user = userService.getUser(userId);
 		model.addAttribute("user", user);
 		List<AdministrativeRole> admRoles = userService.getAdmRoles();
@@ -72,7 +73,7 @@ public class AccountController {
 	}
 	
 	@PostMapping("/updateAccount")
-	public String updateAccount(@ModelAttribute("user") @Valid User user, BindingResult result, Model model) {
+	public String updateAccount(@ModelAttribute("user") @Valid User user, BindingResult result, Model model) throws NotFoundException {
 		if(result.hasErrors()) {
 			List<AdministrativeRole> admRoles = userService.getAdmRoles();
 			admRoles.removeAll(user.getAdmRoles());
@@ -85,7 +86,7 @@ public class AccountController {
 	}
 	
 	@GetMapping("/accountDetails")
-	public String accountDetails(@RequestParam("userId") int userId, Model model) {
+	public String accountDetails(@RequestParam("userId") int userId, Model model) throws NotFoundException {
 		User user = userService.getUser(userId);
 		model.addAttribute("user", user);
 		
