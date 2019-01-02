@@ -36,24 +36,51 @@
     </div>
 
     <h2><fmt:message key="eq.header"/></h2>
-
     <ul class="nav nav-tabs" id="eqTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="everything-tab" data-toggle="tab" href="${pageContext.request.contextPath}/equipment/list" role="tab" aria-controls="home" aria-selected="true"><fmt:message key="eq.everything"/></a>
+            <a class="nav-link" id="everything-tab" href="${pageContext.request.contextPath}/equipment/list" role="tab" aria-controls="home" aria-selected="true"><fmt:message key="eq.everything"/></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="video-tab" data-toggle="tab" href="${pageContext.request.contextPath}/equipment/list?categoryId=1" role="tab" aria-controls="video" aria-selected="false"><fmt:message key="eq.video"/></a>
+            <a class="nav-link" id="video-tab" href="${pageContext.request.contextPath}/equipment/list?categoryId=1" role="tab" aria-controls="video" aria-selected="false"><fmt:message key="eq.video"/></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="audio-tab" data-toggle="tab" href="${pageContext.request.contextPath}/equipment/list?categoryId=2" role="tab" aria-controls="audio" aria-selected="false"><fmt:message key="eq.audio"/></a>
+            <a class="nav-link" id="audio-tab" href="${pageContext.request.contextPath}/equipment/list?categoryId=2" role="tab" aria-controls="audio" aria-selected="false"><fmt:message key="eq.audio"/></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="live-tab" data-toggle="tab" href="${pageContext.request.contextPath}/equipment/list?categoryId=3" role="tab" aria-controls="live" aria-selected="false"><fmt:message key="eq.live"/></a>
+            <a class="nav-link" id="live-tab" href="${pageContext.request.contextPath}/equipment/list?categoryId=3" role="tab" aria-controls="live" aria-selected="false"><fmt:message key="eq.live"/></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="accessory-tab" data-toggle="tab" href="${pageContext.request.contextPath}/equipment/list?categoryId=4" role="tab" aria-controls="accessory" aria-selected="false"><fmt:message key="eq.accessories"/></a>
+            <a class="nav-link" id="accessory-tab" href="${pageContext.request.contextPath}/equipment/list?categoryId=4" role="tab" aria-controls="accessory" aria-selected="false"><fmt:message key="eq.accessories"/></a>
         </li>
     </ul>
+    <script>
+        var categoryID =0;
+        var addrCategoryID = window.location.href.split('&',1).toString();
+        if(addrCategoryID.includes('categoryId=')) {
+            addrCategoryID = addrCategoryID.substr(addrCategoryID.indexOf('categoryId=')+11,1);
+            categoryID = parseInt(addrCategoryID);
+        }
+        else{
+            categoryID = 0;
+        }
+        switch (categoryID) {
+            case 0:
+                document.getElementById("everything-tab").className += " active";
+                break;
+            case 1:
+                document.getElementById("video-tab").className += " active";
+                break;
+            case 2:
+                document.getElementById("audio-tab").className += " active";
+                break;
+            case 3:
+                document.getElementById("live-tab").className += " active";
+                break;
+            case 4:
+                document.getElementById("accessory-tab").className += " active";
+                break;
+        }
+    </script>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="everything" role="tabpanel" aria-labelledby="everything-tab">
             <div class="table-responsive">

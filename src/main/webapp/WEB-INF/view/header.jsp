@@ -29,6 +29,7 @@
             </li>
             <li class="nav-item text-nowrap">
                 <a class="nav-link" href="/reservation/list">
+                    <span data-feather="calendar"></span>
                     <fmt:message key="nav.reservations"/>
                 </a>
             </li>
