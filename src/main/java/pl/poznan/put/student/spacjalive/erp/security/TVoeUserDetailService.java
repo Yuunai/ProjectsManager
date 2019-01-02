@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.poznan.put.student.spacjalive.erp.dao.UserRepository;
 import pl.poznan.put.student.spacjalive.erp.entity.AdministrativeRole;
 import pl.poznan.put.student.spacjalive.erp.entity.User;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -22,7 +23,12 @@ public class TVoeUserDetailService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		User user = userRepository.getUserByEmail(email);
+		User user;
+		try {
+			user = userRepository.getUserByEmail(email);
+		} catch (NotFoundException e) {
+			throw new UsernameNotFoundException("Username: " + email + "not found!");
+		}
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user
 				.isEnabled(), true, true, true, getAuthorities(user.getAdmRoles()));
 	}

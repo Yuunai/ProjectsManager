@@ -2,6 +2,7 @@ package pl.poznan.put.student.spacjalive.erp.converter;
 
 import org.springframework.core.convert.converter.Converter;
 import pl.poznan.put.student.spacjalive.erp.entity.User;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 import pl.poznan.put.student.spacjalive.erp.service.UserService;
 
 public class StringUserIdToUserConverter implements Converter<String, User> {
@@ -15,7 +16,11 @@ public class StringUserIdToUserConverter implements Converter<String, User> {
 	@Override
 	public User convert(String s) {
 		User user;
-		user = userService.getUser(Integer.valueOf(s));
+		try {
+			user = userService.getUser(Integer.valueOf(s));
+		} catch (NotFoundException e) {
+			user = null;
+		}
 		
 		return user;
 	}

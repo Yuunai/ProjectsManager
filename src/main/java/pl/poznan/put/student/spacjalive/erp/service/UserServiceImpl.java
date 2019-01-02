@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.poznan.put.student.spacjalive.erp.dao.TokenRepository;
 import pl.poznan.put.student.spacjalive.erp.dao.UserRepository;
 import pl.poznan.put.student.spacjalive.erp.entity.*;
-import pl.poznan.put.student.spacjalive.erp.exceptions.EmailAlreadyTakenException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenExpiredException;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenNotFound;
 
@@ -16,6 +16,7 @@ import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
 
 @Service("userService")
 @Transactional
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
 	PasswordEncoder passwordEncoder;
 	
 	@Override
-	public UserDetails getUserDetails(int id) {
+	public UserDetails getUserDetails(int id) throws NotFoundException {
 		return userRepository.getUserDetails(id);
 	}
 	
@@ -51,14 +52,14 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User getUser(int id) {
+	public User getUser(int id) throws NotFoundException {
 		User user = userRepository.getUser(id);
 		Hibernate.initialize(user.getAdmRoles());
 		return user;
 	}
 	
 	@Override
-	public User getUserByEmail(String email) {
+	public User getUserByEmail(String email) throws NotFoundException {
 		User user = userRepository.getUserByEmail(email);
 		Hibernate.initialize(user.getAdmRoles());
 		return user;
@@ -80,7 +81,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void updateUserAdmRolesAndStatus(User user) {
+	public void updateUserAdmRolesAndStatus(User user) throws NotFoundException {
 		User oldUser = userRepository.getUser(user.getId());
 		oldUser.setAdmRoles(user.getAdmRoles());
 		oldUser.setEnabled(user.isEnabled());
@@ -89,8 +90,12 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void saveNewUser(User user) throws EmailAlreadyTakenException {
-		if(userRepository.getUserByEmail(user.getEmail()) != null)
+		try {
+			userRepository.getUserByEmail(user.getEmail());
 			throw new EmailAlreadyTakenException();
+		} catch (NotFoundException e) {
+//		    Actually, this is ok.
+		}
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.saveUser(user);
@@ -107,7 +112,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void createAndSendToken(int userId, int tokenType, String serverAddress) throws MessagingException {
+	public void createAndSendToken(int userId, int tokenType, String serverAddress) throws MessagingException, NotFoundException {
 		String randomHash = UUID.randomUUID().toString();
 		User user = userRepository.getUser(userId);
 		String message = "Aby ponownie ustawić hasło kliknij poniższy link:\n" +
@@ -122,7 +127,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void setUserPassword(String tokenHash, String newPassword) throws TokenNotFound, TokenExpiredException {
+	public void setUserPassword(String tokenHash, String newPassword) throws TokenNotFound, TokenExpiredException, SimplePasswordException {
 		Token token = tokenRepository.getTokenByHash(tokenHash);
 		
 		if(token == null) {
@@ -130,8 +135,21 @@ public class UserServiceImpl implements UserService {
 		} else if (token.getExpirationDate().isBefore(LocalDateTime.now())) {
 			throw new TokenExpiredException();
 		}
-		
+		checkPasswordComplexity(newPassword);
 		tokenRepository.deleteToken(token.getUserId(), token.getType());
 		userRepository.setUserPassword(token.getUserId(), passwordEncoder.encode(newPassword));
 	}
+	
+	@Override
+	public void setUserPassword(int userId, String newPassword) throws SimplePasswordException {
+		checkPasswordComplexity(newPassword);
+		userRepository.setUserPassword(userId, passwordEncoder.encode(newPassword));
+	}
+	
+	private void checkPasswordComplexity(String password) throws SimplePasswordException {
+		Matcher matcher = User.passwordPattern.matcher(password);
+		if(!matcher.matches())
+			throw new SimplePasswordException();
+	}
+	
 }

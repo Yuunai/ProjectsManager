@@ -6,6 +6,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.poznan.put.student.spacjalive.erp.entity.Event;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -52,8 +53,11 @@ public class EventRepositoryImpl implements EventRepository {
 	}
 	
 	@Override
-	public Event getEvent(int id) {
+	public Event getEvent(int id) throws NotFoundException {
 		Session session = sessionFactory.getCurrentSession();
-		return session.get(Event.class, id);
+		Event event = session.get(Event.class, id);
+		if(event == null)
+			throw new NotFoundException();
+		return event;
 	}
 }

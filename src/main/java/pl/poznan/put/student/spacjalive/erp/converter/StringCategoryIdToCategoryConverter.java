@@ -1,8 +1,8 @@
 package pl.poznan.put.student.spacjalive.erp.converter;
 
 import org.springframework.core.convert.converter.Converter;
-import pl.poznan.put.student.spacjalive.erp.entity.Equipment;
 import pl.poznan.put.student.spacjalive.erp.entity.EquipmentCategory;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 import pl.poznan.put.student.spacjalive.erp.service.EquipmentService;
 
 public class StringCategoryIdToCategoryConverter implements Converter<String, EquipmentCategory> {
@@ -16,7 +16,11 @@ public class StringCategoryIdToCategoryConverter implements Converter<String, Eq
 	@Override
 	public EquipmentCategory convert(String s) {
 		EquipmentCategory category;
-		category = equipmentService.getCategory(Integer.valueOf(s));
+		try {
+			category = equipmentService.getCategory(Integer.valueOf(s));
+		} catch (NotFoundException e) {
+			category = null;
+		}
 		
 		return category;
 	}

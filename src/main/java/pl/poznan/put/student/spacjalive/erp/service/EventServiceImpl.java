@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.poznan.put.student.spacjalive.erp.dao.EventRepository;
 import pl.poznan.put.student.spacjalive.erp.entity.Event;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class EventServiceImpl implements EventService {
 	}
 	
 	@Override
-	public Event getEvent(int id) {
+	public Event getEvent(int id) throws NotFoundException {
 		return eventRepository.getEvent(id);
 	}
 }

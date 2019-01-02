@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.*;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 import pl.poznan.put.student.spacjalive.erp.service.*;
 import pl.poznan.put.student.spacjalive.erp.viewmodel.ParticipationViewModel;
 
@@ -65,7 +66,7 @@ public class EventController {
 	}
 	
 	@GetMapping("/eventDetails")
-	public String eventDetails(Model model, @RequestParam("eventId") int eventId) {
+	public String eventDetails(Model model, @RequestParam("eventId") int eventId) throws NotFoundException {
 		Event event = eventService.getEvent(eventId);
 		model.addAttribute("event", event);
 		
@@ -86,7 +87,7 @@ public class EventController {
 	}
 	
 	@GetMapping("/updateEventForm")
-	public String updateEventForm(Model model, @RequestParam("eventId") int eventId) {
+	public String updateEventForm(Model model, @RequestParam("eventId") int eventId) throws NotFoundException {
 		Event event = eventService.getEvent(eventId);
 		model.addAttribute("event", event);
 		

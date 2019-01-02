@@ -6,6 +6,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.poznan.put.student.spacjalive.erp.entity.Reservation;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -41,9 +42,12 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 	}
 	
 	@Override
-	public Reservation getReservation(int id) {
+	public Reservation getReservation(int id) throws NotFoundException {
 		Session session = sessionFactory.getCurrentSession();
-		return session.get(Reservation.class, id);
+		Reservation reservation = session.get(Reservation.class, id);
+		if(reservation == null)
+			throw new NotFoundException();
+		return reservation;
 	}
 	
 	@Override

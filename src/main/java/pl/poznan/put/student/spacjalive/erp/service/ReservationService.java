@@ -1,6 +1,7 @@
 package pl.poznan.put.student.spacjalive.erp.service;
 
 import pl.poznan.put.student.spacjalive.erp.entity.Reservation;
+import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -12,6 +13,6 @@ public interface ReservationService {
 	
 	void deleteReservation(int id);
 	
-	Reservation getReservation(int id);
+	Reservation getReservation(int id) throws NotFoundException;
 	
 }

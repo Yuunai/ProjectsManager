@@ -1,5 +1,7 @@
 package pl.poznan.put.student.spacjalive.erp.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -8,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.spacjalive.erp.entity.*;
-import pl.poznan.put.student.spacjalive.erp.exceptions.NoAccessGrantedException;
+import pl.poznan.put.student.spacjalive.erp.exceptions.*;
 import pl.poznan.put.student.spacjalive.erp.service.ParticipationService;
 import pl.poznan.put.student.spacjalive.erp.service.UserService;
 
@@ -18,6 +20,8 @@ import java.util.List;
 @RequestMapping("/user")
 @Controller
 public class UserController {
+	
+	Logger logger = LogManager.getLogger(UserController.class);
 	
 	@Autowired
 	UserService userService;
@@ -40,7 +44,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/userDetails")
-	public String userDetails(@RequestParam("userId") int userId, Model model) {
+	public String userDetails(@RequestParam("userId") int userId, Model model) throws NotFoundException {
 		UserDetails details = userService.getUserDetails(userId);
 		model.addAttribute("details", details);
 		
@@ -49,7 +53,7 @@ public class UserController {
 	
 	@GetMapping("/updateUserForm")
 	public String updateUser(@SessionAttribute("userId") int accessorId,
-			@RequestParam("userId") int userId, Model model) throws NoAccessGrantedException {
+			@RequestParam("userId") int userId, Model model) throws NoAccessGrantedException, NotFoundException {
 		checkAccess(accessorId, userId);
 		UserDetails userDetails = userService.getUserDetails(userId);
 		if(userDetails == null) {
@@ -76,11 +80,33 @@ public class UserController {
 		return "redirect:/user/list";
 	}
 	
+	@PostMapping("/setNewPassword")
+	public String setNewPassword(@SessionAttribute("userId") int userId, @RequestParam("Password") String password,
+	                              Model model) throws NotFoundException {
+		
+		try {
+			userService.setUserPassword(userId, password);
+			model.addAttribute("message", "Hasło zostało zmienione!");
+		} catch (SimplePasswordException e) {
+			model.addAttribute("message", "Hasło musi mieć przynajmniej jedną cyfrę, wielką literę, małą literę " +
+					"oraz znak specjalny. Hasło nie może zawierać znaków białych oraz nie może być krótsze niż 8 " +
+					"znaków");
+		}
+		
+		
+		return userDetails(userId, model);
+	}
+	
 	private boolean checkAccess(int accessingUserId, int userId) throws NoAccessGrantedException {
 		if(accessingUserId == userId) {
 			return true;
 		} else {
-			User user = userService.getUser(accessingUserId);
+			User user = null;
+			try {
+				user = userService.getUser(accessingUserId);
+			} catch (NotFoundException e) {
+				logger.error("It shouldn't happen! Logged user have to exist", e);
+			}
 			if (user.getAdmRoles().stream().anyMatch(e -> e.getId() == AdministrativeRole.ADMIN))
 				return true;
 		}
