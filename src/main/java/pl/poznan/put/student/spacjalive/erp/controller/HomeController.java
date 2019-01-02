@@ -78,5 +78,13 @@ public class HomeController {
 		
 		return "set-new-password";
 	}
+
+	@GetMapping("/public")
+	public String publicUI (Model model) {
+		List<Event> events = eventService.getEvents(false);
+		model.addAttribute("events", events);
+
+		return "public";
+	}
 	
 }
