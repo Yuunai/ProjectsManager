@@ -7,7 +7,11 @@
        <%--scope="session"/>--%>
 <%--<fmt:setLocale value="${lang}"/>--%>
 <%--<fmt:setBundle basename="lang"/>--%>
-
+<script
+        src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous">
+</script>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="col-sm-3 col-md-2 mr-0 mx-0 my-1" href="/home"><img src ="${pageContext.request.contextPath}/resources/img/STV_350.png" style="max-width:120px;transform: rotate(350deg);" alt="SpacjaTV"></img></a>
     <button class="navbar-toggler my-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

@@ -61,7 +61,7 @@
                     <td>${event.name}</td>
                     <td>${event.date}</td>
                     <td>${event.place}</td>
-                    <td>TODO</td>
+                    <td>${event.videoType}</td>
                     <td>
                         <div class="btn-group mr-2">
                             <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${eventDetails}'">

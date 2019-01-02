@@ -73,6 +73,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 			JSONObject eqToPut = new JSONObject();
 			eqToPut.put("id", eq.getId());
 			eqToPut.put("name", eq.getName());
+			eqToPut.put("category", eq.getCategory().getName());
 			eqToPut.put("state", eq.getState());
 			result.put(eqToPut);
 		}

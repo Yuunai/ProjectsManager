@@ -99,20 +99,12 @@ public class ReservationController {
 	@GetMapping("/updateReservationForm")
 	public String updateLendingForm(Model model, @RequestParam("reservationId") int reservationId) {
 		Reservation reservation = reservationService.getReservation(reservationId);
-		model.addAttribute("reservation", reservation);
+		model.addAttribute("reservation", new ReservationViewModel(reservation));
 		
 		List<Equipment> equipmentList = equipmentService.getFreeEquipment(reservation.getDateSince(), reservation
 				.getTimeSince(), reservation.getDateTo(), reservation.getTimeTo());
 		model.addAttribute("equipmentList", equipmentList);
-		
-		List<Event> events = eventService.getEvents(false);
-		events.remove(reservation.getEvent());
-		model.addAttribute("events", events);
-		
-		List<User> users = userService.getUsers(true);
-		users.remove(reservation.getUser());
-		model.addAttribute("employees", users);
-		
+//		TODO CHECK IF USER IS A HACKERMACIEK
 		return "add-reservation-form";
 	}
 	

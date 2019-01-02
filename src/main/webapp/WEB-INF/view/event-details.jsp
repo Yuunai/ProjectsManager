@@ -44,6 +44,11 @@
                 <fmt:message key="event.edit"/>
             </button>
         </div>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/reservation/addReservationForm?eventId=${event.id}'">
+                <fmt:message key="event.reserve"/>
+            </button>
+        </div>
         <div class="btn-toolbar mb-2 mb-md-0 ml-auto">
             <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/home'">
                 <span data-feather="x" style="margin-bottom: 1px;"></span>
