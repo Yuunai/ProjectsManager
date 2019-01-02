@@ -1,113 +1,105 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Yuunai
-  Date: 2017-12-01
-  Time: 16:35
-  To change this template use File | Settings | File Templates.
---%>
+<!DOCTYPE html>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="lang"
+       value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="lang"/>
+
+
+<html lang="<fmt:message key="lang.language"/>">
 <head>
-    <meta charset="utf-8">
-    <title>Add/Update Equipment Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title><fmt:message key="addEq.title"/></title>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header-style.css"/>
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/home.css" />" rel="stylesheet">
+    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/flag-icon.min.css" />" rel="stylesheet">
 
-    <link type="text/css"
-          rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
-
-    <link type="text/css"
-          rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/header-style.css" />
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/add-forms.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/add-forms.js"></script>
 </head>
 <body>
 
-<div id="container" class="container">
 
-    <%@include file="header.jsp"%>
-
-    <div class="row justify-content-center">
-        <div>
-            <form:form action="addEquipment" modelAttribute="equipment" method="POST" acceptCharset="utf8">
-
-                <form:hidden path="id"/>
-                <form:hidden path="lastUpdate"/>
-                <table class="table col-4 table-bordered">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th class="col text-center" colspan="2"></th>
-                    </tr>
-                    <tr>
-                        <th class="col">Właściwość</th>
-                        <th class="col">Wartość</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <%--Error field for sql errors--%>
-                        <c:if test="${!empty message}" >
-                            <tr>
-                                <th scope="col" colspan="2" class="text-center">${message}</th>
-                            </tr>
-                        </c:if>
-                        <tr id="errorRow"><td colspan="2" id="errors"><form:errors /></td></tr>
-                        <script>
-                            hideEmptyErrorsRow();
-                        </script>
-                        <tr>
-                            <td><label>Nazwa</label></td>
-                            <td>
-                                <form:input path="name" />
-                                <form:errors path="name" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><label>Stan</label></td>
-                            <td>
-                                <form:input path="state" />
-                                <form:errors path="state" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><label>Komentarz</label></td>
-                            <td>
-                                <form:input path="comments" />
-                                <form:errors path="comments" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><label>Kategoria</label>
-                            <td><form:select path="category">
-                                <c:if test="${equipment.category != null}">
-                                    <form:option value="${equipment.category.id}"
-                                                 label="${equipment.category.name}"/>
-                                </c:if>
-                                <c:forEach items="${categories}" var="category">
-                                    <form:option value="${category.id}" label="${category.name}"/>
-                                </c:forEach>
-                            </form:select></td>
-                            <form:errors path="category" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><label></label></td>
-                            <td><input type="submit" value="Zapisz przedmiot"/></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </form:form>
-
+<%@include file="header.jsp" %>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-6 mt-0">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div class="btn-toolbar mb-2 mb-md-0 ml-auto">
+            <button class="btn btn-outline-secondary"
+                    onclick="location.href='${pageContext.request.contextPath}/equipment/list'">
+                <span data-feather="x" style="margin-bottom: 1px;"></span>
+                <fmt:message key="addEq.back"/>
+            </button>
         </div>
     </div>
-    <p>
-        <a href="${pageContext.request.contextPath}/equipment/list">Wróc do listy</a>
-    </p>
-</div>
+    <h2><fmt:message key="addEq.header"/></h2>
 
+    <div class="container-fluid justify-content-center">
+        <form:form action="addEquipment" modelAttribute="equipment" method="POST" acceptCharset="utf8">
+            <form:hidden path="id"/>
+            <form:hidden path="lastUpdate"/>
+        <c:if test="${!empty message}">
+        <div class="row py-4">
+            <div class="col-12">
+                <span class="text-center">${message}</span>
+            </div>
+        </div>
+        </c:if>
+        <div id="errorRow">
+            <span id="errors"><form:errors/></span>
+        </div>
+        <script>
+            hideEmptyErrorsRow();
+        </script>
 
+        <div class="row py-4 justify-content-center">
+            <div class="col-12 col-md-4">
+                <label class="form-header" for="nameAddEq"><fmt:message key="addEq.name"/></label>
+                <form:input path="name" id="nameAddEq" type="text" class="form-control"/>
+                <label class="form-note" for="nameAddEq"><form:errors path="name"/></label>
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-header" for="stateAddEq"><fmt:message key="addEq.state"/></label>
+                <form:input path="state" id="stateAddEq" class="form-control"/>
+                <label class="form-note" for="stateAddEq"><form:errors path="state"/></label>
+            </div>
+        </div>
+        <div class="row py-4 justify-content-center">
+            <div class="col-6 col-md-4 text-center">
+                <label class="form-header" for="categoryAddEq"><fmt:message key="addEq.category"/></label>
+                <form:select path="category" id="categoryAddEq" class="form-control">
+                    <c:if test="${equipment.category != null}">
+                        <form:option value="${equipment.category.id}"
+                                     label="${equipment.category.name}"/>
+                    </c:if>
+                    <c:forEach items="${categories}" var="category">
+                        <form:option value="${category.id}" label="${category.name}"/>
+                    </c:forEach>
+                </form:select>
+                <label class="form-note" for="categoryAddEq"><form:errors path="category"/></label>
+            </div>
+        </div>
+        <div class="row py-4 justify-content-center">
+            <div class="col-12 col-md-8 text-center">
+                <label class="form-header" for="commentAddEq"><fmt:message key="addEq.comment"/></label>
+                <form:input path="comments" id="commentAddEq" class="form-control"/>
+                <label class="form-note" for="commentAddEq"><form:errors path="comments"/></label>
+            </div>
+        </div>
+
+        <div class="row py-4 justify-content-center">
+            <div class=" col-4">
+                <button id="addAccBtn" class="btn btn-lg btn-secondary btn-block"
+                        type="submit"><fmt:message key="addEq.submit"/>
+                </button>
+            </div>
+        </div>
+        </form:form>
+</main>
+<%@include file="footer.jsp" %>
 </body>
 </html>
