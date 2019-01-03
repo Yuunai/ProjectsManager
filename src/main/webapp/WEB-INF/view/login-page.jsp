@@ -34,7 +34,8 @@
         <h1 class="h3 mb-3 font-weight-normal"><fmt:message key="login.header"/></h1>
         <c:if test="${message != null}">
         <span class="loginFailed">
-                ${message}
+            <fmt:message key="${message}"/>
+
         </span>
         </c:if>
         <c:if test="${param.error != null}">

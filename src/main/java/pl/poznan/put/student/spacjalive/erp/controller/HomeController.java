@@ -44,11 +44,13 @@ public class HomeController {
 			String serverAddress = request.getRequestURL().toString();
 			serverAddress = serverAddress.substring(0, serverAddress.length() - request.getRequestURI().length());
 			userService.createAndSendToken(user.getId(), Token.RESET_PASSWORD_TOKEN, serverAddress);
-			model.addAttribute("message", "Link do zmiany hasła wysłany na podany adres email! Link będzie ważny " +
-					"przez kolejne " + Token.TOKEN_EXPIRATION_TIME + "minut.");
+//			model.addAttribute("message", "Link do zmiany hasła wysłany na podany adres email! Link będzie ważny " +
+//					"przez kolejne " + Token.TOKEN_EXPIRATION_TIME + "minut.");
+            model.addAttribute("message", "msg.passMailSend");
 		} catch (MessagingException | NotFoundException e) {
-			model.addAttribute("message", "Niepoprawny lub nieznany adres email!");
-			e.printStackTrace();
+            model.addAttribute("message", "error.invalidEmail");
+
+            e.printStackTrace();
 		}
 		
 		return loginPage(model);
@@ -64,16 +66,14 @@ public class HomeController {
 	                             @RequestParam("newPassword") String newPassword) {
 		try {
 			userService.setUserPassword(token, newPassword);
-			model.addAttribute("message", "Hasło zostało zmienione! Możesz się zalogować.");
+			model.addAttribute("message", "msg.passChanged");
 			return loginPage(model);
 		} catch (TokenNotFound tokenNotFound) {
-			model.addAttribute("message", "Nieznany token!");
+			model.addAttribute("message", "error.invalidToken");
 		} catch (TokenExpiredException e) {
-			model.addAttribute("message", "Token wygasł!");
+			model.addAttribute("message", "error.expiredToken");
 		} catch (SimplePasswordException e) {
-			model.addAttribute("message", "Hasło musi mieć przynajmniej jedną cyfrę, wielką literę, małą literę " +
-					"oraz znak specjalny. Hasło nie może zawierać znaków białych oraz nie może być krótsze niż 8 " +
-					"znaków");
+			model.addAttribute("message", "error.passSimple");
 		}
 		
 		return "set-new-password";

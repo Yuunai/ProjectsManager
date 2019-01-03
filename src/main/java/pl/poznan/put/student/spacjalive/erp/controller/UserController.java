@@ -86,11 +86,9 @@ public class UserController {
 		
 		try {
 			userService.setUserPassword(userId, password);
-			model.addAttribute("message", "Hasło zostało zmienione!");
+			model.addAttribute("message", "msg.passChanged");
 		} catch (SimplePasswordException e) {
-			model.addAttribute("message", "Hasło musi mieć przynajmniej jedną cyfrę, wielką literę, małą literę " +
-					"oraz znak specjalny. Hasło nie może zawierać znaków białych oraz nie może być krótsze niż 8 " +
-					"znaków");
+			model.addAttribute("message", "error.passSimple");
 		}
 		
 		

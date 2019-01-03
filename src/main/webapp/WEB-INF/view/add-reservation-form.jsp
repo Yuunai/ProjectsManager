@@ -52,7 +52,7 @@
             <c:if test="${!empty message}">
                 <div class="row py-4">
                     <div class="col-12">
-                        <span class="text-center">${message}</span>
+                        <span class="text-center"><fmt:message key="${message}"/></span>
                     </div>
                 </div>
             </c:if>

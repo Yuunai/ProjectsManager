@@ -54,7 +54,7 @@ public class AccountController {
 		try {
 			userService.saveNewUser(user);
 		} catch (EmailAlreadyTakenException e) {
-			model.addAttribute("message", "Email zajęty!");
+			model.addAttribute("message", "msg.emailUsed");
 			return "new-account";
 		}
 		
