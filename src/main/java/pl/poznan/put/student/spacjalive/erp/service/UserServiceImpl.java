@@ -116,7 +116,9 @@ public class UserServiceImpl implements UserService {
 		String randomHash = UUID.randomUUID().toString();
 		User user = userRepository.getUser(userId);
 		String message = "Aby ponownie ustawić hasło kliknij poniższy link:\n" +
-				serverAddress + "/setNewPassword?token=" + randomHash;
+				"<a href=\"" + serverAddress + "/setNewPassword?token=" + randomHash + "\" >Klik</a>" +
+				"\n\nIf you want to change a password, click a link bellow:\n" +
+				"<a href=\"" + serverAddress + "/setNewPassword?token=" + randomHash + "\" >Click</a>";
 		
 		EmailService es = EmailService.getInstance();
 		es.sendEmail(user.getEmail(), "Reset Password Token", message);
