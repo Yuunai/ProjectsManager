@@ -104,6 +104,7 @@
                     </button>
                 </div>
             </div>
+
             <div class="row py-4 justify-content-center">
 
 
@@ -131,10 +132,31 @@
                     </label>
                 </div>
             </div>
-
             <div class="row py-4 justify-content-center">
+
+                <div class="col-12 col-md-5 text-center">
+                    <label class="form-header" for="comm"><fmt:message key="addReservation.comment"/></label>
+                    <form:input path="comments" id="comm" type="text" class="form-control"/>
+                    <label class="form-note" for="comm">
+                        <form:errors path="comments"/>
+                    </label>
+                </div>
+            </div>
+            <div class="row py-4 justify-content-center">
+                <script>
+                    function sendform(){
+
+                        document.getElementById('dateSince').disabled = false;
+                        document.getElementById('timeSince').disabled = false;
+                        document.getElementById('dateTo').disabled = false;
+                        document.getElementById('timeTo').disabled = false;
+                        $('.flexdatalist').flexdatalist('disabled', false);
+                        document.forms['addReservation'].submit();
+                    }
+
+                </script>
                 <div class=" col-4">
-                    <button class="btn btn-lg btn-secondary btn-block" type="button" onclick="document.forms['addReservation'].submit()"><fmt:message key="addReservation.reserveSubmit"/></button>
+                    <button class="btn btn-lg btn-secondary btn-block" type="button" onclick="sendform()"><fmt:message key="addReservation.reserveSubmit"/></button>
                 </div>
             </div>
 
