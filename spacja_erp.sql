@@ -126,13 +126,13 @@ CREATE TABLE `role` (
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-INSERT INTO role(`name`) values
-('Operator'),
-('Montazysta'),
-('Reporter'),
-('Socialmedia'),
-('Tech'),
-('Realizator');
+INSERT INTO role(`id`, `name`) values
+(1, 'Operator'),
+(2, 'Montazysta'),
+(3, 'Reporter'),
+(4, 'Socialmedia'),
+(5, 'Tech'),
+(6, 'Realizator');
 
 DROP TABLE IF EXISTS `participation`;
 

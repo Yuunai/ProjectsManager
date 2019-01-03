@@ -8,8 +8,8 @@ import pl.poznan.put.student.spacjalive.erp.entity.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenExpiredException;
 import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenNotFound;
-import pl.poznan.put.student.spacjalive.erp.service.EventService;
-import pl.poznan.put.student.spacjalive.erp.service.UserService;
+import pl.poznan.put.student.spacjalive.erp.service.*;
+import pl.poznan.put.student.spacjalive.erp.viewmodel.ParticipationViewModel;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,15 +19,20 @@ import java.util.List;
 public class HomeController {
 	
 	@Autowired
-	EventService eventService;
+	private EventService eventService;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
+	
+	@Autowired
+	private RoleService roleService;
 	
 	@GetMapping("/home")
 	public String home(Model model) {
 		List<Event> events = eventService.getEvents(false);
 		model.addAttribute("events", events);
+		model.addAttribute("participation", new ParticipationViewModel());
+		model.addAttribute("roles", roleService.getRoles());
 		
 		return "home";
 	}
