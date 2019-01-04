@@ -45,7 +45,6 @@
             <tr>
                 <th scope="col"><fmt:message key="users.colName"/></th>
                 <th scope="col"><fmt:message key="users.colSurname"/></th>
-                <th scope="col"><fmt:message key="users.colActive"/></th>
                 <th scope="col"><fmt:message key="users.colPhone"/></th>
                 <th scope="col"></th>
             </tr>
@@ -62,15 +61,6 @@
                 <tr>
                     <td>${user.firstName}</td>
                     <td>${user.lastName}</td>
-                    <td><c:choose>
-                        <c:when test="${user.active}">
-                            <fmt:message key="users.yes"/>
-                        </c:when>
-
-                        <c:otherwise>
-                            <fmt:message key="users.no"/>
-                        </c:otherwise>
-                    </c:choose></td>
                     <td>${user.phoneNumber}</td>
                     <td>
 
