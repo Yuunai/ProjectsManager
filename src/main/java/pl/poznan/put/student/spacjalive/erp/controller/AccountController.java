@@ -84,13 +84,5 @@ public class AccountController {
 		
 		return "redirect:/account/editAccount?userId=" + user.getId();
 	}
-	
-	@GetMapping("/accountDetails")
-	public String accountDetails(@RequestParam("userId") int userId, Model model) throws NotFoundException {
-		User user = userService.getUser(userId);
-		model.addAttribute("user", user);
-		
-		return "account-details";
-	}
-	
+
 }
