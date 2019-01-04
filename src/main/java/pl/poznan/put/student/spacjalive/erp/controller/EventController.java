@@ -40,7 +40,7 @@ public class EventController {
 	
 	@GetMapping("/list")
 	public String listEvents(Model model, @RequestParam("archived") boolean archived) {
-		List<Event> events = eventService.getEvents(archived);
+		List<Event> events = eventService.getEvents(archived, null);
 		model.addAttribute("events", events);
 		
 		return "home";

@@ -67,6 +67,9 @@ public class Event {
 	@Column(name = "deadline", columnDefinition = "DATE")
 	private String deadline;
 	
+	@Column(name = "published")
+	private boolean published;
+	
 	@Column(name = "archived")
 	private boolean archived;
 	
@@ -83,8 +86,9 @@ public class Event {
 	
 	}
 	
-	public Event(String name, String place, String date, String time, String organizer, String phoneNumber, String
-			email, String comments, int priority, String deadline, boolean archived, String videoType, String lastUpdate) {
+	public Event(String name, String place, String date, String time, String organizer, String phoneNumber,
+	             String email, String comments, int priority, String deadline, boolean published, boolean archived,
+	             String videoType, String lastUpdate) {
 		this.name = name;
 		this.place = place;
 		this.date = date;
@@ -95,6 +99,7 @@ public class Event {
 		this.comments = comments;
 		this.priority = priority;
 		this.deadline = deadline;
+		this.published = published;
 		this.archived = archived;
 		this.videoType = videoType;
 		this.lastUpdate = lastUpdate;
@@ -188,6 +193,14 @@ public class Event {
 		this.deadline = deadline;
 	}
 	
+	public boolean isPublished() {
+		return published;
+	}
+	
+	public void setPublished(boolean published) {
+		this.published = published;
+	}
+	
 	public boolean isArchived() {
 		return archived;
 	}
@@ -226,6 +239,7 @@ public class Event {
 				", comments='" + comments + '\'' +
 				", priority=" + priority +
 				", deadline='" + deadline + '\'' +
+				", published=" + published +
 				", archived=" + archived +
 				", videoType='" + videoType + '\'' +
 				", lastUpdate='" + lastUpdate + '\'' +

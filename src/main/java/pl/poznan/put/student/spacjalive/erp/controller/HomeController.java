@@ -29,7 +29,7 @@ public class HomeController {
 	
 	@GetMapping("/home")
 	public String home(Model model) {
-		List<Event> events = eventService.getEvents(false);
+		List<Event> events = eventService.getEvents(false, null);
 		model.addAttribute("events", events);
 		model.addAttribute("participation", new ParticipationViewModel());
 		model.addAttribute("roles", roleService.getRoles());
@@ -86,7 +86,7 @@ public class HomeController {
 
 	@GetMapping("/public")
 	public String publicUI (Model model) {
-		List<Event> events = eventService.getEvents(false);
+		List<Event> events = eventService.getEvents(false, true);
 		model.addAttribute("events", events);
 
 		return "public";

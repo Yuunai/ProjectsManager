@@ -9,7 +9,7 @@ public interface EventService {
 	
 	List<Event> getEvents();
 	
-	List<Event> getEvents(boolean archived);
+	List<Event> getEvents(Boolean archived, Boolean published);
 	
 	void saveEvent(Event event);
 	

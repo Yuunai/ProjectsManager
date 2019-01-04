@@ -108,7 +108,7 @@ CREATE TABLE `event` (
   `comments` VARCHAR(256) DEFAULT NULL,
   `priority` INT DEFAULT 5,
   `deadline` DATE DEFAULT NULL,
-  `confirmed` bool DEFAULT false,
+  `published` bool DEFAULT false,
   `archived` bool DEFAULT false,
   `video_type` VARCHAR(40) NOT NULL,
   `last_update` TIMESTAMP DEFAULT now(),

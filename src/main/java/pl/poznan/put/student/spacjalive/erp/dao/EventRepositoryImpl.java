@@ -27,13 +27,32 @@ public class EventRepositoryImpl implements EventRepository {
 	}
 	
 	@Override
-	public List<Event> getEvents(boolean archived) {
+	public List<Event> getEvents(Boolean archived, Boolean published) {
 		Session session = sessionFactory.getCurrentSession();
 		
-		Query<Event> query = session.createQuery("FROM Event WHERE archived=:archived ORDER BY date ASC ", Event.class);
-		query.setParameter("archived", archived);
+		String query = "FROM Event ";
+		if(archived != null || published != null) {
+			query += "WHERE ";
+			boolean and = false;
+			if(archived != null) {
+				query += "archived=:archived ";
+				and = true;
+			}
+			
+			if(published != null) {
+				if(and)
+					query += "and ";
+				query += "published=:published ";
+			}
+		}
+		query += "ORDER BY date ASC ";
+		Query<Event> q = session.createQuery(query, Event.class);
+		if(archived != null)
+			q.setParameter("archived", archived);
+		if(published != null)
+			q.setParameter("published", published);
 		
-		return query.getResultList();
+		return q.getResultList();
 	}
 	
 	@Override

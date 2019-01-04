@@ -22,8 +22,8 @@ public class EventServiceImpl implements EventService {
 	}
 	
 	@Override
-	public List<Event> getEvents(boolean archived) {
-		return eventRepository.getEvents(archived);
+	public List<Event> getEvents(Boolean archived, Boolean published) {
+		return eventRepository.getEvents(archived, published);
 	}
 	
 	@Override
