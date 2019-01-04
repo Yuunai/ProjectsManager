@@ -31,7 +31,6 @@ CREATE TABLE `user_details` (
   `student_index` VARCHAR(10),
   `car` TINYINT(1) NOT NULL DEFAULT 0,
   `office_entrance` TINYINT(1) DEFAULT 0,
-  `active` TINYINT(1) DEFAULT 0,
   `last_update` TIMESTAMP DEFAULT now(),
 
   CONSTRAINT FK_USER_ID FOREIGN KEY (user_id)
@@ -40,7 +39,7 @@ CREATE TABLE `user_details` (
 ) ENGINE=InnoDB;
 
 insert into user_details value
-  (1, 'admin', 'admin', NULL, NULL, 0, 1, 1, now());
+  (1, 'admin', 'admin', NULL, NULL, 0, 1, now());
 
 DROP TABLE IF EXISTS `token`;
 

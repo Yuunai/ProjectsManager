@@ -14,7 +14,7 @@ public interface UserService {
 	
 	List<UserDetails> getUsersDetails();
 	
-	List<UserDetails> getUsersDetails(boolean active);
+	List<UserDetails> getUsersDetails(boolean enabled);
 	
 	void saveUserDetails(UserDetails details);
 	

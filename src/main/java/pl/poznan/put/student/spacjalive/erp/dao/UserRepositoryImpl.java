@@ -34,10 +34,11 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 	
 	@Override
-	public List<UserDetails> getUsersDetails(boolean active) {
+	public List<UserDetails> getUsersDetails(boolean enabled) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM UserDetails WHERE active=:active ORDER BY firstName");
-		query.setParameter("active", active);
+		Query query = session.createQuery("FROM UserDetails ud JOIN User u WHERE u.enabled=:enabled ORDER BY " +
+				"ud.firstName");
+		query.setParameter("enabled", enabled);
 		
 		return query.getResultList();
 	}

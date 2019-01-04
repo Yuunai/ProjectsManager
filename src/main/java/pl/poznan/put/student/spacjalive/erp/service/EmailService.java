@@ -53,7 +53,7 @@ public class EmailService {
 		
 		MimeMessage message = new MimeMessage(session);
 		message.setSubject(subject);
-		message.setText(content);
+		message.setContent(content, "text/html; charset=utf-8");
 		message.setFrom(email);
 		message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
 		Transport.send(message);

@@ -46,9 +46,6 @@ public class UserDetails {
 	@Column(name = "car")
 	private boolean car;
 	
-	@Column(name = "active")
-	private boolean active;
-	
 	@Column(name = "last_update")
 	private String lastUpdate;
 	
@@ -56,7 +53,7 @@ public class UserDetails {
 	}
 	
 	public UserDetails(int userId, String firstName, String lastName, String phoneNumber, String studentIndex,
-	                   boolean officeEntrance, boolean car, boolean active, String lastUpdate){
+	                   boolean officeEntrance, boolean car, String lastUpdate){
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -64,7 +61,6 @@ public class UserDetails {
 		this.studentIndex = studentIndex;
 		this.officeEntrance = officeEntrance;
 		this.car = car;
-		this.active = active;
 		this.lastUpdate = lastUpdate;
 	}
 	
@@ -124,14 +120,6 @@ public class UserDetails {
 		this.car = car;
 	}
 	
-	public boolean isActive() {
-		return active;
-	}
-	
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	
 	public String getLastUpdate() {
 		return lastUpdate;
 	}
@@ -150,7 +138,6 @@ public class UserDetails {
 				", studentIndex='" + studentIndex + '\'' +
 				", officeEntrance=" + officeEntrance +
 				", car=" + car +
-				", active=" + active +
 				", lastUpdate='" + lastUpdate + '\'' +
 				'}';
 	}

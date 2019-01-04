@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public List<UserDetails> getUsersDetails(boolean active) {
-		return userRepository.getUsersDetails(active);
+	public List<UserDetails> getUsersDetails(boolean enabled) {
+		return userRepository.getUsersDetails(enabled);
 	}
 	
 	@Override
