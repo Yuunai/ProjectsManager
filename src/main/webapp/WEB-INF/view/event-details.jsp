@@ -137,7 +137,7 @@
                 <div class="col-12 col-md-1 mr-3">
                     <label class="form-header text-center" for="archEvent"><fmt:message key="event.eventIsPublic"/></label>
                     <c:choose>
-                        <c:when test="${event.archived}">
+                        <c:when test="${event.published}">
                             <form:checkbox path="published" id="publicEvent" class="form-control" disabled="true"
                                            value="${event.published}" checked="checked"/>
                         </c:when>
@@ -214,8 +214,7 @@
                         <c:param name="eventId" value="${participation.event.id}"/>
                     </c:url>
                     <tr>
-                            <%--TODO replace user email with first and last names--%>
-                        <td>${participation.user.email}</td>
+                        <td>${usersNames.get(participation.user.id)}</td>
                         <td>${participation.role.name}</td>
                         <td>
                             <a href="${deleteLink}"

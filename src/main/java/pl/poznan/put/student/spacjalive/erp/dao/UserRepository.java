@@ -4,6 +4,7 @@ import pl.poznan.put.student.spacjalive.erp.entity.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserRepository {
 	
@@ -22,6 +23,8 @@ public interface UserRepository {
 	List<User> getUsers();
 	
 	List<User> getUsers(boolean enabled);
+	
+	Map<Integer, String> getUsersNamesMap(List<Integer> ids);
 	
 	void saveUser(User user);
 	

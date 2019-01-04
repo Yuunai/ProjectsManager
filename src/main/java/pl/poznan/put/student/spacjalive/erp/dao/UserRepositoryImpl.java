@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import pl.poznan.put.student.spacjalive.erp.entity.*;
 import pl.poznan.put.student.spacjalive.erp.exceptions.NotFoundException;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -36,8 +37,8 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public List<UserDetails> getUsersDetails(boolean enabled) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM UserDetails ud JOIN User u WHERE u.enabled=:enabled ORDER BY " +
-				"ud.firstName");
+		Query query = session.createQuery("FROM UserDetails ud JOIN User u  ON ud.userId = u.id WHERE " +
+				"u.enabled=:enabled ORDER BY ud.firstName");
 		query.setParameter("enabled", enabled);
 		
 		return query.getResultList();
@@ -87,6 +88,20 @@ public class UserRepositoryImpl implements UserRepository {
 		query.setParameter("enabled", enabled);
 		
 		return query.getResultList();
+	}
+	
+	@Override
+	public Map<Integer, String> getUsersNamesMap(List<Integer> ids) {
+		if (ids.isEmpty())
+			return new HashMap<>();
+		
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM UserDetails WHERE userId IN (:ids)");
+		query.setParameterList("ids", ids);
+		List<UserDetails> details = query.getResultList();
+		
+		return details.stream()
+				.collect(Collectors.toMap(UserDetails::getUserId, e -> e.getLastName() + " " + e.getFirstName()));
 	}
 	
 	@Override

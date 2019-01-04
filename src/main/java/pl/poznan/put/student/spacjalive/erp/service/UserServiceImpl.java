@@ -14,8 +14,7 @@ import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenNotFound;
 
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 
 @Service("userService")
@@ -68,6 +67,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getUsers() {
 		return userRepository.getUsers();
+	}
+	
+	@Override
+	public Map<Integer, String> getUsersNamesMap(List<Integer> ids) {
+		return userRepository.getUsersNamesMap(ids);
 	}
 	
 	@Override

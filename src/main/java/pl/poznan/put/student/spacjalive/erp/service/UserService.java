@@ -7,6 +7,7 @@ import pl.poznan.put.student.spacjalive.erp.exceptions.token.TokenNotFound;
 
 import javax.mail.MessagingException;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 	
@@ -23,6 +24,8 @@ public interface UserService {
 	User getUserByEmail(String email) throws NotFoundException;
 	
 	List<User> getUsers();
+	
+	Map<Integer, String> getUsersNamesMap(List<Integer> ids);
 	
 	List<User> getUsers(boolean enabled);
 	
