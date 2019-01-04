@@ -115,7 +115,7 @@
                                 <td>${participation.role.name}</td>
                                 <td>
                                     <a href="${deleteLink}"
-                                       onclick="if (!(confirm('Are you sure you want to delete this participation?'))) return false"><fmt:message key="home.modalRemoveParticipation"/>
+                                       onclick="if (!(confirm('<fmt:message key="msg.sureToRemoveParticipation"/>'))) return false"><fmt:message key="home.modalRemoveParticipation"/>
                                     </a>
                             </tr>
                         </c:forEach>

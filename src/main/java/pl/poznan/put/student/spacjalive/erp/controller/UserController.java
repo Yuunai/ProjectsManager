@@ -50,22 +50,7 @@ public class UserController {
 		
 		return "user-details";
 	}
-	
-	@GetMapping("/updateUserForm")
-	public String updateUser(@SessionAttribute("userId") int accessorId,
-			@RequestParam("userId") int userId, Model model) throws NoAccessGrantedException, NotFoundException {
-		checkAccess(accessorId, userId);
-		UserDetails userDetails = userService.getUserDetails(userId);
-		if(userDetails == null) {
-			userDetails = new UserDetails();
-			userDetails.setUserId(userId);
-		}
-		model.addAttribute("details", userDetails);
-		model.addAttribute("administrativeRoles", userService.getAdmRoles());
-		
-		return "update-user-form";
-	}
-	
+
 	@PostMapping("/updateUser")
 	public String updateUser(@SessionAttribute("userId") int accessorId,
 	                         @ModelAttribute("details") @Valid UserDetails details,
@@ -73,7 +58,7 @@ public class UserController {
 			throws NoAccessGrantedException {
 		checkAccess(accessorId, details.getUserId());
 		if (result.hasErrors())
-			return "update-user-form";
+			return "user-details";
 		
 		userService.saveUserDetails(details);
 		

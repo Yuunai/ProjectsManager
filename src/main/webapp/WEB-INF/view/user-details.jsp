@@ -97,7 +97,7 @@
                 <label class="form-note" for="lastNameProfile"><form:errors path="lastName"/></label>
             </div>
             <div class="col-12 col-md-2">
-                <label class="form-header" for="indexProfile"><fmt:message key="user.index"/>u</label>
+                <label class="form-header" for="indexProfile"><fmt:message key="user.index"/></label>
                 <form:input path="studentIndex" id="indexProfile" type="text" class="form-control"
                             value="${details.studentIndex}"
                             disabled="true"/>
@@ -162,7 +162,7 @@
                         <td>${participation.role.name}</td>
                         <td>
                             <a href="${deleteLink}"
-                               onclick="if (!(confirm('Are you sure you want to delete this participation?'))) return false"><fmt:message key="user.remove"/>
+                               onclick="if (!(confirm('<fmt:message key="msg.sureToRemoveParticipation"/>'))) return false"><fmt:message key="user.remove"/>
                             </a>
                     </tr>
                 </c:forEach>

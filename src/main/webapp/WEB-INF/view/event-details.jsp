@@ -135,6 +135,20 @@
             </div>
             <div class="row py-4">
                 <div class="col-12 col-md-1 mr-3">
+                    <label class="form-header text-center" for="archEvent"><fmt:message key="event.eventIsPublic"/></label>
+                    <c:choose>
+                        <c:when test="${event.archived}">
+                            <form:checkbox path="published" id="publicEvent" class="form-control" disabled="true"
+                                           value="${event.published}" checked="checked"/>
+                        </c:when>
+
+                        <c:otherwise>
+                            <form:checkbox path="published" id="publicEvent" class="form-control" disabled="true"
+                                           value="${event.published}"/>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <div class="col-12 col-md-1 mr-3">
                     <label class="form-header text-center" for="archEvent"><fmt:message key="event.eventArchive"/></label>
                     <c:choose>
                         <c:when test="${event.archived}">
@@ -205,7 +219,7 @@
                         <td>${participation.role.name}</td>
                         <td>
                             <a href="${deleteLink}"
-                               onclick="if (!(confirm('Are you sure you want to delete this participation?'))) return false"><fmt:message key="event.remove"/>
+                               onclick="if (!(confirm('<fmt:message key="msg.sureToRemoveParticipation"/>'))) return false"><fmt:message key="event.remove"/>
                             </a>
                     </tr>
                 </c:forEach>
