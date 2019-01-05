@@ -50,7 +50,6 @@
 					<fmt:message key="newPass.passwordPlaceholder" var="passPlaceholder"/>
 					<input name="newPassword" type="password" id="newPassword" class="form-control"
 						   placeholder="${passPlaceholder}"/>
-					<%--TODO wrong pass language versions and validation--%>
 					<label class="form-note" id="errorPass" for="newPassword"><fmt:message key="newPass.passwordRequirements"/></label>
 				</div>
 				<div class="col-12 col-md-4">
@@ -58,16 +57,49 @@
 					<fmt:message key="newPass.passwordPlaceholderRepeated" var="passPlaceholderRepeated"/>
 					<input type="password" id="newPasswordRepeated" class="form-control"
 						   placeholder="${passPlaceholderRepeated}"/>
+					<label class="form-note" id="errorPassRep" for="newPasswordRepeated"></label>
+
 				</div>
 				<input name="token" type="hidden" value="${paramValues.get("token")[0]}" />
 			</div>
 		</form>
+<script>
+	function validate() {
+        var nPassInp = document.getElementById("newPassword");
+        var nPassInpRep = document.getElementById("newPasswordRepeated");
+		var repLabel = document.getElementById("errorPassRep");
 
+		if (nPassInp.value =="")
+		{
+            nPassInpRep.value="";
+            nPassInp.value="";
+            repLabel.innerText = '<fmt:message key="newPass.emptyInput"/>'
+		}
+		else if (nPassInp.value == nPassInpRep.value)
+		{
+
+            var regex = new RegExp("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!,.])(?=\\S+$).{8,}$");
+            if (regex.test(nPassInp.value)) {
+                document.forms['setNewPassword'].submit();
+            } else {
+                nPassInpRep.value="";
+                nPassInp.value="";
+                repLabel.innerText = '<fmt:message key="newPass.passwordRequirements"/>'
+            }
+		}
+		else
+		{
+		    nPassInpRep.value="";
+		    nPassInp.value="";
+		    repLabel.innerText = '<fmt:message key="newPass.passNotMatch"/>'
+		}
+    }
+</script>
 <%--TODO function validating--%>
 		<div class="row py-4 justify-content-center">
 			<div class=" col-4">
 				<button id="saveNewPassBtn" class="btn btn-lg btn-secondary btn-block"
-						type="button" onclick="document.forms['setNewPassword'].submit();"><fmt:message key="newPass.submit"/>
+						type="button" onclick="validate()"><fmt:message key="newPass.submit"/>
 				</button>
 			</div>
 		</div>

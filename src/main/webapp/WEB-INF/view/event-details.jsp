@@ -5,12 +5,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="lang" value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}" scope="session" />
-<fmt:setLocale value="${lang}" />
+<c:set var="lang"
+       value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${lang}"/>
 <fmt:setBundle basename="lang"/>
 
 
-<html lang="<fmt:message key="lang.language"/>"><head>
+<html lang="<fmt:message key="lang.language"/>">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title><fmt:message key="event.title"/>"</title>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"/>
@@ -45,7 +48,8 @@
             </button>
         </div>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/reservation/addReservationForm?eventId=${event.id}'">
+            <button class="btn btn-outline-secondary"
+                    onclick="location.href='${pageContext.request.contextPath}/reservation/addReservationForm?eventId=${event.id}'">
                 <fmt:message key="event.reserve"/>
             </button>
         </div>
@@ -135,7 +139,8 @@
             </div>
             <div class="row py-4">
                 <div class="col-12 col-md-1 mr-3">
-                    <label class="form-header text-center" for="archEvent"><fmt:message key="event.eventIsPublic"/></label>
+                    <label class="form-header text-center" for="archEvent"><fmt:message
+                            key="event.eventIsPublic"/></label>
                     <c:choose>
                         <c:when test="${event.published}">
                             <form:checkbox path="published" id="publicEvent" class="form-control" disabled="true"
@@ -149,7 +154,8 @@
                     </c:choose>
                 </div>
                 <div class="col-12 col-md-1 mr-3">
-                    <label class="form-header text-center" for="archEvent"><fmt:message key="event.eventArchive"/></label>
+                    <label class="form-header text-center" for="archEvent"><fmt:message
+                            key="event.eventArchive"/></label>
                     <c:choose>
                         <c:when test="${event.archived}">
                             <form:checkbox path="archived" id="archEvent" class="form-control" disabled="true"
@@ -160,7 +166,7 @@
                             <form:checkbox path="archived" id="archEvent" class="form-control" disabled="true"
                                            value="${event.archived}"/>
                         </c:otherwise>
-                     </c:choose>
+                    </c:choose>
                 </div>
                 <div class="col-12 col-md-2">
                     <label class="form-header" for="prioEvent"><fmt:message key="event.eventPriority"/></label>
@@ -218,8 +224,11 @@
                         <td>${participation.role.name}</td>
                         <td>
                             <a href="${deleteLink}"
-                               onclick="if (!(confirm('<fmt:message key="msg.sureToRemoveParticipation"/>'))) return false"><fmt:message key="event.remove"/>
+                               onclick="if (!(confirm('<fmt:message
+                                       key="msg.sureToRemoveParticipation"/>'))) return false"><fmt:message
+                                    key="event.remove"/>
                             </a>
+                        </td>
                     </tr>
                 </c:forEach>
                 <form:form action="/participation/addParticipation" modelAttribute="participation" method="POST"
@@ -243,7 +252,8 @@
                             </form:select>
                         </td>
                         <td>
-                            <button class="btn btn-outline-secondary" type="submit"><fmt:message key="event.add"/></button>
+                            <button class="btn btn-outline-secondary" type="submit"><fmt:message
+                                    key="event.add"/></button>
                         </td>
                     </tr>
                 </form:form>
