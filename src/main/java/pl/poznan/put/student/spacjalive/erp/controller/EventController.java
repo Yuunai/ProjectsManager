@@ -15,6 +15,7 @@ import pl.poznan.put.student.spacjalive.erp.viewmodel.ParticipationViewModel;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/event")
@@ -83,10 +84,7 @@ public class EventController {
 		List<UserDetails> users = userService.getUsersDetails(true);
 		model.addAttribute("users", users);
 		
-		List<Integer> userIds = new ArrayList<>();
-		for(Participation p : participations) {
-			userIds.add(p.getUser().getId());
-		}
+		List<Integer> userIds = users.stream().map(e -> e.getUserId()).collect(Collectors.toList());
 		Map<Integer, String> usersNames = userService.getUsersNamesMap(userIds);
 		model.addAttribute("usersNames", usersNames);
 		

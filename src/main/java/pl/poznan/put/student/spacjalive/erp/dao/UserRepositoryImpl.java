@@ -29,7 +29,7 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public List<UserDetails> getUsersDetails() {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM UserDetails ORDER BY firstName");
+		Query<UserDetails> query = session.createQuery("FROM UserDetails ORDER BY firstName");
 		
 		return query.getResultList();
 	}
@@ -37,8 +37,8 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public List<UserDetails> getUsersDetails(boolean enabled) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM UserDetails ud JOIN User u  ON ud.userId = u.id WHERE " +
-				"u.enabled=:enabled ORDER BY ud.firstName");
+		Query<UserDetails> query = session.createQuery("SELECT ud FROM UserDetails ud, User u " +
+				"where ud.userId = u.id AND u.enabled=:enabled ORDER BY ud.firstName");
 		query.setParameter("enabled", enabled);
 		
 		return query.getResultList();
