@@ -162,7 +162,9 @@
                         <td>${participation.role.name}</td>
                         <td>
                             <a href="${deleteLink}"
-                               onclick="if (!(confirm('<fmt:message key="msg.sureToRemoveParticipation"/>'))) return false"><fmt:message key="user.remove"/>
+                               onclick="if (!(confirm('<fmt:message
+                                       key="msg.sureToRemoveParticipation"/>'))) return false"><fmt:message
+                                    key="user.remove"/>
                             </a>
                     </tr>
                 </c:forEach>
@@ -184,18 +186,60 @@
             </div>
             <div class="modal-body">
                 <form:form id="resetPassForm" class="form-inline"
-                           action="${pageContext.request.contextPath}/setNewPassword" method="POST">
-                    <div class="form-group">
-                        <input type="password" name="newPassword" class="form-control"
-                               placeholder="<fmt:message key="user.newPassword"/>" required autofocus>
-                        <input name="token" type="hidden" value="${paramValues.get("token")[0]}" />
-                        <button class="btn btn-outline-secondary" type="submit"><fmt:message key="user.modalSubmit"/></button>
+                           action="${pageContext.request.contextPath}/user/setNewPassword" method="POST">
+                    <div class="container">
+                        <div class="row my-4">
+                        <span id="modalMSG"></span>
+                        </div>
+                        <div class="row my-4">
+                            <input type="password" name="password" id="newPassword" class="form-control"
+                                   placeholder="<fmt:message key="user.newPassword"/>" required autofocus>
+                        </div>
+                        <div class="row my-4">
+                            <input type="password" id="newPasswordRepeated" class="form-control"
+                                   placeholder="<fmt:message key="user.newPasswordRepeated"/>" required autofocus>
+                        </div>
+                        <div class="row my-4">
+                            <button class="btn btn-outline-secondary" type="button" onclick="validateModal()"><fmt:message
+                                    key="user.modalSubmit"/></button>
+                        </div>
                     </div>
                 </form:form>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function validateModal() {
+        var nPassInp = document.getElementById("newPassword");
+        var nPassInpRep = document.getElementById("newPasswordRepeated");
+        var repLabel = document.getElementById("modalMSG");
 
+        if (nPassInp.value =="")
+        {
+            nPassInpRep.value="";
+            nPassInp.value="";
+            repLabel.innerText = '<fmt:message key="newPass.emptyInput"/>'
+        }
+        else if (nPassInp.value == nPassInpRep.value)
+        {
+
+            var regex = new RegExp("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!,.])(?=\\S+$).{8,}$");
+            if (regex.test(nPassInp.value)) {
+                document.forms['resetPassForm'].submit();
+            } else {
+                nPassInpRep.value="";
+                nPassInp.value="";
+                repLabel.innerText = '<fmt:message key="newPass.passwordRequirements"/>'
+            }
+        }
+        else
+        {
+            nPassInpRep.value="";
+            nPassInp.value="";
+            repLabel.innerText = '<fmt:message key="newPass.passNotMatch"/>'
+        }
+    }
+</script>
 </body>
 </html>

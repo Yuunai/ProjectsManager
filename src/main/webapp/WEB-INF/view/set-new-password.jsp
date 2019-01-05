@@ -95,7 +95,6 @@
 		}
     }
 </script>
-<%--TODO function validating--%>
 		<div class="row py-4 justify-content-center">
 			<div class=" col-4">
 				<button id="saveNewPassBtn" class="btn btn-lg btn-secondary btn-block"

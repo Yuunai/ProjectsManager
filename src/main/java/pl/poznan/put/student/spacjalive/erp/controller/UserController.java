@@ -66,7 +66,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/setNewPassword")
-	public String setNewPassword(@SessionAttribute("userId") int userId, @RequestParam("Password") String password,
+	public String setNewPassword(@SessionAttribute("userId") int userId, @RequestParam("password") String password,
 	                              Model model) throws NotFoundException {
 		
 		try {
