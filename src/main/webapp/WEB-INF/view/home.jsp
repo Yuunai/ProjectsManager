@@ -4,8 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<c:set var="lang" value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}" scope="session" />
-<fmt:setLocale value="${lang}" />
+<c:set var="lang"
+       value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${lang}"/>
 <fmt:setBundle basename="lang"/>
 
 
@@ -26,20 +28,23 @@
 <%@include file="header.jsp" %>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-6 mt-0">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <button class="btn btn-outline-secondary" onclick="location.href='/event/addEventForm'">
-                <span data-feather="plus" style="margin-bottom: 1px;"></span>
-                <fmt:message key="home.addEventBtn"/>
-            </button>
-        </div>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <button class="btn btn-outline-secondary" onclick="location.href='/event/list?archived=true'">
-                <span data-feather="archive" style="margin-bottom: 1px;"></span>
-                <fmt:message key="home.archiveBtn"/>
-            </button>
-        </div>
+        <security:authorize access="hasAnyRole('ADMIN','MODERATOR','TRUSTED','OUTER_USER')">
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <button class="btn btn-outline-secondary" onclick="location.href='/event/addEventForm'">
+                    <span data-feather="plus" style="margin-bottom: 1px;"></span>
+                    <fmt:message key="home.addEventBtn"/>
+                </button>
+            </div>
+        </security:authorize>
+        <security:authorize access="hasAnyRole('ADMIN','MODERATOR','TRUSTED')">
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <button class="btn btn-outline-secondary" onclick="location.href='/event/list?archived=true'">
+                    <span data-feather="archive" style="margin-bottom: 1px;"></span>
+                    <fmt:message key="home.archiveBtn"/>
+                </button>
+            </div>
+        </security:authorize>
     </div>
-
     <h2><fmt:message key="home.header"/></h2>
     <div class="table-responsive">
         <table class="table table-striped table-sm">
@@ -54,25 +59,48 @@
             </thead>
             <tbody>
             <c:forEach var="event" items="${events}">
-                <c:url var="eventDetails" value="/event/eventDetails">
-                    <c:param name="eventId" value="${event.id}"/>
-                </c:url>
-                <tr>
-                    <td>${event.name}</td>
-                    <td>${event.date}</td>
-                    <td>${event.place}</td>
-                    <td>${event.videoType}</td>
-                    <td>
-                        <div class="btn-group mr-2">
-                            <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${eventDetails}'">
-                                <fmt:message key="home.eventDetailsBtn"/>
-                            </button>
-                            <button class="btn btn-sm btn-outline-secondary" data-toggle="modal"
-                                    data-target="#joinModal"><fmt:message key="home.eventJoinBtn"/>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                <security:authorize access="hasRole('OUTER_USER')">
+                    <c:if test="${event.published}">
+                        <c:url var="eventDetails" value="/event/eventDetails">
+                            <c:param name="eventId" value="${event.id}"/>
+                        </c:url>
+                        <tr>
+                            <td>${event.name}</td>
+                            <td>${event.date}</td>
+                            <td>${event.place}</td>
+                            <td>***</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary"
+                                        onclick="location.href='${eventDetails}'">
+                                    <fmt:message key="home.eventDetailsBtn"/>
+                                </button>
+                            </td>
+                        </tr>
+
+                    </c:if>
+                </security:authorize>
+                <security:authorize access="hasAnyRole('ADMIN','MODERATOR','TRUSTED','USER')">
+                    <c:url var="eventDetails" value="/event/eventDetails">
+                        <c:param name="eventId" value="${event.id}"/>
+                    </c:url>
+                    <tr>
+                        <td>${event.name}</td>
+                        <td>${event.date}</td>
+                        <td>${event.place}</td>
+                        <td>${event.videoType}</td>
+                        <td>
+                            <div class="btn-group mr-2">
+                                <button class="btn btn-sm btn-outline-secondary"
+                                        onclick="location.href='${eventDetails}'">
+                                    <fmt:message key="home.eventDetailsBtn"/>
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary" data-toggle="modal"
+                                        data-target="#joinModal"><fmt:message key="home.eventJoinBtn"/>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </security:authorize>
             </c:forEach>
             </tbody>
         </table>
@@ -115,7 +143,9 @@
                                 <td>${participation.role.name}</td>
                                 <td>
                                     <a href="${deleteLink}"
-                                       onclick="if (!(confirm('<fmt:message key="msg.sureToRemoveParticipation"/>'))) return false"><fmt:message key="home.modalRemoveParticipation"/>
+                                       onclick="if (!(confirm('<fmt:message
+                                               key="msg.sureToRemoveParticipation"/>'))) return false"><fmt:message
+                                            key="home.modalRemoveParticipation"/>
                                     </a>
                             </tr>
                         </c:forEach>
@@ -149,7 +179,8 @@
                 </div>
                 <div class="modal-footer">
                     <%--TODO move submit button to form--%>
-                    <button class="btn btn-outline-secondary" type="submit"><fmt:message key="home.modalSubmit"/></button>
+                    <button class="btn btn-outline-secondary" type="submit"><fmt:message
+                            key="home.modalSubmit"/></button>
                 </div>
             </div>
         </div>

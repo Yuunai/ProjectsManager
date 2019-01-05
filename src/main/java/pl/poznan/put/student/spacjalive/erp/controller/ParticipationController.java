@@ -56,7 +56,7 @@ public class ParticipationController {
 	public String deleteParticipation(
 			@SessionAttribute("userId") int accessorId,
 			@RequestParam("roleId") int roleId,
-	        @RequestParam("employeeId") int userId,
+	        @RequestParam("userId") int userId,
 	        @RequestParam("eventId") int eventId) throws NoAccessGrantedException {
 		checkAccess(accessorId, userId);
 		participationService.deleteParticipation(eventId, roleId, userId);

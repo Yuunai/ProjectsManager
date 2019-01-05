@@ -44,9 +44,15 @@ public class UserController {
 	}
 	
 	@GetMapping("/userDetails")
-	public String userDetails(@RequestParam("userId") int userId, Model model) throws NotFoundException {
-		UserDetails details = userService.getUserDetails(userId);
-		model.addAttribute("details", details);
+	public String userDetails(@RequestParam("userId") int userId, Model model) {
+        UserDetails details = null;
+        try {
+            details = userService.getUserDetails(userId);
+        } catch (NotFoundException e) {
+            details = new UserDetails();
+            details.setUserId(userId);
+        }
+        model.addAttribute("details", details);
 		
 		return "user-details";
 	}
