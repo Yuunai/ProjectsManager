@@ -27,12 +27,14 @@
 <%@include file="header.jsp" %>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-6 mt-0">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <security:authorize access="hasAnyRole('ADMIN','MODERATOR')">
         <div class="btn-toolbar mb-2 mb-md-0">
             <button class="btn btn-outline-secondary" onclick="location.href='/equipment/addEquipmentForm'">
                 <span data-feather="plus" style="margin-bottom: 1px;"></span>
                 <fmt:message key="eq.addEqBtn"/>
             </button>
         </div>
+        </security:authorize>
     </div>
 
     <h2><fmt:message key="eq.header"/></h2>

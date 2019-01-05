@@ -61,9 +61,11 @@
                     <td>${reservation.dateTo} ${reservation.timeTo}</td>
                     <td>
                         <a href="${updateLink}"><fmt:message key="reservations.update"/></a>
+                        <security:authorize access="hasAnyRole('ADMIN','MODERATOR')">
                         |
                         <a href="${deleteLink}"
                            onclick="if (!(confirm('<fmt:message key="reservations.confirmMessage"/>'))) return false"><fmt:message key="reservations.remove"/></a>
+                        </security:authorize>
                     </td>
                 </tr>
 

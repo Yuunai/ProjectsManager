@@ -45,12 +45,13 @@
                 <fmt:message key="user.edit"/>
             </button>
         </div>
+        <c:if test="${pageContext.session.getAttribute('userId')==paramValues.get('userId')[0]}">
         <div class="btn-toolbar mb-2 mb-md-0">
             <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#passResetModal">
                 <fmt:message key="user.changePassword"/>
             </button>
         </div>
-
+        </c:if>
         <div class="btn-toolbar mb-2 mb-md-0 ml-auto">
             <%--TODO if id is mine back to home else back to people--%>
             <button class="btn btn-outline-secondary"
