@@ -1,10 +1,11 @@
 package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "equipment_category")
-public class EquipmentCategory {
+public class EquipmentCategory implements Serializable {
 
 	@Id
 	@Column(name = "id")

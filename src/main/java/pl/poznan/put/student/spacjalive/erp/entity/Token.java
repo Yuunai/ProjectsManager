@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "token")
-public class Token implements Serializable{
+public class Token implements Serializable {
 	
 	public static final int RESET_PASSWORD_TOKEN = 1;
 	

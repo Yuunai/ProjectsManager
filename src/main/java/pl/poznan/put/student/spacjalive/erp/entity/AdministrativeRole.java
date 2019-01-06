@@ -1,11 +1,12 @@
 package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
 @Table(name = "adm_role")
-public class AdministrativeRole {
+public class AdministrativeRole implements Serializable {
 	
 	public static final int ADMIN = 1;
 	public static final int MODERATOR = 2;

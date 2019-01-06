@@ -1,12 +1,13 @@
 package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "equipment")
-public class Equipment {
+public class Equipment implements Serializable {
 	
 	//TODO add fields validations
 	
