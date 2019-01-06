@@ -60,7 +60,7 @@
                     <td>${reservation.dateSince} ${reservation.timeSince}</td>
                     <td>${reservation.dateTo} ${reservation.timeTo}</td>
                     <td>
-                        <a href="${updateLink}"><fmt:message key="reservations.update"/></a>
+                        <a href="${updateLink}"><fmt:message key="reservations.details"/></a>
                         <security:authorize access="hasAnyRole('ADMIN','MODERATOR')">
                         |
                         <a href="${deleteLink}"

@@ -33,7 +33,7 @@
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-6 mt-0">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <div class="btn-toolbar mb-2 mb-md-0 ml-auto">
-            <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/home'">
+            <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/reservation/list'">
                 <span data-feather="x" style="margin-bottom: 1px;"></span>
                 <fmt:message key="addReservation.back"/>
             </button>
@@ -42,7 +42,8 @@
     <h2><fmt:message key="addReservation.header"/></h2>
 
     <div class="container-fluid justify-content-center">
-        <form:form name="addReservation" action="addReservation" modelAttribute="reservation" method="POST" acceptCharset="utf8">
+        <form:form name="addReservation" action="addReservation" modelAttribute="reservation" method="POST"
+                   acceptCharset="utf8">
 
             <form:hidden path="id"/>
             <form:hidden path="lastUpdate"/>
@@ -65,14 +66,14 @@
             <div class="row py-4 justify-content-center">
                 <div class="col-12 col-md-3">
                     <label class="form-header" for="dateSince"><fmt:message key="addReservation.fromDate"/></label>
-                    <form:input path="dateSince" id="dateSince" type="date" class="form-control" required="true"/>
+                    <form:input path="dateSince" id="dateSince" type="date" class="form-control" disabled="true"/>
                     <label class="form-note" for="dateSince">
                         <form:errors path="dateSince"/>
                     </label>
                 </div>
                 <div class="col-12 col-md-2">
                     <label class="form-header" for="timeSince"><fmt:message key="addReservation.fromTime"/></label>
-                    <form:input path="timeSince" id="timeSince" type="time" class="form-control" required="true"/>
+                    <form:input path="timeSince" id="timeSince" type="time" class="form-control" disabled="true"/>
                     <label class="form-note" for="timeSince">
                         <form:errors path="timeSince"/>
                     </label>
@@ -82,87 +83,56 @@
             <div class="row py-4 justify-content-center">
                 <div class="col-12 col-md-3">
                     <label class="form-header" for="dateTo"><fmt:message key="addReservation.toDate"/></label>
-                    <form:input path="dateTo" id="dateTo" type="date" class="form-control" required="true"/>
+                    <form:input path="dateTo" id="dateTo" type="date" class="form-control" disabled="true"/>
                     <label class="form-note" for="dateTo">
-                            <form:errors path="dateTo"/>
+                        <form:errors path="dateTo"/>
                     </label>
                 </div>
                 <div class="col-12 col-md-2">
                     <label class="form-header" for="timeTo"><fmt:message key="addReservation.toTime"/></label>
-                    <form:input path="timeTo" id="timeTo" type="time" class="form-control" required="true"/>
+                    <form:input path="timeTo" id="timeTo" type="time" class="form-control" disabled="true"/>
                     <label class="form-note" for="timeTo">
-                            <form:errors path="timeTo"/>
+                        <form:errors path="timeTo"/>
                     </label>
                 </div>
-
             </div>
             <div class="row py-4 justify-content-center">
-
-                <div class="col-12 col-md-5 text-center">
-                    <button class="btn btn-outline-secondary btn-block" type="button" onclick="lockReserv()" >
-                        <fmt:message key="addReservation.lock"/>
-                    </button>
-                </div>
-            </div>
-
-            <div class="row py-4 justify-content-center">
-
-
                 <div class="col-12 col-md-5">
-                    <label class="form-header" for="equipmentList"><fmt:message key="addReservation.eqList"/></label>
-                    <fmt:message key="addReservation.eqListPlaceholder" var="eqListPlaceholder"/>
-                    <fmt:message key="addReservation.eqListNoItems" var="eqListNoItems"/>
-                    <form:input path="equipmentList" type='text'
-                           placeholder='${eqListPlaceholder}'
-                           class='flexdatalist form-control'
-                           data-search-in='["name", "category"]'
-                           data-visible-properties='["name"]'
-                           data-group-by='category'
-                           data-selection-required='true'
-                           data-focus-first-result='true'
-                           data-min-length='1'
-                           noResultsText='${eqListNoItems}'
-                           data-search-contain='true'
-                           multiple='multiple'
-                           id='equipmentList'
-                           name='equipmentList'
-                           required="true" />
-                    <label class="form-note" for="equipmentList">
-                            <form:errors path="equipmentList"/>
-                    </label>
+                    <label class="form-header"><fmt:message key="addReservation.eqList"/></label>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <c:forEach items="${reservation.equipmentList}" var="equipment">
+                                        <form:checkbox path="equipmentList" label="${equipment.name}"
+                                                       value="${equipment.id}" checked="checked" disabled="true"/>
+                                    </c:forEach>
+                                </td>
+                            </tr>
+                            </tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
             <div class="row py-4 justify-content-center">
 
                 <div class="col-12 col-md-5 text-center">
                     <label class="form-header" for="comm"><fmt:message key="addReservation.comment"/></label>
-                    <form:input path="comments" id="comm" type="text" class="form-control"/>
+                    <form:input path="comments" id="comm" type="text" class="form-control" disabled="true"/>
                     <label class="form-note" for="comm">
                         <form:errors path="comments"/>
                     </label>
                 </div>
             </div>
-            <div class="row py-4 justify-content-center">
-                <script>
-                    function sendform(){
-
-                        document.getElementById('dateSince').disabled = false;
-                        document.getElementById('timeSince').disabled = false;
-                        document.getElementById('dateTo').disabled = false;
-                        document.getElementById('timeTo').disabled = false;
-                        $('.flexdatalist').flexdatalist('disabled', false);
-                        document.forms['addReservation'].submit();
-                    }
-
-                </script>
-                <div class=" col-4">
-                    <button class="btn btn-lg btn-secondary btn-block" id="submitBtn" hidden type="button" onclick="sendform()"><fmt:message key="addReservation.reserveSubmit"/></button>
-                </div>
-            </div>
-
-
         </form:form>
-
     </div>
 </main>
 <%@include file="footer.jsp" %>
@@ -173,31 +143,6 @@
         valueProperty: 'id',
         cache: false
     });
-  //  $('.flexdatalist').flexdatalist('disabled', true);
-
-    function lockReserv(){
-        if(document.getElementById('dateSince').disabled == false) {
-            document.getElementById('dateSince').disabled = true;
-            document.getElementById('timeSince').disabled = true;
-            document.getElementById('dateTo').disabled = true;
-            document.getElementById('timeTo').disabled = true;
-            document.getElementById('submitBtn').hidden = false;
-       //     $('.flexdatalist').flexdatalist('disabled', false);
-        }
-        else {
-            document.getElementById('dateSince').disabled = false;
-            document.getElementById('timeSince').disabled = false;
-            document.getElementById('dateTo').disabled = false;
-            document.getElementById('timeTo').disabled = false;
-            document.getElementById('submitBtn').hidden = true;
-            //      $('.flexdatalist').flexdatalist('disabled', true);
-        }
-
-        $('.flexdatalist').flexdatalist('data', '${pageContext.request.contextPath}/api/getFreeEquipment?date-since='+
-        document.getElementById('dateSince').value+'&time-since='+document.getElementById('timeSince').value+'&date-to='+document.getElementById('dateTo').value+'&time-to='+document.getElementById('timeTo').value);
-
-    };
-
 </script>
 </body>
 </html>

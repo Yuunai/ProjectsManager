@@ -105,7 +105,7 @@ public class ReservationController {
 		List<Equipment> equipmentList = equipmentService.getFreeEquipment(reservation.getDateSince(), reservation
 				.getTimeSince(), reservation.getDateTo(), reservation.getTimeTo());
 		model.addAttribute("equipmentList", equipmentList);
-		return "add-reservation-form";
+		return "reservation-details";
 	}
 	
 	@GetMapping("/deleteReservation")
