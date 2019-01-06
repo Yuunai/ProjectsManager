@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/reservation")
 public class ReservationController {
 	
-	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("u-M-d H:m:s");
+	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
 	
 	@Autowired
 	ReservationService reservationService;
@@ -76,8 +76,18 @@ public class ReservationController {
 	public String addReservation(
 			HttpServletRequest request,
 			@ModelAttribute("reservation") @Valid ReservationViewModel reservationViewModel,
-			BindingResult result) throws NotFoundException {
+			BindingResult result, Model model) throws NotFoundException {
 		if (result.hasErrors()) {
+			return "add-reservation-form";
+		}
+		
+		LocalDateTime dateTimeSince =
+				LocalDateTime.parse(reservationViewModel.getDateSince() +
+						" " + reservationViewModel.getTimeSince(), dateTimeFormatter);
+		LocalDateTime dateTimeTo = LocalDateTime.parse(reservationViewModel.getDateTo() +
+						" " + reservationViewModel.getTimeTo(), dateTimeFormatter);
+		if(dateTimeSince.isAfter(dateTimeTo)) {
+			model.addAttribute("message", "reservations.incorrectDates");
 			return "add-reservation-form";
 		}
 		
