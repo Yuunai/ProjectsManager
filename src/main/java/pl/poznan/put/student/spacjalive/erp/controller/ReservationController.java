@@ -17,6 +17,8 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/reservation")
@@ -46,7 +48,14 @@ public class ReservationController {
 	public String listReservations(Model model) {
 		List<Reservation> reservations = reservationService.getReservations();
 		model.addAttribute("reservations", reservations);
-		
+
+		List<UserDetails> users = userService.getUsersDetails(true);
+		model.addAttribute("users", users);
+
+		List<Integer> userIds = users.stream().map(e -> e.getUserId()).collect(Collectors.toList());
+		Map<Integer, String> usersNames = userService.getUsersNamesMap(userIds);
+		model.addAttribute("usersNames", usersNames);
+
 		return "list-reservations";
 	}
 	

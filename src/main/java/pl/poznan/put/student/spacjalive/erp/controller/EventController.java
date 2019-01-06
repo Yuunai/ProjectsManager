@@ -32,7 +32,10 @@ public class EventController {
 	
 	@Autowired
 	UserService userService;
-	
+
+	@Autowired
+	ReservationService reservationService;
+
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
@@ -80,7 +83,10 @@ public class EventController {
 		
 		List<Role> roles = roleService.getRoles();
 		model.addAttribute("roles", roles);
-		
+
+		List<Reservation> reservations = reservationService.getReservations();
+		model.addAttribute("reservations", reservations);
+
 		List<UserDetails> users = userService.getUsersDetails(true);
 		model.addAttribute("users", users);
 		

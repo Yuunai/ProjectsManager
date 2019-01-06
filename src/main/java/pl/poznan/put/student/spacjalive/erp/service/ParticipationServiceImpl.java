@@ -36,7 +36,7 @@ public class ParticipationServiceImpl implements ParticipationService {
 			try {
 				UserDetails details = userService.getUserDetails(participation.getUser().getId());
 				p.put("user", details.getLastName() + " " + details.getFirstName());
-				p.put("roleId", participation.getRole().getId());
+				p.put("roleName", participation.getRole().getName());
 			} catch (NotFoundException e) {
 				e.printStackTrace();
 			}
