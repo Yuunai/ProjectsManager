@@ -56,7 +56,7 @@
 
                 <tr>
                     <td>${reservation.event.name}</td>
-                    <td>${reservation.user.email}</td>
+                    <td>${usersNames.get(reservation.user.id)}</td>
                     <td>${reservation.dateSince} ${reservation.timeSince}</td>
                     <td>${reservation.dateTo} ${reservation.timeTo}</td>
                     <td>

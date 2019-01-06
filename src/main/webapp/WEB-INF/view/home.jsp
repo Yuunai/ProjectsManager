@@ -95,7 +95,7 @@
                                     <fmt:message key="home.eventDetailsBtn"/>
                                 </button>
                                 <button class="btn btn-sm btn-outline-secondary" data-toggle="modal"
-                                        data-target="#joinModal"><fmt:message key="home.eventJoinBtn"/>
+                                        data-target="#joinModal" onclick="openModal(${event.id})"><fmt:message key="home.eventJoinBtn"/>
                                 </button>
                             </div>
                         </td>
@@ -122,66 +122,69 @@
                         <tr>
                             <th scope="col"><fmt:message key="home.modalName"/></th>
                             <th scope="col"><fmt:message key="home.modalRole"/></th>
-                            <th scope="col"><fmt:message key="home.modalAction"/></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <c:if test="${empty participations}">
-                            <tr>
-                                <td colspan="3"><fmt:message key="home.modalNoParticipations"/></td>
-                            </tr>
-                        </c:if>
-                        <c:forEach var="participation" items="${participations}">
-                            <c:url var="deleteLink" value="/participation/deleteParticipation">
-                                <c:param name="roleId" value="${participation.role.id}"/>
-                                <c:param name="userId" value="${participation.user.id}"/>
-                                <c:param name="eventId" value="${participation.event.id}"/>
-                            </c:url>
-                            <tr>
-                                    <%--TODO replace user email with first and last names--%>
-                                <td>${participation.user.email}</td>
-                                <td>${participation.role.name}</td>
-                                <td>
-                                    <a href="${deleteLink}"
-                                       onclick="if (!(confirm('<fmt:message
-                                               key="msg.sureToRemoveParticipation"/>'))) return false"><fmt:message
-                                            key="home.modalRemoveParticipation"/>
-                                    </a>
-                            </tr>
-                        </c:forEach>
-                        <%--TODO no model participation--%>
-                        <%--<form:form action="/participation/addParticipation" modelAttribute="participation" method="POST"--%>
-                        <%--acceptCharset="utf8">--%>
-                        <%--<form:hidden path="eventId"/>--%>
-                        <%--<tr>--%>
-                        <%--<td>--%>
-                        <%--<form:select path="userId" class="form-control">--%>
-                        <%--<form:option value="0" label="Wybierz pracownika"/>--%>
-                        <%--<c:forEach items="${users}" var="user">--%>
-                        <%--<form:option value="${user.userId}" label="${user.firstName} ${user.lastName}"/>--%>
-                        <%--</c:forEach>--%>
-                        <%--</form:select>--%>
-                        <%--</td>--%>
-                        <%--<td>--%>
-                        <%--<form:select path="roleId" class="form-control">--%>
-                        <%--<form:option value="0" label="Wybierz rolę"/>--%>
-                        <%--<c:forEach items="${roles}" var="role">--%>
-                        <%--<form:option value="${role.id}" label="${role.name}"/>--%>
-                        <%--</c:forEach>--%>
-                        <%--</form:select>--%>
-                        <%--</td>--%>
-                        <%--<td>--%>
-                        <%--</td>--%>
-                        <%--</tr>--%>
-                        <%--</form:form>--%>
+                        <tbody id="modalTbody">
+
                         </tbody>
+
+                        <form:form action="/participation/addParticipation" modelAttribute="participation" method="POST"
+                                   acceptCharset="utf8">
+                            <input type="hidden" id="currEventId">
+                            <tr>
+                                <td>
+                                   <span><fmt:message key="home.modalJoinAs"/></span>
+                                </td>
+                                <td>
+                                    <form:select path="roleId" class="form-control" id="modalRoleId">
+                                        <form:option value="0"><fmt:message key="event.selectRole"/></form:option>
+                                        <c:forEach items="${roles}" var="role">
+                                            <form:option value="${role.id}" label="${role.name}"/>
+                                        </c:forEach>
+                                    </form:select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-secondary" data-dismiss="modal" type="button" onclick="joinEvent();"><fmt:message key="home.modalJoin"/></button>
+                                </td>
+                            </tr>
+                        </form:form>
+                        <script>
+                        function joinEvent() {
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open( "GET","${pageContext.request.contextPath}/api/makeParticipation?eventId="+document.getElementById('currEventId').value+"&roleId="+document.getElementById('modalRoleId').value, false ); // false for synchronous request
+                            xmlHttp.send( null );
+                            return xmlHttp.responseText;
+
+                        }
+
+                        function reqParticipation(id) {
+                            return new Promise(function (resolve, reject) {
+                                document.getElementById('currEventId').value=id.toString();
+                                var xmlhttp = new XMLHttpRequest();
+                                xmlhttp.open("GET", "${pageContext.request.contextPath}/api/getEventParticipants?eventId="+id, true);
+                                xmlhttp.setRequestHeader("Content-Type", "application/json");
+                                xmlhttp.responseType = "json";
+                                xmlhttp.onreadystatechange = function () {
+                                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                                        xmlhttp.response.forEach(function(par){
+                                            document.getElementById('modalTbody').innerHTML += '<td>'+par.user+'</td><td>'+par.roleName+'</td>';
+                                        });
+                                        console.log(xmlhttp.response);
+                                        resolve();
+                                    }
+                                };
+                                xmlhttp.send();
+                            });
+                        }
+                        function openModal(id){
+                            document.getElementById('modalTbody').innerHTML="";
+                            reqParticipation(id);
+                        }
+
+                        </script>
                     </table>
                 </div>
-                <div class="modal-footer">
-                    <%--TODO move submit button to form--%>
-                    <button class="btn btn-outline-secondary" type="submit"><fmt:message
-                            key="home.modalSubmit"/></button>
-                </div>
+
             </div>
         </div>
     </div>
