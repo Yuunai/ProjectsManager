@@ -32,7 +32,15 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserDetails getUserDetails(int id) throws NotFoundException {
-		return userRepository.getUserDetails(id);
+		UserDetails userDetails;
+		try {
+			userDetails = userRepository.getUserDetails(id);
+		} catch (NotFoundException e) {
+			userRepository.getUser(id);
+			userDetails = new UserDetails();
+			userDetails.setUserId(id);
+		}
+		return userDetails;
 	}
 	
 	@Override
