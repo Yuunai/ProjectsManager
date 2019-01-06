@@ -1,6 +1,7 @@
 package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
 		query = "CALL select_reservations(:dSince, :tSince, :dTo, :tTo)",
 		resultClass = Reservation.class)
 )
-public class Reservation {
+public class Reservation implements Serializable {
 	
 	//TODO add fields validations
 	

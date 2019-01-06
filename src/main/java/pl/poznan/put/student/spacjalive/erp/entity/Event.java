@@ -2,10 +2,11 @@ package pl.poznan.put.student.spacjalive.erp.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "event")
-public class Event {
+public class Event implements Serializable {
 	
 	//TODO add fields validations
 	

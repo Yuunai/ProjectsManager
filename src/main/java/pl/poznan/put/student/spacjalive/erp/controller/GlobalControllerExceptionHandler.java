@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
 	
+	
+	
 	private static final Logger LOGGER = LogManager.getLogger(GlobalControllerExceptionHandler.class);
 	
 	public static final String DEFAULT_ERROR_VIEW = "error";
