@@ -35,5 +35,10 @@ public class ReservationServiceImpl implements ReservationService {
 	public Reservation getReservation(int id) throws NotFoundException {
 		return reservationRepository.getReservation(id);
 	}
-
+	
+	@Override
+	public List<Reservation> getEventReservations(int eventId) {
+		return reservationRepository.getEventReservations(eventId);
+	}
+	
 }

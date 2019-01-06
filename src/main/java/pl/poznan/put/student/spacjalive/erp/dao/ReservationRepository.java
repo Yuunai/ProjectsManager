@@ -17,4 +17,6 @@ public interface ReservationRepository {
 	
 	List<Reservation> getReservations(String dateSince, String timeSince, String dateTo, String timeTo);
 	
+	List<Reservation> getEventReservations(int eventId);
+	
 }

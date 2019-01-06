@@ -61,4 +61,13 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 		
 		return query.getResultList();
 	}
+	
+	@Override
+	public List<Reservation> getEventReservations(int eventId) {
+		Session session = sessionFactory.getCurrentSession();
+		Query<Reservation> query = session.createQuery("FROM Reservation WHERE event.id=:eventId ORDER BY timeSince");
+		query.setParameter("eventId", eventId);
+		
+		return query.getResultList();
+	}
 }

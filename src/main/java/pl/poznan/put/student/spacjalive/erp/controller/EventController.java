@@ -46,6 +46,8 @@ public class EventController {
 	public String listEvents(Model model, @RequestParam("archived") boolean archived) {
 		List<Event> events = eventService.getEvents(archived, null);
 		model.addAttribute("events", events);
+		model.addAttribute("participation", new ParticipationViewModel());
+		model.addAttribute("roles", roleService.getRoles());
 		
 		return "home";
 	}
@@ -84,7 +86,7 @@ public class EventController {
 		List<Role> roles = roleService.getRoles();
 		model.addAttribute("roles", roles);
 
-		List<Reservation> reservations = reservationService.getReservations();
+		List<Reservation> reservations = reservationService.getEventReservations(eventId);
 		model.addAttribute("reservations", reservations);
 
 		List<UserDetails> users = userService.getUsersDetails(true);

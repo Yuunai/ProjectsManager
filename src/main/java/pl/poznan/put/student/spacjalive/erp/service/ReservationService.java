@@ -15,4 +15,6 @@ public interface ReservationService {
 	
 	Reservation getReservation(int id) throws NotFoundException;
 	
+	List<Reservation> getEventReservations(int eventId);
+	
 }
