@@ -269,6 +269,50 @@
                 </table>
             </div>
         </security:authorize>
+        <%--TODO Krystian reservations only for current event--%>
+        <security:authorize access="hasAnyRole('ADMIN','MODERATOR','TRUSTED', 'USER')">
+        <div class="table-responsive">
+            <h2><fmt:message key="event.header3"/></h2>
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col"><fmt:message key="reservations.colResUser"/></th>
+                    <th scope="col"><fmt:message key="reservations.colSince"/></th>
+                    <th scope="col"><fmt:message key="reservations.colTo"/></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="reservation" items="${reservations}">
+
+                    <c:url var="updateLink" value="/reservation/updateReservationForm">
+                        <c:param name="reservationId" value="${reservation.id}" />
+                    </c:url>
+
+                    <c:url var="deleteLink" value="/reservation/deleteReservation">
+                        <c:param name="reservationId" value="${reservation.id}" />
+                    </c:url>
+
+                    <tr>
+                        <td>${reservation.user.email}</td>
+                        <td>${reservation.dateSince} ${reservation.timeSince}</td>
+                        <td>${reservation.dateTo} ${reservation.timeTo}</td>
+                        <td>
+                            <a href="${updateLink}"><fmt:message key="reservations.details"/></a>
+                            <security:authorize access="hasAnyRole('ADMIN','MODERATOR')">
+                                |
+                                <a href="${deleteLink}"
+                                   onclick="if (!(confirm('<fmt:message key="reservations.confirmMessage"/>'))) return false"><fmt:message key="reservations.remove"/></a>
+                            </security:authorize>
+                        </td>
+                    </tr>
+
+                </c:forEach>
+                </tbody>
+                </tbody>
+            </table>
+        </div>
+        </security:authorize>
     </div>
 </main>
 <%@include file="footer.jsp" %>
