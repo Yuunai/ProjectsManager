@@ -9,6 +9,8 @@ public interface ReservationService {
 	
 	List<Reservation> getReservations();
 	
+	List<Reservation> getActualReservations();
+	
 	void saveReservation(Reservation reservation);
 	
 	void deleteReservation(int id);

@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/reservation")
 public class ReservationController {
 	
-	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+	public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
 	
 	@Autowired
 	ReservationService reservationService;
@@ -46,7 +46,7 @@ public class ReservationController {
 	
 	@GetMapping("/list")
 	public String listReservations(Model model) {
-		List<Reservation> reservations = reservationService.getReservations();
+		List<Reservation> reservations = reservationService.getActualReservations();
 		model.addAttribute("reservations", reservations);
 
 		List<UserDetails> users = userService.getUsersDetails(true);
