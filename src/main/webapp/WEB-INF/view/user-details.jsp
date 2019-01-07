@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <c:set var="lang"
        value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}"
@@ -46,20 +47,21 @@
             </button>
         </div>
         <c:if test="${pageContext.session.getAttribute('userId')==paramValues.get('userId')[0]}">
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#passResetModal">
-                <fmt:message key="user.changePassword"/>
-            </button>
-        </div>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#passResetModal">
+                    <fmt:message key="user.changePassword"/>
+                </button>
+            </div>
         </c:if>
-        <div class="btn-toolbar mb-2 mb-md-0 ml-auto">
-            <%--TODO if id is mine back to home else back to people--%>
-            <button class="btn btn-outline-secondary"
-                    onclick="location.href='${pageContext.request.contextPath}/home'">
-                <span data-feather="x" style="margin-bottom: 1px;"></span>
-                <fmt:message key="user.back"/>
-            </button>
-        </div>
+        <security:authorize access="hasAnyRole('ADMIN','MODERATOR','TRUSTED','USER')">
+            <div class="btn-toolbar mb-2 mb-md-0 ml-auto">
+                <button class="btn btn-outline-secondary"
+                        onclick="location.href='${pageContext.request.contextPath}/home'">
+                    <span data-feather="x" style="margin-bottom: 1px;"></span>
+                    <fmt:message key="user.back"/>
+                </button>
+            </div>
+        </security:authorize>
     </div>
     <h2><fmt:message key="user.header"/></h2>
 
@@ -97,13 +99,15 @@
                             disabled="true"/>
                 <label class="form-note" for="lastNameProfile"><form:errors path="lastName"/></label>
             </div>
-            <div class="col-12 col-md-2">
-                <label class="form-header" for="indexProfile"><fmt:message key="user.index"/></label>
-                <form:input path="studentIndex" id="indexProfile" type="text" class="form-control"
-                            value="${details.studentIndex}"
-                            disabled="true"/>
-                <label class="form-note" for="indexProfile"><form:errors path="studentIndex"/></label>
-            </div>
+            <security:authorize access="hasAnyRole('ADMIN','MODERATOR','TRUSTED','USER')">
+                <div class="col-12 col-md-2">
+                    <label class="form-header" for="indexProfile"><fmt:message key="user.index"/></label>
+                    <form:input path="studentIndex" id="indexProfile" type="text" class="form-control"
+                                value="${details.studentIndex}"
+                                disabled="true"/>
+                    <label class="form-note" for="indexProfile"><form:errors path="studentIndex"/></label>
+                </div>
+            </security:authorize>
         </div>
         <div class="row py-4">
             <div class="col-12 col-md-3">
@@ -112,16 +116,18 @@
                             value="${details.phoneNumber}" disabled="true"/>
                 <label class="form-note" for="phoneProfile"><form:errors path="phoneNumber"/></label>
             </div>
-            <div class="col-12 col-md-2 text-center">
-                <label class="form-header" for="officeProfile"><fmt:message key="user.office"/></label>
-                <form:checkbox path="officeEntrance" id="officeProfile" class="form-control" disabled="true"
-                               value="${details.officeEntrance}"/>
-            </div>
-            <div class="col-12 col-md-1 text-center">
-                <label class="form-header" for="carProfile"><fmt:message key="user.car"/></label>
-                <form:checkbox path="car" id="carProfile" class="form-control" disabled="true"
-                               value="${details.car}"/>
-            </div>
+            <security:authorize access="hasAnyRole('ADMIN','MODERATOR','TRUSTED','USER')">
+                <div class="col-12 col-md-2 text-center">
+                    <label class="form-header" for="officeProfile"><fmt:message key="user.office"/></label>
+                    <form:checkbox path="officeEntrance" id="officeProfile" class="form-control" disabled="true"
+                                   value="${details.officeEntrance}"/>
+                </div>
+                <div class="col-12 col-md-1 text-center">
+                    <label class="form-header" for="carProfile"><fmt:message key="user.car"/></label>
+                    <form:checkbox path="car" id="carProfile" class="form-control" disabled="true"
+                                   value="${details.car}"/>
+                </div>
+            </security:authorize>
         </div>
 
         <div class="row py-4 justify-content-center">
@@ -143,7 +149,9 @@
                 <tr>
                     <th scope="col"><fmt:message key="user.colEvent"/></th>
                     <th scope="col"><fmt:message key="user.colRole"/></th>
-                    <th scope="col"><fmt:message key="users.colActive"/></th>
+                    <security:authorize access="hasRole('ADMIN')">
+                        <th scope="col"><fmt:message key="users.colActive"/></th>
+                    </security:authorize>
                 </tr>
                 </thead>
                 <tbody>
@@ -161,12 +169,15 @@
                     <tr>
                         <td>${participation.event.name}</td>
                         <td>${participation.role.name}</td>
+                        <security:authorize access="hasRole('ADMIN')">
                         <td>
                             <a href="${deleteLink}"
                                onclick="if (!(confirm('<fmt:message
                                        key="msg.sureToRemoveParticipation"/>'))) return false"><fmt:message
                                     key="user.remove"/>
                             </a>
+                        </td>
+                        </security:authorize>
                     </tr>
                 </c:forEach>
 
@@ -190,7 +201,7 @@
                            action="${pageContext.request.contextPath}/user/setNewPassword" method="POST">
                     <div class="container">
                         <div class="row my-4">
-                        <span id="modalMSG"></span>
+                            <span id="modalMSG"></span>
                         </div>
                         <div class="row my-4">
                             <input type="password" name="password" id="newPassword" class="form-control"
@@ -201,8 +212,9 @@
                                    placeholder="<fmt:message key="user.newPasswordRepeated"/>" required autofocus>
                         </div>
                         <div class="row my-4">
-                            <button class="btn btn-outline-secondary" type="button" onclick="validateModal()"><fmt:message
-                                    key="user.modalSubmit"/></button>
+                            <button class="btn btn-outline-secondary" type="button" onclick="validateModal()">
+                                <fmt:message
+                                        key="user.modalSubmit"/></button>
                         </div>
                     </div>
                 </form:form>
@@ -216,28 +228,25 @@
         var nPassInpRep = document.getElementById("newPasswordRepeated");
         var repLabel = document.getElementById("modalMSG");
 
-        if (nPassInp.value =="")
-        {
-            nPassInpRep.value="";
-            nPassInp.value="";
+        if (nPassInp.value == "") {
+            nPassInpRep.value = "";
+            nPassInp.value = "";
             repLabel.innerText = '<fmt:message key="newPass.emptyInput"/>'
         }
-        else if (nPassInp.value == nPassInpRep.value)
-        {
+        else if (nPassInp.value == nPassInpRep.value) {
 
             var regex = new RegExp("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!,.])(?=\\S+$).{8,}$");
             if (regex.test(nPassInp.value)) {
                 document.forms['resetPassForm'].submit();
             } else {
-                nPassInpRep.value="";
-                nPassInp.value="";
+                nPassInpRep.value = "";
+                nPassInp.value = "";
                 repLabel.innerText = '<fmt:message key="newPass.passwordRequirements"/>'
             }
         }
-        else
-        {
-            nPassInpRep.value="";
-            nPassInp.value="";
+        else {
+            nPassInpRep.value = "";
+            nPassInp.value = "";
             repLabel.innerText = '<fmt:message key="newPass.passNotMatch"/>'
         }
     }

@@ -62,7 +62,7 @@ public class UserController {
 		
 		userService.saveUserDetails(details);
 		
-		return "redirect:/user/list";
+		return "redirect:/user/userDetails?userId="+details.getUserId();
 	}
 	
 	@PostMapping("/setNewPassword")
