@@ -48,6 +48,9 @@ public class UserController {
         UserDetails details = userService.getUserDetails(userId);
         model.addAttribute("details", details);
 		
+		List<Participation> participations = participationService.getParticipationsByUserId(userId);
+		model.addAttribute("participations", participations);
+  
 		return "user-details";
 	}
 
