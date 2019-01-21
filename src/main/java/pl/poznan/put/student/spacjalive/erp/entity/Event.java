@@ -64,7 +64,6 @@ public class Event implements Serializable {
 	@Column(name = "priority")
 	private int priority;
 	
-	@NotNull(message = "Wymagany format pola: 'yyyy.MM.dd!' Nie może być puste!")
 	@Column(name = "deadline", columnDefinition = "DATE")
 	private String deadline;
 	
@@ -74,8 +73,6 @@ public class Event implements Serializable {
 	@Column(name = "archived")
 	private boolean archived;
 	
-	@NotNull(message = "Pole nie może być puste!")
-	@Size(min = 1, message = "Pole nie może być puste!")
 	@Size(max = 40, message = "Długość pola nie może przekroczyć 40 znaków!")
 	@Column(name = "video_type")
 	private String videoType;
