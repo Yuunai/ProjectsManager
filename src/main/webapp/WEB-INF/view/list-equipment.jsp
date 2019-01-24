@@ -111,14 +111,21 @@
                             <td>${item.state}</td>
                             <td>${item.comments}</td>
                             <td>
-                                <div class="btn-group mr-2">
+                                <security:authorize access="hasAnyRole('ADMIN','MODERATOR')">
+                                    <div class="btn-group mr-2">
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
+                                            <fmt:message key="eq.eqUpdate"/>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
+                                            <fmt:message key="eq.eqDelete"/>
+                                        </button>
+                                    </div>
+                                </security:authorize>
+                                <security:authorize access="hasRole('TRUSTED')">
                                     <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
                                         <fmt:message key="eq.eqUpdate"/>
                                     </button>
-                                    <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
-                                        <fmt:message key="eq.eqDelete"/>
-                                    </button>
-                                </div>
+                                </security:authorize>
                             </td>
                         </tr>
                     </c:forEach>
@@ -153,14 +160,21 @@
                             <td>${item.state}</td>
                             <td>${item.comments}</td>
                             <td>
-                                <div class="btn-group mr-2">
+                                <security:authorize access="hasAnyRole('ADMIN','MODERATOR')">
+                                    <div class="btn-group mr-2">
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
+                                            <fmt:message key="eq.eqUpdate"/>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
+                                            <fmt:message key="eq.eqDelete"/>
+                                        </button>
+                                    </div>
+                                </security:authorize>
+                                <security:authorize access="hasRole('TRUSTED')">
                                     <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
                                         <fmt:message key="eq.eqUpdate"/>
                                     </button>
-                                    <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
-                                        <fmt:message key="eq.eqDelete"/>
-                                    </button>
-                                </div>
+                                </security:authorize>
                             </td>
                         </tr>
                     </c:forEach>
@@ -196,6 +210,7 @@
                             <td>${item.state}</td>
                             <td>${item.comments}</td>
                             <td>
+                                <security:authorize access="hasAnyRole('ADMIN','MODERATOR')">
                                 <div class="btn-group mr-2">
                                     <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
                                         <fmt:message key="eq.eqUpdate"/>
@@ -204,6 +219,12 @@
                                         <fmt:message key="eq.eqDelete"/>
                                     </button>
                                 </div>
+                                </security:authorize>
+                                <security:authorize access="hasRole('TRUSTED')">
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
+                                            <fmt:message key="eq.eqUpdate"/>
+                                        </button>
+                                </security:authorize>
                             </td>
                         </tr>
                     </c:forEach>
@@ -239,14 +260,21 @@
                             <td>${item.state}</td>
                             <td>${item.comments}</td>
                             <td>
-                                <div class="btn-group mr-2">
+                                <security:authorize access="hasAnyRole('ADMIN','MODERATOR')">
+                                    <div class="btn-group mr-2">
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
+                                            <fmt:message key="eq.eqUpdate"/>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
+                                            <fmt:message key="eq.eqDelete"/>
+                                        </button>
+                                    </div>
+                                </security:authorize>
+                                <security:authorize access="hasRole('TRUSTED')">
                                     <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
                                         <fmt:message key="eq.eqUpdate"/>
                                     </button>
-                                    <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
-                                        <fmt:message key="eq.eqDelete"/>
-                                    </button>
-                                </div>
+                                </security:authorize>
                             </td>
                         </tr>
                     </c:forEach>
@@ -282,14 +310,21 @@
                             <td>${item.state}</td>
                             <td>${item.comments}</td>
                             <td>
-                                <div class="btn-group mr-2">
+                                <security:authorize access="hasAnyRole('ADMIN','MODERATOR')">
+                                    <div class="btn-group mr-2">
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
+                                            <fmt:message key="eq.eqUpdate"/>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
+                                            <fmt:message key="eq.eqDelete"/>
+                                        </button>
+                                    </div>
+                                </security:authorize>
+                                <security:authorize access="hasRole('TRUSTED')">
                                     <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
                                         <fmt:message key="eq.eqUpdate"/>
                                     </button>
-                                    <button class="btn btn-sm btn-outline-secondary" data-toggle="confirmation" onclick="location.href='${deleteLink}'">
-                                        <fmt:message key="eq.eqDelete"/>
-                                    </button>
-                                </div>
+                                </security:authorize>
                             </td>
                         </tr>
                     </c:forEach>

@@ -4,7 +4,7 @@
     <div class="footer-copyright text-center py-3">
         <div class="container">
 
-            <ul class="list-unstyled list-inline text-center">
+            <ul id="footerList" class="list-unstyled list-inline text-center">
                 <li class="list-inline-item flagShadow">
                     <script>
                         var addresPl = window.location.href.split('&',1).toString();
