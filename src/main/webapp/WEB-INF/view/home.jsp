@@ -83,6 +83,9 @@
                     <c:url var="eventDetails" value="/event/eventDetails">
                         <c:param name="eventId" value="${event.id}"/>
                     </c:url>
+                    <c:url var="deleteEvent" value="/event/deleteEvent">
+                        <c:param name="eventId" value="${event.id}"/>
+                    </c:url>
                     <tr>
                         <td>${event.name}</td>
                         <td>${event.date}</td>
@@ -95,9 +98,16 @@
                                     <fmt:message key="home.eventDetailsBtn"/>
                                 </button>
                                 <button class="btn btn-sm btn-outline-secondary" data-toggle="modal"
-                                        data-target="#joinModal" onclick="openModal(${event.id})"><fmt:message key="home.eventJoinBtn"/>
+                                        data-target="#joinModal" onclick="openModal(${event.id})"><fmt:message
+                                        key="home.eventJoinBtn"/>
                                 </button>
                             </div>
+                            <security:authorize access="hasAnyRole('ADMIN','MODERATOR')">
+                                <button class="btn btn-sm btn-outline-secondary"
+                                        onclick="location.href='${deleteEvent}'">
+                                    <fmt:message key="home.eventDeleteBtn"/>
+                                </button>
+                            </security:authorize>
                         </td>
                     </tr>
                 </security:authorize>
@@ -133,7 +143,7 @@
                             <input type="hidden" id="currEventId">
                             <tr>
                                 <td>
-                                   <span><fmt:message key="home.modalJoinAs"/></span>
+                                    <span><fmt:message key="home.modalJoinAs"/></span>
                                 </td>
                                 <td>
                                     <form:select path="roleId" class="form-control" id="modalRoleId">
@@ -144,42 +154,44 @@
                                     </form:select>
                                 </td>
                                 <td>
-                                    <button class="btn btn-outline-secondary" data-dismiss="modal" type="button" onclick="joinEvent();"><fmt:message key="home.modalJoin"/></button>
+                                    <button class="btn btn-outline-secondary" data-dismiss="modal" type="button"
+                                            onclick="joinEvent();"><fmt:message key="home.modalJoin"/></button>
                                 </td>
                             </tr>
                         </form:form>
                         <script>
-                        function joinEvent() {
-                            var xmlHttp = new XMLHttpRequest();
-                            xmlHttp.open( "GET","${pageContext.request.contextPath}/api/makeParticipation?eventId="+document.getElementById('currEventId').value+"&roleId="+document.getElementById('modalRoleId').value, false ); // false for synchronous request
-                            xmlHttp.send( null );
-                            return xmlHttp.responseText;
+                            function joinEvent() {
+                                var xmlHttp = new XMLHttpRequest();
+                                xmlHttp.open("GET", "${pageContext.request.contextPath}/api/makeParticipation?eventId=" + document.getElementById('currEventId').value + "&roleId=" + document.getElementById('modalRoleId').value, false); // false for synchronous request
+                                xmlHttp.send(null);
+                                return xmlHttp.responseText;
 
-                        }
+                            }
 
-                        function reqParticipation(id) {
-                            return new Promise(function (resolve, reject) {
-                                document.getElementById('currEventId').value=id.toString();
-                                var xmlhttp = new XMLHttpRequest();
-                                xmlhttp.open("GET", "${pageContext.request.contextPath}/api/getEventParticipants?eventId="+id, true);
-                                xmlhttp.setRequestHeader("Content-Type", "application/json");
-                                xmlhttp.responseType = "json";
-                                xmlhttp.onreadystatechange = function () {
-                                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                                        xmlhttp.response.forEach(function(par){
-                                            document.getElementById('modalTbody').innerHTML += '<td>'+par.user+'</td><td>'+par.roleName+'</td>';
-                                        });
-                                        console.log(xmlhttp.response);
-                                        resolve();
-                                    }
-                                };
-                                xmlhttp.send();
-                            });
-                        }
-                        function openModal(id){
-                            document.getElementById('modalTbody').innerHTML="";
-                            reqParticipation(id);
-                        }
+                            function reqParticipation(id) {
+                                return new Promise(function (resolve, reject) {
+                                    document.getElementById('currEventId').value = id.toString();
+                                    var xmlhttp = new XMLHttpRequest();
+                                    xmlhttp.open("GET", "${pageContext.request.contextPath}/api/getEventParticipants?eventId=" + id, true);
+                                    xmlhttp.setRequestHeader("Content-Type", "application/json");
+                                    xmlhttp.responseType = "json";
+                                    xmlhttp.onreadystatechange = function () {
+                                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                                            xmlhttp.response.forEach(function (par) {
+                                                document.getElementById('modalTbody').innerHTML += '<td>' + par.user + '</td><td>' + par.roleName + '</td>';
+                                            });
+                                            console.log(xmlhttp.response);
+                                            resolve();
+                                        }
+                                    };
+                                    xmlhttp.send();
+                                });
+                            }
+
+                            function openModal(id) {
+                                document.getElementById('modalTbody').innerHTML = "";
+                                reqParticipation(id);
+                            }
 
                         </script>
                     </table>
