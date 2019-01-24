@@ -121,7 +121,7 @@
                                         </button>
                                     </div>
                                 </security:authorize>
-                                <security:authorize access="hasRole('TRUSTED_USER')">
+                                <security:authorize access="hasRole('TRUSTED')">
                                     <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
                                         <fmt:message key="eq.eqUpdate"/>
                                     </button>
@@ -170,7 +170,7 @@
                                         </button>
                                     </div>
                                 </security:authorize>
-                                <security:authorize access="hasRole('TRUSTED_USER')">
+                                <security:authorize access="hasRole('TRUSTED')">
                                     <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
                                         <fmt:message key="eq.eqUpdate"/>
                                     </button>
@@ -220,7 +220,7 @@
                                     </button>
                                 </div>
                                 </security:authorize>
-                                <security:authorize access="hasRole('TRUSTED_USER')">
+                                <security:authorize access="hasRole('TRUSTED')">
                                         <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
                                             <fmt:message key="eq.eqUpdate"/>
                                         </button>
@@ -270,7 +270,7 @@
                                         </button>
                                     </div>
                                 </security:authorize>
-                                <security:authorize access="hasRole('TRUSTED_USER')">
+                                <security:authorize access="hasRole('TRUSTED')">
                                     <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
                                         <fmt:message key="eq.eqUpdate"/>
                                     </button>
@@ -320,7 +320,7 @@
                                         </button>
                                     </div>
                                 </security:authorize>
-                                <security:authorize access="hasRole('TRUSTED_USER')">
+                                <security:authorize access="hasRole('TRUSTED')">
                                     <button class="btn btn-sm btn-outline-secondary" onclick="location.href='${updateLink}'">
                                         <fmt:message key="eq.eqUpdate"/>
                                     </button>
