@@ -80,7 +80,7 @@ public class AccountController {
 			model.addAttribute("admRoles", admRoles);
 			return "update-account";
 		}
-		userService.updateUserAdmRolesAndStatus(user);
+		userService.updateUserAdmRolesStatusEmail(user);
 		
 		return "redirect:/account/editAccount?userId=" + user.getId();
 	}

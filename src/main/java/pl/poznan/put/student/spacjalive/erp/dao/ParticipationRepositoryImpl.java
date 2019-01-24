@@ -63,4 +63,13 @@ public class ParticipationRepositoryImpl implements ParticipationRepository {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(participation);
 	}
+	
+	@Override
+	public void deleteEventParticipations(int eventId) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query query = session.createQuery("DELETE FROM Participation WHERE event.id=:eventId");
+		query.setParameter("eventId", eventId);
+		query.executeUpdate();
+	}
 }

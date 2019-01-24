@@ -39,7 +39,7 @@
     <h2><fmt:message key="updateEq.header"/></h2>
 
     <div class="container-fluid justify-content-center">
-        <form:form action="updateEquipment" modelAttribute="equipment" method="POST" acceptCharset="utf8">
+        <form:form action="addEquipment" modelAttribute="equipment" method="POST" acceptCharset="utf8">
             <form:hidden path="id"/>
             <form:hidden path="lastUpdate"/>
         <c:if test="${!empty message}">

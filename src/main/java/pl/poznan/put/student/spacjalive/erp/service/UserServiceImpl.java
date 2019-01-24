@@ -93,8 +93,9 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void updateUserAdmRolesAndStatus(User user) throws NotFoundException {
+	public void updateUserAdmRolesStatusEmail(User user) throws NotFoundException {
 		User oldUser = userRepository.getUser(user.getId());
+		oldUser.setEmail(user.getEmail());
 		oldUser.setAdmRoles(user.getAdmRoles());
 		oldUser.setEnabled(user.isEnabled());
 		userRepository.saveUser(oldUser);
@@ -127,9 +128,10 @@ public class UserServiceImpl implements UserService {
 	public void createAndSendToken(int userId, int tokenType, String serverAddress) throws MessagingException, NotFoundException {
 		String randomHash = UUID.randomUUID().toString();
 		User user = userRepository.getUser(userId);
-		String message = "Aby ponownie ustawić hasło kliknij poniższy link:\n" +
+		String message = "<h2>Wiadomość wysłana z systemu SpacjaTV - reset hasła</h2><br>" +
+				"Aby ponownie ustawić hasło kliknij poniższy link:<br>" +
 				"<a href=\"" + serverAddress + "/setNewPassword?token=" + randomHash + "\" >Klik</a>" +
-				"\n\nIf you want to change a password, click a link bellow:\n" +
+				"<br><br>If you want to change a password, click a link bellow:<br>" +
 				"<a href=\"" + serverAddress + "/setNewPassword?token=" + randomHash + "\" >Click</a>";
 		
 		EmailService es = EmailService.getInstance();

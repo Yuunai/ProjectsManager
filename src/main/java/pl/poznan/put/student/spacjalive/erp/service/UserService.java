@@ -31,7 +31,7 @@ public interface UserService {
 	
 	void saveUser(User user);
 	
-	void updateUserAdmRolesAndStatus(User user) throws NotFoundException;
+	void updateUserAdmRolesStatusEmail(User user) throws NotFoundException;
 	
 	void saveNewUser(User user) throws EmailAlreadyTakenException;
 	

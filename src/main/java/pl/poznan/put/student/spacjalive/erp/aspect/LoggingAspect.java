@@ -1,19 +1,16 @@
 package pl.poznan.put.student.spacjalive.erp.aspect;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
-import java.util.logging.Logger;
 
 @Aspect
 @Component
 public class LoggingAspect {
 	
-	private Logger logger = Logger.getLogger(LoggingAspect.class.getSimpleName());
+	private static final Logger LOGGER = LogManager.getLogger(LoggingAspect.class);
 	
 	@Pointcut("execution(* pl.poznan.put.student.spacjalive.erp.dao.*Impl.save*(..))")
 	public void daoSaveActions() {
@@ -23,25 +20,21 @@ public class LoggingAspect {
 	public void daoDeleteActions() {
 	}
 	
-	@AfterReturning("daoSaveActions() || daoDeleteActions()")
+	@Pointcut("execution(* pl.poznan.put.student.spacjalive.erp.dao.*Impl.add*(..))")
+	public void daoAddActions() {
+	}
+	
+	@AfterReturning("daoSaveActions() || daoDeleteActions() || daoAddActions()")
 	public void before(JoinPoint joinPoint) {
 		String method = joinPoint.getSignature().toShortString();
-		
-		String message = LocalDateTime.now().toString();
-		
-		if (method.contains("save")) {
-			message += "Saved: ";
-		} else {
-			message += "Deleted: ";
-		}
+		String message = "";
 		
 		Object[] args = joinPoint.getArgs();
 		for (Object obj : args) {
 			message += obj.toString() + "\n";
 		}
 		
-		logger.info(message);
-		
+		LOGGER.info(method + " with args\n" + message);
 	}
 	
 }
