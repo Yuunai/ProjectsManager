@@ -5,14 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.poznan.put.student.projectsmanager.dao.TokenRepository;
 import pl.poznan.put.student.projectsmanager.dao.UserRepository;
 import pl.poznan.put.student.projectsmanager.entity.*;
 import pl.poznan.put.student.projectsmanager.exceptions.*;
-import pl.poznan.put.student.projectsmanager.exceptions.token.TokenNotFound;
-import pl.poznan.put.student.projectsmanager.dao.TokenRepository;
-import pl.poznan.put.student.spacjalive.erp.entity.*;
-import pl.poznan.put.student.spacjalive.erp.exceptions.*;
 import pl.poznan.put.student.projectsmanager.exceptions.token.TokenExpiredException;
+import pl.poznan.put.student.projectsmanager.exceptions.token.TokenNotFound;
 
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;

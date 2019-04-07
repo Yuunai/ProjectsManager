@@ -1,7 +1,6 @@
 package pl.poznan.put.student.projectsmanager.dao;
 
 import pl.poznan.put.student.projectsmanager.entity.*;
-import pl.poznan.put.student.spacjalive.erp.entity.*;
 import pl.poznan.put.student.projectsmanager.exceptions.NotFoundException;
 
 import java.util.List;

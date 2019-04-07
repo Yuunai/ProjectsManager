@@ -42,16 +42,31 @@ public class User implements Serializable {
 	@ManyToMany(fetch = FetchType.LAZY)
 	private List<AdministrativeRole> admRoles;
 	
+	@JoinTable(name = "participation",
+				joinColumns = @JoinColumn(name = "user_id"),
+				inverseJoinColumns = @JoinColumn(name = "task_id"))
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<Task> tasks;
+	
+	@JoinTable(name = "project_user",
+				joinColumns = @JoinColumn(name = "user_id"),
+				inverseJoinColumns = @JoinColumn(name = "project_id"))
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<Project> projects;
+	
 	public User() {
 	
 	}
 	
-	public User(String email, String password, boolean enabled, String lastUpdate, List<AdministrativeRole> admRoles) {
+	public User(String email, String password, boolean enabled, String lastUpdate, List<AdministrativeRole> admRoles,
+	            List<Task> tasks, List<Project> projects) {
 		this.email = email;
 		this.password = password;
 		this.enabled = enabled;
 		this.lastUpdate = lastUpdate;
 		this.admRoles = admRoles;
+		this.tasks = tasks;
+		this.projects = projects;
 	}
 	
 	public int getId() {
@@ -100,6 +115,22 @@ public class User implements Serializable {
 	
 	public void setAdmRoles(List<AdministrativeRole> admRoles) {
 		this.admRoles = admRoles;
+	}
+	
+	public List<Task> getTasks() {
+		return tasks;
+	}
+	
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+	
+	public List<Project> getProjects() {
+		return projects;
+	}
+	
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
 	}
 	
 	@Override

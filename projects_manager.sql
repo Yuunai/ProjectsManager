@@ -91,8 +91,8 @@ DROP TABLE IF EXISTS `project`;
 
 CREATE TABLE `project` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(60) NOT NULL,
-  `comment` VARCHAR(1024),
+  `name` VARCHAR(60) NOT NULL,
+  `description` VARCHAR(1024),
   `last_update` TIMESTAMP DEFAULT now(),
   
   PRIMARY KEY(`id`)
@@ -121,12 +121,12 @@ DROP TABLE IF EXISTS `task`;
 CREATE TABLE `task` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `project_id` INT NOT NULL,
-  `title` VARCHAR(60) NOT NULL,
-  `comment` VARCHAR(1024),
+  `name` VARCHAR(60) NOT NULL,
+  `description` VARCHAR(1024),
   `priority` INT DEFAULT 5,
   `deadline` DATE DEFAULT NULL,
   `status` INT DEFAULT 0,
-  `task_type` VARCHAR(40) NOT NULL,
+  `type` VARCHAR(40) NOT NULL,
   `last_update` TIMESTAMP DEFAULT now(),
   
   CONSTRAINT `FK_TASK_PROJECT` FOREIGN KEY (`project_id`)

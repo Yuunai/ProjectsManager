@@ -11,9 +11,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.projectsmanager.entity.*;
 import pl.poznan.put.student.projectsmanager.exceptions.*;
-import pl.poznan.put.student.spacjalive.erp.entity.*;
-import pl.poznan.put.student.spacjalive.erp.exceptions.*;
-import pl.poznan.put.student.projectsmanager.service.ParticipationService;
 import pl.poznan.put.student.projectsmanager.service.UserService;
 
 import javax.validation.Valid;
@@ -27,9 +24,6 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
-	
-	@Autowired
-	ParticipationService participationService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {

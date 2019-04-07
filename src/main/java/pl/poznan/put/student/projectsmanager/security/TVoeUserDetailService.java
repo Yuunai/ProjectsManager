@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.poznan.put.student.projectsmanager.dao.UserRepository;
 import pl.poznan.put.student.projectsmanager.entity.AdministrativeRole;
-import pl.poznan.put.student.projectsmanager.exceptions.NotFoundException;
 import pl.poznan.put.student.projectsmanager.entity.User;
+import pl.poznan.put.student.projectsmanager.exceptions.NotFoundException;
 
 import java.util.Collection;
 import java.util.stream.Collectors;

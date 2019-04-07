@@ -8,9 +8,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.projectsmanager.entity.AdministrativeRole;
-import pl.poznan.put.student.projectsmanager.exceptions.NotFoundException;
 import pl.poznan.put.student.projectsmanager.entity.User;
 import pl.poznan.put.student.projectsmanager.exceptions.EmailAlreadyTakenException;
+import pl.poznan.put.student.projectsmanager.exceptions.NotFoundException;
 import pl.poznan.put.student.projectsmanager.service.UserService;
 
 import javax.validation.Valid;

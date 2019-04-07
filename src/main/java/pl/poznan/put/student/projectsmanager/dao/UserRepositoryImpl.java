@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.poznan.put.student.projectsmanager.entity.*;
 import pl.poznan.put.student.projectsmanager.exceptions.NotFoundException;
-import pl.poznan.put.student.spacjalive.erp.entity.*;
 
 import java.util.*;
 import java.util.stream.Collectors;

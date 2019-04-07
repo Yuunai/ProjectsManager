@@ -11,7 +11,6 @@ import pl.poznan.put.student.projectsmanager.exceptions.SimplePasswordException;
 import pl.poznan.put.student.projectsmanager.exceptions.token.TokenExpiredException;
 import pl.poznan.put.student.projectsmanager.exceptions.token.TokenNotFound;
 import pl.poznan.put.student.projectsmanager.service.UserService;
-import pl.poznan.put.student.spacjalive.erp.service.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
