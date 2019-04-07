@@ -2,11 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>pl.poznan.put.student.spacjalive</groupId>
-    <artifactId>ERP_SpacjaTV</artifactId>
+    <groupId>pl.poznan.put.projectsmanager</groupId>
+    <artifactId>ProjectsManager</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>ERP_SpacjaTV Maven Webapp</name>
+    <name>Projects Manager Web</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -170,7 +170,7 @@
 
 
     <build>
-        <finalName>ERP_SpacjaTV</finalName>
+        <finalName>ProjectsManager</finalName>
 
         <plugins>
             <!-- The Compiler Plugin is used to compile the sources of your project. -->

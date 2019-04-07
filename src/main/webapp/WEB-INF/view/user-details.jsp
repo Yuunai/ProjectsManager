@@ -141,50 +141,6 @@
 
         </form:form>
 
-
-        <div id="participationsTable" class="table-responsive">
-            <h2><fmt:message key="user.header2"/></h2>
-            <table class="table table-striped table-sm">
-                <thead>
-                <tr>
-                    <th scope="col"><fmt:message key="user.colEvent"/></th>
-                    <th scope="col"><fmt:message key="user.colRole"/></th>
-                    <security:authorize access="hasRole('ADMIN')">
-                        <th scope="col"><fmt:message key="users.colActive"/></th>
-                    </security:authorize>
-                </tr>
-                </thead>
-                <tbody>
-                <c:if test="${empty participations}">
-                    <tr>
-                        <td colspan="3"><fmt:message key="user.noParticipations"/>.</td>
-                    </tr>
-                </c:if>
-                <c:forEach var="participation" items="${participations}">
-                    <c:url var="deleteLink" value="/participation/deleteParticipation">
-                        <c:param name="roleId" value="${participation.role.id}"/>
-                        <c:param name="userId" value="${participation.user.id}"/>
-                        <c:param name="eventId" value="${participation.event.id}"/>
-                    </c:url>
-                    <tr>
-                        <td>${participation.event.name}</td>
-                        <td>${participation.role.name}</td>
-                        <security:authorize access="hasRole('ADMIN')">
-                        <td>
-                            <a href="${deleteLink}"
-                               onclick="if (!(confirm('<fmt:message
-                                       key="msg.sureToRemoveParticipation"/>'))) return false"><fmt:message
-                                    key="user.remove"/>
-                            </a>
-                        </td>
-                        </security:authorize>
-                    </tr>
-                </c:forEach>
-
-                </tbody>
-            </table>
-        </div>
-
 </main>
 <%@include file="footer.jsp" %>
 <div class="modal fade" id="passResetModal" role="dialog">
