@@ -18,4 +18,35 @@ public class Comment {
 	@Column(name = "comment")
 	private String comment;
 	
+	public Comment() {
+	}
+	
+	public Comment(Task task, String comment) {
+		this.task = task;
+		this.comment = comment;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public Task getTask() {
+		return task;
+	}
+	
+	public void setTask(Task task) {
+		this.task = task;
+	}
+	
+	public String getComment() {
+		return comment;
+	}
+	
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 }

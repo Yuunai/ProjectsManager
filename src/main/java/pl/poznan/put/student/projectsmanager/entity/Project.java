@@ -81,6 +81,14 @@ public class Project {
 		this.tasks = tasks;
 	}
 	
+	public void addTask(Task task) {
+		tasks.add(task);
+	}
+	
+	public void removeTask(Task task) {
+		tasks.remove(task);
+	}
+	
 	public List<User> getUsers() {
 		return users;
 	}
