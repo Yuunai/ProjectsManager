@@ -23,9 +23,7 @@ public class HomeController {
 	
 	@GetMapping("/home")
 	public String home(Model model) {
-//		TODO Projects list
-		
-		return "home";
+		return "redirect:/project/list";
 	}
 	
 	@GetMapping("/loginPage")

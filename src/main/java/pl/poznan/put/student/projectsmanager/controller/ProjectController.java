@@ -26,7 +26,7 @@ public class ProjectController {
 	
 	@GetMapping("/details")
 	public String projectDetails(Model model, @RequestParam("pid") int projectId) {
-		Project project = projectService.getProject(projectId, true);
+		Project project = projectService.getProject(projectId, true, true);
 		model.addAttribute("project", project);
 		
 		return "project-details";

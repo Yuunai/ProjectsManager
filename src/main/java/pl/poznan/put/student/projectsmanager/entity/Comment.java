@@ -7,12 +7,12 @@ import javax.persistence.*;
 public class Comment {
 	
 	@Id
-	@Column(name = "comment")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@ManyToOne(targetEntity = Task.class)
-	@Column(name = "comment")
+	@JoinColumn(name = "task_id")
 	private Task task;
 	
 	@Column(name = "comment")

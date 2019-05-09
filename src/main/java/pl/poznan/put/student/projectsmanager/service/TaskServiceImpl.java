@@ -1,5 +1,6 @@
 package pl.poznan.put.student.projectsmanager.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,10 @@ public class TaskServiceImpl implements TaskService {
 	
 	@Override
 	public Task getTask(int id) {
-		return taskRepository.getTask(id);
+		Task task = taskRepository.getTask(id);
+		Hibernate.initialize(task.getComments());
+		Hibernate.initialize(task.getUsers());
+		return task;
 	}
 	
 	@Override

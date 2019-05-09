@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProjectService {
 	
-	Project getProject(int id, boolean initializeTasks);
+	Project getProject(int id, boolean initializeTasks, boolean initializeUsers);
 	
 	List<Project> getProjects(boolean initializeTasks);
 	

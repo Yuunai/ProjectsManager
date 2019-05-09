@@ -12,15 +12,15 @@ public class LoggingAspect {
 	
 	private static final Logger LOGGER = LogManager.getLogger(LoggingAspect.class);
 	
-	@Pointcut("execution(* pl.poznan.put.student.spacjalive.erp.dao.*Impl.save*(..))")
+	@Pointcut("execution(* pl.poznan.put.student.projectsmanager.dao.*Impl.save*(..))")
 	public void daoSaveActions() {
 	}
 	
-	@Pointcut("execution(* pl.poznan.put.student.spacjalive.erp.dao.*Impl.delete*(..))")
+	@Pointcut("execution(* pl.poznan.put.student.projectsmanager.dao.*Impl.delete*(..))")
 	public void daoDeleteActions() {
 	}
 	
-	@Pointcut("execution(* pl.poznan.put.student.spacjalive.erp.dao.*Impl.add*(..))")
+	@Pointcut("execution(* pl.poznan.put.student.projectsmanager.dao.*Impl.add*(..))")
 	public void daoAddActions() {
 	}
 	

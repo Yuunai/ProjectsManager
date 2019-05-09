@@ -13,7 +13,7 @@ public class Task {
 	private int id;
 	
 	@ManyToOne(targetEntity = Project.class)
-	@Column(name = "project_id")
+	@JoinColumn(name = "project_id")
 	private Project project;
 	
 	@Column(name = "name")
@@ -37,7 +37,7 @@ public class Task {
 	@Column(name = "last_update")
 	private String lastUpdate;
 	
-	@OneToMany(mappedBy = "task")
+	@OneToMany(mappedBy = "task", orphanRemoval = true)
 	private List<Comment> comments;
 	
 	@JoinTable(name = "participation",
@@ -141,6 +141,10 @@ public class Task {
 	
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+	
+	public void addComment(Comment comment) {
+		comments.add(comment);
 	}
 	
 	public List<User> getUsers() {

@@ -17,10 +17,14 @@ public class ProjectServiceImpl implements ProjectService {
 	ProjectRepository projectRepository;
 	
 	@Override
-	public Project getProject(int id, boolean initializeTasks) {
+	public Project getProject(int id, boolean initializeTasks, boolean initializeUsers) {
 		Project result = projectRepository.getProject(id);
+		
 		if(initializeTasks)
 			Hibernate.initialize(result.getTasks());
+		
+		if(initializeUsers)
+			Hibernate.initialize(result.getUsers());
 		
 		return result;
 	}
