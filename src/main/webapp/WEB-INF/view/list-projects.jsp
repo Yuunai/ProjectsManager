@@ -6,9 +6,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
-	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-	<meta name="generator" content="Jekyll v3.8.5">
-	<title>PUTzadania</title>
+	<meta name="author" content="Maciej Jaskiewicz, Krystian Minta">
+	<title>Projects Manager</title>
 
 	<link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/product/">
 
@@ -33,7 +32,7 @@
 		}
 	</style>
 	<!-- Custom styles for this template -->
-	<link href="https://getbootstrap.com/docs/4.3/examples/product/product.css" rel="stylesheet">
+	<link href="<c:url value="${pageContext.request.contextPath}/resources/css/list-projects.css" />" rel="stylesheet">
 </head>
 <body>
 
@@ -44,6 +43,9 @@
 				<div class="col-sm-8 col-md-7 py-4">
 					<h4 class="text-white">O nas</h4>
 					<p class="text-muted">System zarządzania projektami studenckimi | Kontakt z administratorem -> </p>
+					<button class="btn btn-outline-secondary" onclick="location.href='/logout'">
+							Wyloguj się
+						</button>
 				</div>
 				<div class="col-sm-4 offset-md-1 py-4">
 					<h4 class="text-white">Kontakt</h4>
@@ -57,7 +59,7 @@
 	</div>
 	<div class="navbar navbar-dark bg-dark shadow-sm">
 		<div class="container d-flex justify-content-between">
-			<a href="#" class="navbar-brand d-flex align-items-center">
+			<a href="/" class="navbar-brand d-flex align-items-center">
 				<strong>ProjectsManager</strong>
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +71,7 @@
 <section class="text-center">
 	<div class="container my-3">
 		<p>
-			<button class="btn btn-outline-secondary" onclick="location.href='#'">
+			<button class="btn btn-outline-secondary" onclick="location.href='/project/new'">
 				<span data-feather="plus" style="margin-bottom: 1px;"></span>
 				Dodaj projekt
 			</button>
@@ -78,7 +80,10 @@
 </section>
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
 	<c:forEach var="project" items="${projects}" >
-		<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+		<c:url var="projectDetails" value="/project/details">
+			<c:param name="eventId" value="${event.id}"/>
+		</c:url>
+		<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" onclick="location.href='${projectDetails}'">
 			<div class="my-3 p-3">
 				<h2 class="display-5">${project.name}</h2>
 				<p class="lead">${project.description}</p>
@@ -217,8 +222,9 @@
 				</table>
 			</div></div>   </div>
 </div>
-</body>
 -->
+
+</body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
