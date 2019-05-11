@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Maciej Jaskiewicz, Krystian Minta">
-    <title>Projects Manager Add Project</title>
+    <title>Projects Manager Add Task</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -69,28 +69,33 @@
 </header>
 
 <div class="container-fluid justify-content-center">
-    <form:form action="save" modelAttribute="project" method="POST" acceptCharset="utf8">
+    <form:form action="save" modelAttribute="task" method="POST" acceptCharset="utf8">
 
         <form:hidden path="id"/>
         <form:hidden path="lastUpdate"/>
+        <form:hidden path="project"/>
+
+
+
+
 
         <%--<c:if test="${!empty message}">--%>
-            <%--<div class="row py-4">--%>
-                <%--<div class="col-12">--%>
-                    <%--<span class="text-center"><fmt:message key="${message}"/></span>--%>
-                <%--</div>--%>
-            <%--</div>--%>
+        <%--<div class="row py-4">--%>
+        <%--<div class="col-12">--%>
+        <%--<span class="text-center"><fmt:message key="${message}"/></span>--%>
+        <%--</div>--%>
+        <%--</div>--%>
         <%--</c:if>--%>
         <div id="errorRow">
             <span id="errors"><form:errors/></span>
         </div>
         <%--<script>--%>
-            <%--hideEmptyErrorsRow();--%>
+        <%--hideEmptyErrorsRow();--%>
         <%--</script>--%>
 
         <div class="row py-4 justify-content-center">
             <div class="col-12">
-                <label class="form-header" for="name">Nazwa projektu</label>
+                <label class="form-header" for="name">Nazwa zadania</label>
                 <form:input path="name" id="name" type="text" class="form-control"/>
                 <label class="form-note" for="name"><form:errors path="name"/></label>
             </div>
@@ -98,10 +103,31 @@
         <div class="row py-4 justify-content-center">
 
             <div class="col-12">
-                <label class="form-header" for="description">Opis projektu</label>
+                <label class="form-header" for="description">Opis zadania</label>
                 <form:input path="description" id="description" type="text" class="form-control"/>
                 <label class="form-note" for="description"><form:errors path="description"/></label>
             </div>
+        </div>
+        <div class="row py-4 justify-content-center">
+
+            <div class="col-12">
+                <label class="form-header" for="status">Status zadania</label>
+                <form:input path="status" id="status" type="text" class="form-control"/>
+                <label class="form-note" for="status"><form:errors path="status"/></label>
+            </div>
+        </div>
+        <div class="row py-4 justify-content-center">
+            <div class="col-12 col-md-2">
+                <label class="form-header" for="priority">Priorytet</label>
+                <form:input path="priority" max="10" min="0" id="priority" type="number" class="form-control"/>
+                <label class="form-note" for="priority"><form:errors path="priority"/></label>
+            </div>
+            <div class="col-12 col-md-3">
+                <label class="form-header" for="deadline">Deadline</label>
+                <form:input path="deadline" id="deadline" type="date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control"/>
+                <label class="form-note" for="deadline"><form:errors path="deadline"/></label>
+            </div>
+
         </div>
         <div class="row py-4 justify-content-center">
             <div class=" col-4">

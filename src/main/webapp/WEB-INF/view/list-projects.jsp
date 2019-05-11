@@ -81,7 +81,7 @@
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
 	<c:forEach var="project" items="${projects}" >
 		<c:url var="projectDetails" value="/project/details">
-			<c:param name="eventId" value="${event.id}"/>
+			<c:param name="pid" value="${project.id}"/>
 		</c:url>
 		<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" onclick="location.href='${projectDetails}'">
 			<div class="my-3 p-3">
