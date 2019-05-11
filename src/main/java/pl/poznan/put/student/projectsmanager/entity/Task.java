@@ -31,9 +31,6 @@ public class Task {
 	@Column(name = "status")
 	private String status;
 	
-	@Column(name = "type")
-	private String type;
-	
 	@Column(name = "last_update")
 	private String lastUpdate;
 	
@@ -50,14 +47,13 @@ public class Task {
 	}
 	
 	public Task(Project project, String name, String description, int priority, String deadline, String status,
-	            String type, String lastUpdate, List<Comment> comments, List<User> users) {
+	            String lastUpdate, List<Comment> comments, List<User> users) {
 		this.project = project;
 		this.name = name;
 		this.description = description;
 		this.priority = priority;
 		this.deadline = deadline;
 		this.status = status;
-		this.type = type;
 		this.lastUpdate = lastUpdate;
 		this.comments = comments;
 		this.users = users;
@@ -119,14 +115,6 @@ public class Task {
 		this.status = status;
 	}
 	
-	public String getType() {
-		return type;
-	}
-	
-	public void setType(String type) {
-		this.type = type;
-	}
-	
 	public String getLastUpdate() {
 		return lastUpdate;
 	}
@@ -165,7 +153,6 @@ public class Task {
 				", priority=" + priority +
 				", deadline='" + deadline + '\'' +
 				", status='" + status + '\'' +
-				", type='" + type + '\'' +
 				", lastUpdate='" + lastUpdate + '\'' +
 				'}';
 	}
