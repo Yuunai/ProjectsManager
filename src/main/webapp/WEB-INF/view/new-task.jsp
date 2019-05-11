@@ -73,7 +73,7 @@
 
         <form:hidden path="id"/>
         <form:hidden path="lastUpdate"/>
-        <form:hidden path="project"/>
+        <form:hidden path="project" value="${task.project.id}"/>
 
 
 
