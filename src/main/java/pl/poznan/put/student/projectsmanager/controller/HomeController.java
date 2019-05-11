@@ -1,8 +1,10 @@
 package pl.poznan.put.student.projectsmanager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.projectsmanager.entity.Token;
 import pl.poznan.put.student.projectsmanager.entity.User;
@@ -20,6 +22,12 @@ public class HomeController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@InitBinder
+	public void initBinder(WebDataBinder webDataBinder) {
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
 	
 	@GetMapping("/home")
 	public String home(Model model) {
