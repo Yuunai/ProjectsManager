@@ -104,126 +104,14 @@
 					</table>
 				</div></div>
 		</div>
+        <c:if test="${project.id %2 ==0}">
+        </div>
+        <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+
+        </c:if>
 	</c:forEach>
 
-	<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-		<div class="my-3 py-3">
-			<h2 class="display-5">Projekt 2</h2>
-			<p class="lead">Poszukiwanie pracy</p>
-		</div>
-		<div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0; overflow-y: scroll;">
-			<div class="table-responsive">
-				<table class="table table-striped table-sm">
-					<tbody>
-					<tr>
-						<td>Nauka pisania CV</td>
-						<td>03.04.2018</td>
-						<td>***</td>
-					</tr>
-					<tr>
-						<td>Targi pracy UAM</td>
-						<td>03.04.2018</td>
-						<td>***</td>
-					</tr>
-					<tr>
-						<td>Targi pracy MTP</td>
-						<td>13.04.2018</td>
-						<td>***</td>
-					</tr>
-					<tr>
-						<td>Targi pracy PP</td>
-						<td>03.06.2018</td>
-						<td>***</td>
-					</tr>
-					<tr>
-						<td>Rozmowa o prace w McDonald's</td>
-						<td>13.06.2018</td>
-						<td>***</td>
-					</tr>
-					</tbody>
-				</table>
-			</div></div>
-	</div>
 </div>
-
-<!-- TODO usunać? przerobić powyższe?
-<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-	<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-		<div class="my-3 p-3">
-			<h2 class="display-5">Projekt nauka</h2>
-			<p class="lead">Zebranie informacji</p>
-		</div>
-		<div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0; overflow-y: scroll;">
-			<div class="table-responsive">
-				<table class="table table-striped table-sm">
-					<tbody>
-					<tr>
-						<td>Nauka na egzamin 1</td>
-						<td>03.04.2018</td>
-						<td>***</td>
-					</tr>
-					<tr>
-						<td>Nauka na egzamin 2</td>
-						<td>03.04.2018</td>
-						<td>***</td>
-					</tr>
-					<tr>
-						<td>Nauka na egzamin 3</td>
-						<td>13.04.2018</td>
-						<td>***</td>
-					</tr>
-					<tr>
-						<td>Nauka na egzamin 4</td>
-						<td>03.06.2018</td>
-						<td>***</td>
-					</tr>
-					<tr>
-						<td>Rozmowa o prace w McDonald's</td>
-						<td>13.06.2018</td>
-						<td>***</td>
-					</tr>
-					</tbody>
-				</table>
-			</div></div>   </div>
-	<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-		<div class="my-3 py-3">
-			<h2 class="display-5">Integracja</h2>
-		</div>
-		<div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0; overflow-y: scroll;">
-			<div class="table-responsive">
-				<table class="table table-striped table-sm">
-					<tbody>
-					<tr>
-						<td>Piwo</td>
-						<td>30.02.2019</td>
-						<td>***</td>
-					</tr>
-					<tr>
-						<td>Piwo</td>
-						<td>30.02.2020</td>
-						<td>***</td>
-					</tr>
-					<tr>
-						<td>Piwo</td>
-						<td>30.02.2021</td>
-						<td>***</td>
-					</tr>
-					<tr>
-						<td>Piwo</td>
-						<td>30.02.2022</td>
-						<td>***</td>
-					</tr>
-					<tr>
-						<td>Piwo</td>
-						<td>30.02.2023</td>
-						<td>***</td>
-					</tr>
-					</tbody>
-				</table>
-			</div></div>   </div>
-</div>
--->
-
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

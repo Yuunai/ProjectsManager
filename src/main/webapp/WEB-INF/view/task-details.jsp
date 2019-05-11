@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html lang="en">
@@ -10,7 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Maciej Jaskiewicz, Krystian Minta">
-    <title>Projects Manager Add Project</title>
+    <title>Projects Manager Details</title>
+
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -35,6 +35,7 @@
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/list-projects.css" />" rel="stylesheet">
 </head>
 <body>
+
 <header>
     <div class="collapse bg-dark" id="navbarHeader">
         <div class="container">
@@ -67,55 +68,115 @@
         </div>
     </div>
 </header>
-
+<section class="text-center">
+    <c:url var="newTask" value="/task/new">
+        <c:param name="pid" value="${project.id}"/>
+    </c:url>
+    <div class="container my-3">
+        <p>
+            <button class="btn btn-outline-secondary" onclick="">
+                <span data-feather="plus" style="margin-bottom: 1px;"></span>
+                Edytuj
+            </button>
+            <button class="btn btn-outline-secondary" onclick="location.href='/'">
+                <span data-feather="plus" style="margin-bottom: 1px;"></span>
+                Dodaj komentarz
+            </button>
+        </p>
+    </div>
+</section>
 <div class="container-fluid justify-content-center">
-    <form:form action="save" modelAttribute="project" method="POST" acceptCharset="utf8">
+    <form:form action="save" modelAttribute="task" method="POST" acceptCharset="utf8">
 
         <form:hidden path="id"/>
         <form:hidden path="lastUpdate"/>
+        <form:hidden path="project" value="${task.project.id}"/>
+
+
+
+
 
         <%--<c:if test="${!empty message}">--%>
-            <%--<div class="row py-4">--%>
-                <%--<div class="col-12">--%>
-                    <%--<span class="text-center"><fmt:message key="${message}"/></span>--%>
-                <%--</div>--%>
-            <%--</div>--%>
+        <%--<div class="row py-4">--%>
+        <%--<div class="col-12">--%>
+        <%--<span class="text-center"><fmt:message key="${message}"/></span>--%>
+        <%--</div>--%>
+        <%--</div>--%>
         <%--</c:if>--%>
         <div id="errorRow">
             <span id="errors"><form:errors/></span>
         </div>
         <%--<script>--%>
-            <%--hideEmptyErrorsRow();--%>
+        <%--hideEmptyErrorsRow();--%>
         <%--</script>--%>
 
         <div class="row py-4 justify-content-center">
             <div class="col-12">
-                <label class="form-header" for="name">Nazwa projektu</label>
-                <form:input path="name" id="name" type="text" class="form-control" required="true"/>
+                <label class="form-header" for="name">Nazwa zadania</label>
+                <form:input path="name" id="name" type="text" class="form-control" disabled="true"/>
                 <label class="form-note" for="name"><form:errors path="name"/></label>
             </div>
         </div>
         <div class="row py-4 justify-content-center">
 
             <div class="col-12">
-                <label class="form-header" for="description">Opis projektu</label>
-                <form:input path="description" id="description" type="text" class="form-control"/>
+                <label class="form-header" for="description">Opis zadania</label>
+                <form:input path="description" id="description" type="text" class="form-control" disabled="true"/>
                 <label class="form-note" for="description"><form:errors path="description"/></label>
             </div>
         </div>
         <div class="row py-4 justify-content-center">
-            <div class=" col-4">
-                <button class="btn btn-lg btn-secondary btn-block" type="submit">Dodaj projekt</button>
+
+            <div class="col-12">
+                <label class="form-header" for="status">Status zadania</label>
+                <form:input path="status" id="status" type="number" class="form-control" disabled="true"/>
+                <label class="form-note" for="status"><form:errors path="status"/></label>
             </div>
         </div>
+        <div class="row py-4 justify-content-center">
+            <div class="col-12 col-md-2">
+                <label class="form-header" for="priority">Priorytet</label>
+                <form:input path="priority" max="10" min="0" id="priority" type="number" class="form-control" disabled="true"/>
+                <label class="form-note" for="priority"><form:errors path="priority"/></label>
+            </div>
+            <div class="col-12 col-md-3">
+                <label class="form-header" for="deadline">Deadline</label>
+                <form:input path="deadline" id="deadline" type="date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" disabled="true"/>
+                <label class="form-note" for="deadline"><form:errors path="deadline"/></label>
+            </div>
+
+        </div>
+
+
+
+        <div class="row py-4 justify-content-center">
+            <div class=" col-4">
+                <button class="btn btn-lg btn-secondary btn-block" type="submit" hidden>Dodaj projekt</button>
+            </div>
+        </div>
+
+        <h3>Komentarze</h3>
+        <c:url var="taskVar" value="/task/details">
+            <c:param name="tid" value="${task.id}"/>
+        </c:url>
+        <c:forEach var="comm" items="${task.comments}">
+            <div class="row py-4 justify-content-center">
+                <div class="col-12">
+                    <input type="text" class="form-control" disabled="true" value="${comm}"/>
+                </div>
+            </div>
+
+
+        </c:forEach>
 
 
     </form:form>
 
 </div>
 
-
 </body>
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
