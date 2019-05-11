@@ -8,8 +8,7 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import pl.poznan.put.student.projectsmanager.converter.*;
 import pl.poznan.put.student.projectsmanager.interceptor.ChangeLocaleInterceptor;
-import pl.poznan.put.student.projectsmanager.service.ProjectService;
-import pl.poznan.put.student.projectsmanager.service.UserService;
+import pl.poznan.put.student.projectsmanager.service.*;
 
 @EnableWebMvc
 @org.springframework.context.annotation.Configuration
@@ -21,6 +20,9 @@ public class Configuration extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private TaskService taskService;
 	
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver() {
@@ -44,6 +46,7 @@ public class Configuration extends WebMvcConfigurerAdapter {
 		registry.addConverter(new StringUserIdToUserConverter(userService));
 		registry.addConverter(new StringAdmRoleIdToAdmRoleConverter(userService));
 		registry.addConverter(new StringProjectIdToProjectConverter(projectService));
+		registry.addConverter(new StringTaskIdToTaskConverter(taskService));
 	}
 	
 	@Override

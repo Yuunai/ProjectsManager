@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import pl.poznan.put.student.projectsmanager.entity.Comment;
 import pl.poznan.put.student.projectsmanager.entity.Task;
 
 import java.util.List;
@@ -40,5 +41,19 @@ public class TaskRepositoryImpl implements TaskRepository {
 		Query query = session.createQuery("DELETE FROM Task WHERE id=:id");
 		query.setParameter("id", id);
 		query.executeUpdate();
+	}
+	
+	@Override
+	public void deleteComment(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("DELETE FROM Comment WHERE id=:id");
+		query.setParameter("id", id);
+		query.executeUpdate();
+	}
+	
+	@Override
+	public void saveComment(Comment comment) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(comment);
 	}
 }

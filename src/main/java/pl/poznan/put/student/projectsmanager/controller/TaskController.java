@@ -66,11 +66,9 @@ public class TaskController {
 	
 	@PostMapping("/comment")
 	public String saveComment(Model model, @ModelAttribute("comment") Comment comment) {
-		Task task = taskService.getTask(comment.getTask().getId());
-		task.addComment(comment);
-		taskService.saveTask(task);
+		taskService.saveComment(comment);
 		
-		return taskDetails(model, task.getId());
+		return taskDetails(model, comment.getTask().getId());
 	}
 	
 }
