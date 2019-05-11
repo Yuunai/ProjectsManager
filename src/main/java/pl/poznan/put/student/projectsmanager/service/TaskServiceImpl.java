@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.poznan.put.student.projectsmanager.dao.TaskRepository;
+import pl.poznan.put.student.projectsmanager.entity.Comment;
 import pl.poznan.put.student.projectsmanager.entity.Task;
 
 import java.util.List;
@@ -37,5 +38,15 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public void deleteTask(int id) {
 		taskRepository.deleteTask(id);
+	}
+	
+	@Override
+	public void saveComment(Comment comment) {
+		taskRepository.saveComment(comment);
+	}
+	
+	@Override
+	public void deleteComment(int id) {
+		taskRepository.deleteComment(id);
 	}
 }
