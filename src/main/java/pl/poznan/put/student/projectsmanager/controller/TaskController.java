@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import pl.poznan.put.student.projectsmanager.entity.Comment;
-import pl.poznan.put.student.projectsmanager.entity.Task;
+import pl.poznan.put.student.projectsmanager.entity.*;
+import pl.poznan.put.student.projectsmanager.service.ProjectService;
 import pl.poznan.put.student.projectsmanager.service.TaskService;
 
 @RequestMapping("/task")
@@ -15,7 +15,10 @@ import pl.poznan.put.student.projectsmanager.service.TaskService;
 public class TaskController {
 	
 	@Autowired
-	TaskService taskService;
+	private TaskService taskService;
+	
+	@Autowired
+	private ProjectService projectService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
@@ -24,8 +27,12 @@ public class TaskController {
 	}
 	
 	@GetMapping("/new")
-	public String newTask(Model model) {
-		model.addAttribute("task", new Task());
+	public String newTask(Model model, @RequestParam("pid") int projectId) {
+		Project project = projectService.getProject(projectId, false, false);
+		
+		Task task = new Task();
+		task.setProject(project);
+		model.addAttribute("task", task);
 		
 		return "new-task";
 	}
