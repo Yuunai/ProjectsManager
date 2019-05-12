@@ -81,7 +81,7 @@
 			<button class="btn btn-outline-secondary" onclick="location.href='/user/list'">
 				Użytkownicy
 			</button>
-			<button class="btn btn-outline-secondary" onclick="location.href='/user/userDetails?userId=${sessionScope.get("userId")}">
+			<button class="btn btn-outline-secondary" onclick="location.href='/user/userDetails?userId=${sessionScope.get("userId")}'">
 				Mój profil
 			</button>
 		</p>

@@ -23,17 +23,14 @@
     <link href="<c:url value="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />" rel="stylesheet">
 
 </head>
-<body>
-<header>
+<body class="justify-content-center">
+<header class="fixed-top">
     <div class="collapse bg-dark" id="navbarHeader">
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-md-7 py-4">
                     <h4 class="text-white">O nas</h4>
                     <p class="text-muted">System zarządzania projektami studenckimi | Kontakt z administratorem -> </p>
-                    <button class="btn btn-outline-secondary" onclick="location.href='/logout'">
-                        Wyloguj się
-                    </button>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <h4 class="text-white">Kontakt</h4>
@@ -56,6 +53,7 @@
         </div>
     </div>
 </header>
+<main role="main" class="mt-0">
 <form:form id="loginForm" class="form-signin" action="${pageContext.request.contextPath}/authUser" method="POST">
     <div class="text-center mb-4">
         <h1 class="h3 mb-3 font-weight-normal">Projects Manager</h1>
@@ -115,10 +113,12 @@
         </div>
     </div>
 </div>
-
+</main>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

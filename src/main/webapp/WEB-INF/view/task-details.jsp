@@ -82,6 +82,9 @@
             <button class="btn btn-outline-secondary" onclick="edit();">
                 Edytuj
             </button>
+            <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/project/details?pid=${task.project.id}'">
+                Wróć
+            </button>
         </p>
     </div>
 </section>
@@ -159,7 +162,8 @@
         <c:forEach var="comm" items="${task.comments}">
             <div class="row py-4 justify-content-center">
                 <div class="col-12">
-                    <input type="text" class="form-control" disabled="true" value="${comm.comment}"/>
+                    <label class="form-header" for="comm${comm.id}">Autor i timestamp</label>
+                    <input id="comm${comm.id}" type="text" class="form-control" disabled="true" value="${comm.comment}"/>
                 </div>
             </div>
 
