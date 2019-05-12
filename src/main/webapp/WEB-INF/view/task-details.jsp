@@ -79,8 +79,7 @@
                 <span data-feather="plus" style="margin-bottom: 1px;"></span>
                 Dodaj komentarz
             </button>
-            <button class="btn btn-outline-secondary" onclick="location.href='/'">
-                <span data-feather="plus" style="margin-bottom: 1px;"></span>
+            <button class="btn btn-outline-secondary" onclick="edit();">
                 Edytuj
             </button>
         </p>
@@ -127,14 +126,11 @@
             </div>
         </div>
         <div class="row py-4 justify-content-center">
-
-            <div class="col-12">
+            <div class="col-12 col-md-3">
                 <label class="form-header" for="status">Status zadania</label>
                 <form:input path="status" id="status" type="number" class="form-control" disabled="true"/>
                 <label class="form-note" for="status"><form:errors path="status"/></label>
             </div>
-        </div>
-        <div class="row py-4 justify-content-center">
             <div class="col-12 col-md-2">
                 <label class="form-header" for="priority">Priorytet</label>
                 <form:input path="priority" max="10" min="0" id="priority" type="number" class="form-control" disabled="true"/>
@@ -152,7 +148,7 @@
 
         <div class="row py-4 justify-content-center">
             <div class=" col-4">
-                <button class="btn btn-lg btn-secondary btn-block" type="submit" hidden>Zapisz zadanie</button>
+                <button id="saveBtn" class="btn btn-lg btn-secondary btn-block" type="submit" hidden>Zapisz zadanie</button>
             </div>
         </div>
 
@@ -163,7 +159,7 @@
         <c:forEach var="comm" items="${task.comments}">
             <div class="row py-4 justify-content-center">
                 <div class="col-12">
-                    <input type="text" class="form-control" disabled="true" value="${comm}"/>
+                    <input type="text" class="form-control" disabled="true" value="${comm.comment}"/>
                 </div>
             </div>
 
@@ -208,7 +204,26 @@
 </div>
 
 </body>
+<script>
+    function hideEmptyErrorsRow() {
+        var x = document.getElementById("errors");
+        if(x.innerHTML == "" || x.innerHTML == null) {
+            document.getElementById("errorRow").style.display = " none";
+        }
+    }
 
+    function edit()
+    {
+        document.getElementById("name").disabled=false;
+        document.getElementById("description").disabled=false;
+        document.getElementById("status").disabled=false;
+        document.getElementById("priority").disabled=false;
+        document.getElementById("deadline").disabled=false;
+        document.getElementById("saveBtn").hidden=false;
+
+    }
+
+</script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>

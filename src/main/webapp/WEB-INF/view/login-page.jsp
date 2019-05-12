@@ -24,7 +24,38 @@
 
 </head>
 <body>
-
+<header>
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">O nas</h4>
+                    <p class="text-muted">System zarządzania projektami studenckimi | Kontakt z administratorem -> </p>
+                    <button class="btn btn-outline-secondary" onclick="location.href='/logout'">
+                        Wyloguj się
+                    </button>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white">Kontakt</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Facebook</a></li>
+                        <li><a href="#" class="text-white">Email</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <strong>ProjectsManager</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
 <form:form id="loginForm" class="form-signin" action="${pageContext.request.contextPath}/authUser" method="POST">
     <div class="text-center mb-4">
         <h1 class="h3 mb-3 font-weight-normal">Projects Manager</h1>

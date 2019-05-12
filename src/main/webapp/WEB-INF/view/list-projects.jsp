@@ -75,6 +75,15 @@
 				<span data-feather="plus" style="margin-bottom: 1px;"></span>
 				Dodaj projekt
 			</button>
+			<button class="btn btn-outline-secondary" onclick="location.href='/account/list'">
+				Konta
+			</button>
+			<button class="btn btn-outline-secondary" onclick="location.href='/user/list'">
+				Użytkownicy
+			</button>
+			<button class="btn btn-outline-secondary" onclick="location.href='/user/userDetails?userId=${sessionScope.get("userId")}">
+				Mój profil
+			</button>
 		</p>
 	</div>
 </section>

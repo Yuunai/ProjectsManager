@@ -76,6 +76,13 @@
 				<span data-feather="plus" style="margin-bottom: 1px;"></span>
 				Dodaj zadanie
 			</button>
+			<button class="btn btn-outline-secondary" onclick="edit();">
+				Edytuj
+			</button>
+			<button class="btn btn-outline-secondary" onclick="alert('Nie dodasz')">
+				<span data-feather="plus" style="margin-bottom: 1px;"></span>
+				Dodaj uczestnika
+			</button>
 		</p>
 	</div>
 </section>
@@ -119,7 +126,26 @@
 	</div>
 </main>
 </body>
+<script>
+    function hideEmptyErrorsRow() {
+        var x = document.getElementById("errors");
+        if(x.innerHTML == "" || x.innerHTML == null) {
+            document.getElementById("errorRow").style.display = " none";
+        }
+    }
 
+    function edit()
+    {
+        document.getElementById("name").disabled=false;
+        document.getElementById("description").disabled=false;
+        document.getElementById("status").disabled=false;
+        document.getElementById("priority").disabled=false;
+        document.getElementById("deadline").disabled=false;
+        document.getElementById("saveBtn").hidden=false;
+
+    }
+
+</script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>

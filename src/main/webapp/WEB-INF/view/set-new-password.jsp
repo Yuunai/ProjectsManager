@@ -24,12 +24,38 @@
 		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 		crossorigin="anonymous">
 </script>
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-	<a class="col-sm-3 col-md-2 mr-0 mx-0 my-1" href="/home"><img src ="${pageContext.request.contextPath}/resources/img/STV_350.png" style="max-width:120px;transform: rotate(350deg);" alt="SpacjaTV"></img></a>
-	<div class="collapse navbar-collapse" id="navbarCollapse">
-
+<header>
+	<div class="collapse bg-dark" id="navbarHeader">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-8 col-md-7 py-4">
+					<h4 class="text-white">O nas</h4>
+					<p class="text-muted">System zarządzania projektami studenckimi | Kontakt z administratorem -> </p>
+					<button class="btn btn-outline-secondary" onclick="location.href='/logout'">
+						Wyloguj się
+					</button>
+				</div>
+				<div class="col-sm-4 offset-md-1 py-4">
+					<h4 class="text-white">Kontakt</h4>
+					<ul class="list-unstyled">
+						<li><a href="#" class="text-white">Facebook</a></li>
+						<li><a href="#" class="text-white">Email</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
-</nav>
+	<div class="navbar navbar-dark bg-dark shadow-sm">
+		<div class="container d-flex justify-content-between">
+			<a href="/" class="navbar-brand d-flex align-items-center">
+				<strong>ProjectsManager</strong>
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+</header>
 
 <main role="main" class="mt-0 ml-2">
 

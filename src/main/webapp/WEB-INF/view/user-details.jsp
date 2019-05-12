@@ -6,23 +6,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<c:set var="lang"
-       value="${not empty param.language ? param.language : not empty lang ? lang : pageContext.request.locale}"
-       scope="session"/>
-<fmt:setLocale value="${lang}"/>
-<fmt:setBundle basename="lang"/>
 
-
-<html lang="<fmt:message key="lang.language"/>">
+<html lang="pl">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title><fmt:message key="user.title"/></title>
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"/>
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header-style.css"/>
-    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/home.css" />" rel="stylesheet">
-    <link href="<c:url value="${pageContext.request.contextPath}/resources/css/flag-icon.min.css" />" rel="stylesheet">
-
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/add-forms.js"></script>
+    <title>Szczegóły użytkownika</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/product/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script>
         function makeEditable() {
             var x = document.getElementsByClassName("form-control");
@@ -37,33 +27,54 @@
     </script>
 </head>
 <body>
-
-<%@include file="header.jsp" %>
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-6 mt-0">
+<header>
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">O nas</h4>
+                    <p class="text-muted">System zarządzania projektami studenckimi | Kontakt z administratorem -> </p>
+                    <button class="btn btn-outline-secondary" onclick="location.href='/logout'">
+                        Wyloguj się
+                    </button>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white">Kontakt</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Facebook</a></li>
+                        <li><a href="#" class="text-white">Email</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <strong>ProjectsManager</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
+<main role="main" class="mt-0">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <div class="btn-toolbar mb-2 mb-md-0">
             <button class="btn btn-outline-secondary" onclick="makeEditable()">
-                <fmt:message key="user.edit"/>
+                Edytuj
             </button>
         </div>
         <c:if test="${pageContext.session.getAttribute('userId')==paramValues.get('userId')[0]}">
             <div class="btn-toolbar mb-2 mb-md-0">
                 <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#passResetModal">
-                    <fmt:message key="user.changePassword"/>
+                Zmień hasło
                 </button>
             </div>
         </c:if>
-        <security:authorize access="hasAnyRole('ADMIN','MODERATOR','TRUSTED','USER')">
-            <div class="btn-toolbar mb-2 mb-md-0 ml-auto">
-                <button class="btn btn-outline-secondary"
-                        onclick="location.href='${pageContext.request.contextPath}/home'">
-                    <span data-feather="x" style="margin-bottom: 1px;"></span>
-                    <fmt:message key="user.back"/>
-                </button>
-            </div>
-        </security:authorize>
     </div>
-    <h2><fmt:message key="user.header"/></h2>
+    <h2>Szczegóły</h2>
 
     <div class="container-fluid justify-content-center">
         <%--TODO wrong redirection if invalid data--%>
@@ -86,54 +97,33 @@
 
         <div class="row py-4">
             <div class="col-12 col-md-4">
-                <label class="form-header" for="firstNameProfile"><fmt:message key="user.name"/></label>
+                <label class="form-header" for="firstNameProfile">Imię</label>
                 <form:input path="firstName" id="firstNameProfile" type="text" class="form-control"
                             value="${details.firstName}"
                             disabled="true"/>
                 <label class="form-note" for="firstNameProfile"><form:errors path="firstName"/></label>
             </div>
             <div class="col-12 col-md-4">
-                <label class="form-header" for="lastNameProfile"><fmt:message key="user.surname"/></label>
+                <label class="form-header" for="lastNameProfile">Nazwisko</label>
                 <form:input path="lastName" id="lastNameProfile" type="text" class="form-control"
                             value="${details.lastName}"
                             disabled="true"/>
                 <label class="form-note" for="lastNameProfile"><form:errors path="lastName"/></label>
             </div>
-            <security:authorize access="hasAnyRole('ADMIN','MODERATOR','TRUSTED','USER')">
-                <div class="col-12 col-md-2">
-                    <label class="form-header" for="indexProfile"><fmt:message key="user.index"/></label>
-                    <form:input path="studentIndex" id="indexProfile" type="text" class="form-control"
-                                value="${details.studentIndex}"
-                                disabled="true"/>
-                    <label class="form-note" for="indexProfile"><form:errors path="studentIndex"/></label>
-                </div>
-            </security:authorize>
         </div>
         <div class="row py-4">
             <div class="col-12 col-md-3">
-                <label class="form-header" for="phoneProfile"><fmt:message key="user.phone"/></label>
+                <label class="form-header" for="phoneProfile">Numer telefonu</label>
                 <form:input path="phoneNumber" id="phoneProfile" type="text" class="form-control"
                             value="${details.phoneNumber}" disabled="true"/>
                 <label class="form-note" for="phoneProfile"><form:errors path="phoneNumber"/></label>
             </div>
-            <security:authorize access="hasAnyRole('ADMIN','MODERATOR','TRUSTED','USER')">
-                <div class="col-12 col-md-2 text-center">
-                    <label class="form-header" for="officeProfile"><fmt:message key="user.office"/></label>
-                    <form:checkbox path="officeEntrance" id="officeProfile" class="form-control" disabled="true"
-                                   value="${details.officeEntrance}"/>
-                </div>
-                <div class="col-12 col-md-1 text-center">
-                    <label class="form-header" for="carProfile"><fmt:message key="user.car"/></label>
-                    <form:checkbox path="car" id="carProfile" class="form-control" disabled="true"
-                                   value="${details.car}"/>
-                </div>
-            </security:authorize>
         </div>
 
         <div class="row py-4 justify-content-center">
             <div class=" col-4">
                 <button id="updateBtn" class="btn btn-lg btn-secondary btn-block" style="display: none"
-                        type="submit"><fmt:message key="user.update"/>
+                        type="submit">Aktualizuj
                 </button>
             </div>
         </div>
@@ -142,12 +132,11 @@
         </form:form>
 
 </main>
-<%@include file="footer.jsp" %>
 <div class="modal fade" id="passResetModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="passResetModalLabel"><fmt:message key="user.modalHeader"/></h5>
+                <h5 class="modal-title" id="passResetModalLabel">Resetuj hasło</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -161,16 +150,15 @@
                         </div>
                         <div class="row my-4">
                             <input type="password" name="password" id="newPassword" class="form-control"
-                                   placeholder="<fmt:message key="user.newPassword"/>" required autofocus>
+                                   placeholder="Nowe hasło" required autofocus>
                         </div>
                         <div class="row my-4">
                             <input type="password" id="newPasswordRepeated" class="form-control"
-                                   placeholder="<fmt:message key="user.newPasswordRepeated"/>" required autofocus>
+                                   placeholder="Powtórz hasło" required autofocus>
                         </div>
                         <div class="row my-4">
                             <button class="btn btn-outline-secondary" type="button" onclick="validateModal()">
-                                <fmt:message
-                                        key="user.modalSubmit"/></button>
+                                Zmień</button>
                         </div>
                     </div>
                 </form:form>
@@ -187,7 +175,7 @@
         if (nPassInp.value == "") {
             nPassInpRep.value = "";
             nPassInp.value = "";
-            repLabel.innerText = '<fmt:message key="newPass.emptyInput"/>'
+            repLabel.innerText = 'Hasło nie moze byc puste'
         }
         else if (nPassInp.value == nPassInpRep.value) {
 
@@ -197,15 +185,22 @@
             } else {
                 nPassInpRep.value = "";
                 nPassInp.value = "";
-                repLabel.innerText = '<fmt:message key="newPass.passwordRequirements"/>'
+                repLabel.innerText = 'Hasło nie spełnia wymagan'
             }
         }
         else {
             nPassInpRep.value = "";
             nPassInp.value = "";
-            repLabel.innerText = '<fmt:message key="newPass.passNotMatch"/>'
+            repLabel.innerText = 'Hasła nie pasują'
         }
     }
 </script>
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
 </html>
