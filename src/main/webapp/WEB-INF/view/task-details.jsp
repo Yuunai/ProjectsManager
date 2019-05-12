@@ -74,13 +74,14 @@
     </c:url>
     <div class="container my-3">
         <p>
-            <button class="btn btn-outline-secondary" onclick="">
+            <button class="btn btn-outline-secondary" data-toggle="modal"
+                    data-target="#commModal">
                 <span data-feather="plus" style="margin-bottom: 1px;"></span>
-                Edytuj
+                Dodaj komentarz
             </button>
             <button class="btn btn-outline-secondary" onclick="location.href='/'">
                 <span data-feather="plus" style="margin-bottom: 1px;"></span>
-                Dodaj komentarz
+                Edytuj
             </button>
         </p>
     </div>
@@ -151,7 +152,7 @@
 
         <div class="row py-4 justify-content-center">
             <div class=" col-4">
-                <button class="btn btn-lg btn-secondary btn-block" type="submit" hidden>Dodaj projekt</button>
+                <button class="btn btn-lg btn-secondary btn-block" type="submit" hidden>Zapisz zadanie</button>
             </div>
         </div>
 
@@ -172,6 +173,38 @@
 
     </form:form>
 
+</div>
+<div class="modal fade" id="commModal" tabindex="-1" role="dialog" aria-labelledby="commModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="commModalLabel">Dodaj komentarz</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+<div class="modal-body">
+
+    <form:form action="comment" modelAttribute="comment" method="POST"
+                       acceptCharset="utf8">
+        <form:hidden path="id"/>
+        <form:hidden path="task" value="${task.id}"/>
+        <div class="row py-4 justify-content-center">
+            <div class="col-12">
+                <label class="form-header" for="name">Treść</label>
+                <form:input path="comment" id="name" type="text" class="form-control"/>
+                <label class="form-note" for="name"><form:errors path="comment"/></label>
+            </div>
+        </div>
+        <div class="row py-4 justify-content-center">
+            <div class=" col-4">
+                <button class="btn btn-lg btn-secondary btn-block" type="submit">Zapisz komentarz</button>
+            </div>
+        </div>
+            </form:form>
+</div>
+        </div>
+    </div>
 </div>
 
 </body>
