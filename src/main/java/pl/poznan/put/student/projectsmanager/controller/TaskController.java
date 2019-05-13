@@ -7,8 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.projectsmanager.entity.*;
-import pl.poznan.put.student.projectsmanager.service.ProjectService;
-import pl.poznan.put.student.projectsmanager.service.TaskService;
+import pl.poznan.put.student.projectsmanager.exceptions.NotFoundException;
+import pl.poznan.put.student.projectsmanager.service.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RequestMapping("/task")
 @Controller
@@ -19,6 +22,9 @@ public class TaskController {
 	
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
@@ -65,7 +71,12 @@ public class TaskController {
 	}
 	
 	@PostMapping("/comment")
-	public String saveComment(Model model, @ModelAttribute("comment") Comment comment) {
+	public String saveComment(Model model,
+	                          @ModelAttribute("comment") Comment comment,
+	                          @SessionAttribute("userId") int userId) throws NotFoundException {
+		User user = userService.getUser(userId);
+		comment.setUser(user);
+		comment.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.uuuu HH:mm:ss")));
 		taskService.saveComment(comment);
 		
 		return taskDetails(model, comment.getTask().getId());

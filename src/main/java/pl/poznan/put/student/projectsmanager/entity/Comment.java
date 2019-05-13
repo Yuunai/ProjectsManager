@@ -18,7 +18,21 @@ public class Comment {
 	@Column(name = "comment")
 	private String comment;
 	
+	@ManyToOne(targetEntity = User.class)
+	@JoinColumn(name = "user_id")
+	private User user;
+	
+	@Column(name = "timestamp")
+	private String timestamp;
+	
 	public Comment() {
+	}
+	
+	public Comment(Task task, String comment, User user, String timestamp) {
+		this.task = task;
+		this.comment = comment;
+		this.user = user;
+		this.timestamp = timestamp;
 	}
 	
 	public Comment(Task task, String comment) {
@@ -48,5 +62,21 @@ public class Comment {
 	
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	public String getTimestamp() {
+		return timestamp;
+	}
+	
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
 	}
 }

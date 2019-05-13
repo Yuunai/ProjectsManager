@@ -105,7 +105,7 @@
 							<tr>
 								<td>${task.name}</td>
 								<td>${task.description.length() > 40 ? task.description.substring(0, 40) + "..."
-								: task.description}}</td>
+								: task.description}</td>
 								<td>${task.deadline}</td>
 							</tr>
 						</c:forEach>

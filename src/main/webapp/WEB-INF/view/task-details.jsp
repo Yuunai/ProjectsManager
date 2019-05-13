@@ -162,7 +162,7 @@
         <c:forEach var="comm" items="${task.comments}">
             <div class="row py-4 justify-content-center">
                 <div class="col-12">
-                    <label class="form-header" for="comm${comm.id}">Autor i timestamp</label>
+                    <label class="form-header" for="comm${comm.id}">${comm.user.email}  |   ${comm.timestamp}</label>
                     <input id="comm${comm.id}" type="text" class="form-control" disabled="true" value="${comm.comment}"/>
                 </div>
             </div>
