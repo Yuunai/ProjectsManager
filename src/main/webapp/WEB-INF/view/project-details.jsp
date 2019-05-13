@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -76,12 +77,13 @@
 				<span data-feather="plus" style="margin-bottom: 1px;"></span>
 				Dodaj zadanie
 			</button>
-			<button class="btn btn-outline-secondary" onclick="edit();">
+			<button class="btn btn-outline-secondary" data-toggle="modal"
+					data-target="#editModal">
 				Edytuj
 			</button>
 			<button class="btn btn-outline-secondary" onclick="alert('Nie dodasz')">
 				<span data-feather="plus" style="margin-bottom: 1px;"></span>
-				Dodaj uczestnika
+				Dołącz
 			</button>
 		</p>
 	</div>
@@ -125,6 +127,45 @@
 		</table>
 	</div>
 </main>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="editModalLabel">Edytuj projekt</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+				<form:form action="save" modelAttribute="project" method="POST"
+						   acceptCharset="utf8">
+					<form:hidden path="id" value="${project.id}"/>
+					<form:hidden path="lastUpdate"/>
+					<div class="row py-4 justify-content-center">
+						<div class="col-12">
+							<label class="form-header" for="name">Nazwa</label>
+							<form:input path="name" id="name" type="text" class="form-control" value="${project.name}"/>
+							<label class="form-note" for="name"><form:errors path="name"/></label>
+						</div>
+					</div>
+					<div class="row py-4 justify-content-center">
+						<div class="col-12">
+							<label class="form-header" for="name">Opis</label>
+							<form:input path="description" id="name" type="text" class="form-control" value="${project.description}"/>
+							<label class="form-note" for="name"><form:errors path="description"/></label>
+						</div>
+					</div>
+					<div class="row py-4 justify-content-center">
+						<div class=" col-4">
+							<button class="btn btn-lg btn-secondary btn-block" type="submit">Zapisz</button>
+						</div>
+					</div>
+				</form:form>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 <script>
     function hideEmptyErrorsRow() {

@@ -67,7 +67,15 @@
         </div>
     </div>
 </header>
-
+<section class="text-center">
+    <div class="container my-3">
+        <p>
+            <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/project/details?pid=${task.project.id}'">
+                Wróć
+            </button>
+        </p>
+    </div>
+</section>
 <div class="container-fluid justify-content-center">
     <form:form action="save" modelAttribute="task" method="POST" acceptCharset="utf8">
 
