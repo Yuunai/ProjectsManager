@@ -82,4 +82,16 @@ public class TaskController {
 		return taskDetails(model, comment.getTask().getId());
 	}
 	
+	@PostMapping("/user")
+	public String addUser(Model model,
+	                      @RequestParam("taskId") int taskId,
+	                      @SessionAttribute("userId") int userId) throws NotFoundException {
+		User user = userService.getUser(userId);
+		Task task = taskService.getTask(taskId);
+		task.getUsers().add(user);
+		taskService.saveTask(task);
+		
+		return taskDetails(model, task.getId());
+	}
+	
 }
