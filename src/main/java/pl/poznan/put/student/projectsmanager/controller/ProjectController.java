@@ -7,7 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.projectsmanager.entity.Project;
+import pl.poznan.put.student.projectsmanager.entity.User;
 import pl.poznan.put.student.projectsmanager.service.ProjectService;
+import pl.poznan.put.student.projectsmanager.service.UserService;
 
 import java.util.List;
 
@@ -17,6 +19,9 @@ public class ProjectController {
 	
 	@Autowired
 	ProjectService projectService;
+	
+	@Autowired
+	UserService userService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
@@ -61,4 +66,26 @@ public class ProjectController {
 		return listProjects(model);
 	}
 	
+	
+	@GetMapping("/projectRights")
+	public String getProjectRightsPage(Model model,
+	                                   @RequestParam("projectId") int projectId) {
+		Project project = projectService.getProject(projectId, false, true);
+		List<User> users = userService.getUsers(true);
+		model.addAttribute("project", project);
+		
+		users.removeAll(project.getUsers());
+		model.addAttribute("users", users);
+		
+		
+		return "project-rights";
+	}
+	
+	@PostMapping("/projectRights")
+	public String saveProjectRights(Model model,
+	                                @ModelAttribute("project") Project project) {
+		projectService.saveProject(project);
+		
+		return getProjectRightsPage(model, project.getId());
+	}
 }
