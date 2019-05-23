@@ -85,6 +85,13 @@
             <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/project/details?pid=${task.project.id}'">
                 Wróć
             </button>
+
+            <form action="user?taskId=${task.id}" method="POST"
+                       acceptCharset="utf8">
+                <button class="btn btn-outline-secondary" type="submit">
+                    Dołącz/Zrezygnuj
+                </button>
+            </form>
         </p>
     </div>
 </section>
@@ -128,6 +135,7 @@
                 <label class="form-note" for="description"><form:errors path="description"/></label>
             </div>
         </div>
+
         <div class="row py-4 justify-content-center">
             <div class="col-12 col-md-3">
                 <label class="form-header" for="status">Status zadania</label>
@@ -147,13 +155,21 @@
 
         </div>
 
-
-
         <div class="row py-4 justify-content-center">
             <div class=" col-4">
                 <button id="saveBtn" class="btn btn-lg btn-secondary btn-block" type="submit" hidden>Zapisz zadanie</button>
             </div>
         </div>
+        <div class="row py-4 justify-content-center">
+
+            <div class="col-12">
+                <h2>Uczestnicy</h2>
+                <c:forEach var="usr" items="${task.users}">
+                    <span>${usr.email}</span>
+                </c:forEach>
+            </div>
+        </div>
+
 
         <h3>Komentarze</h3>
         <c:url var="taskVar" value="/task/details">
