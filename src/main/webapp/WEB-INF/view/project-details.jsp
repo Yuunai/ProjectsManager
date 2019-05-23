@@ -83,7 +83,7 @@
                     data-target="#editModal">
                 Edytuj
             </button>
-            <button class="btn btn-outline-secondary" onclick="location.href='/projectRights?projectId=${project.id}'">
+            <button class="btn btn-outline-secondary" onclick="location.href='/project/projectRights?projectId=${project.id}'">
                 Lista moderatorów
             </button>
         </p>

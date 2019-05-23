@@ -63,7 +63,7 @@
             <tbody>
             <c:forEach var="user" items="${users}">
                 <tr>
-                    <td>${user.firstName}</td>
+                    <td>${user.email}</td>
                     <td>
                         <c:choose>
                         <c:when test="${'1'=='1'}">
