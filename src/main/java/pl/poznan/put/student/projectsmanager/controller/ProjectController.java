@@ -72,10 +72,8 @@ public class ProjectController {
 	                                   @RequestParam("projectId") int projectId) {
 		Project project = projectService.getProject(projectId, false, true);
 		List<User> users = userService.getUsers(true);
-		model.addAttribute("project", project);
-		
-		users.removeAll(project.getUsers());
 		model.addAttribute("users", users);
+		model.addAttribute("project", project);
 		
 		
 		return "project-rights";
