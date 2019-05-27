@@ -2,6 +2,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <html lang="en">
 <head>
@@ -82,7 +83,12 @@
             <button class="btn btn-outline-secondary" onclick="edit();">
                 Edytuj
             </button>
-            <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/project/details?pid=${task.project.id}'">
+<security:authorize access="hasAnyRole('ADMIN')">
+            <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/task/delete?tid=${task.id}'">
+                Usuń
+            </button>
+            </security:authorize>
+<button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/project/details?pid=${task.project.id}'">
                 Wróć
             </button>
 
