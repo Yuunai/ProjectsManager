@@ -111,6 +111,7 @@ public class UserServiceImpl implements UserService {
 		}
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setAdmRoles(Collections.singletonList(userRepository.getAdmRole(2)));
 		userRepository.saveUser(user);
 	}
 	
