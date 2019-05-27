@@ -4,9 +4,9 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.poznan.put.student.projectsmanager.dao.TaskRepository;
-import pl.poznan.put.student.projectsmanager.entity.Comment;
-import pl.poznan.put.student.projectsmanager.entity.Task;
+import pl.poznan.put.student.projectsmanager.dao.*;
+import pl.poznan.put.student.projectsmanager.entity.*;
+import pl.poznan.put.student.projectsmanager.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -15,7 +15,13 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
 	
 	@Autowired
-	TaskRepository taskRepository;
+	private TaskRepository taskRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private ProjectRepository projectRepository;
 	
 	@Override
 	public Task getTask(int id) {
@@ -48,5 +54,12 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public void deleteComment(int id) {
 		taskRepository.deleteComment(id);
+	}
+	
+	@Override
+	public boolean checkUserRights(int projectId, int userId) throws NotFoundException {
+		Project project = projectRepository.getProject(projectId);
+		
+		return project.getUsers().stream().anyMatch(u -> u.getId() == userId);
 	}
 }

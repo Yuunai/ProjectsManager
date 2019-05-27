@@ -34,7 +34,12 @@ public class TaskController {
 	}
 	
 	@GetMapping("/new")
-	public String newTask(Model model, @RequestParam("pid") int projectId) {
+	public String newTask(Model model,
+	                      @RequestParam("pid") int projectId,
+	                      @SessionAttribute("userId") int userId) throws NotFoundException {
+		if(!taskService.checkUserRights(projectId, userId))
+			return "redirect:/project/list";
+		
 		Project project = projectService.getProject(projectId, false, false);
 		
 		Task task = new Task();
@@ -57,7 +62,12 @@ public class TaskController {
 	}
 	
 	@PostMapping("/save")
-	public String saveTask(Model model, @ModelAttribute("task") Task task) {
+	public String saveTask(Model model,
+	                       @ModelAttribute("task") Task task,
+	                       @SessionAttribute("userId") int userId) throws NotFoundException {
+		if(!taskService.checkUserRights(task.getProject().getId(), userId))
+			return taskDetails(model, task.getId());
+		
 		taskService.saveTask(task);
 		
 		return taskDetails(model, task.getId());
@@ -89,6 +99,9 @@ public class TaskController {
 	                      @SessionAttribute("userId") int userId) throws NotFoundException {
 		User user = userService.getUser(userId);
 		Task task = taskService.getTask(taskId);
+		if(!taskService.checkUserRights(task.getProject().getId(), userId))
+			return "redirect:/project/list";
+		
 		if(task.getUsers().stream().anyMatch(u -> u.getId() == user.getId())) {
 			task.getUsers().removeIf(tempUser -> tempUser.getId() == user.getId());
 		} else {
