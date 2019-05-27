@@ -50,9 +50,13 @@ public class TaskController {
 	}
 	
 	@GetMapping("/details")
-	public String taskDetails(Model model, @RequestParam("tid") int taskId) {
+	public String taskDetails(Model model,
+	                          @RequestParam("tid") int taskId,
+	                          @SessionAttribute("userId") int userId) throws NotFoundException {
 		Task task = taskService.getTask(taskId);
 		model.addAttribute("task", task);
+		
+		model.addAttribute("access", taskService.checkUserRights(task.getProject().getId(), userId));
 		
 		Comment comment = new Comment();
 		comment.setTask(task);
@@ -66,11 +70,11 @@ public class TaskController {
 	                       @ModelAttribute("task") Task task,
 	                       @SessionAttribute("userId") int userId) throws NotFoundException {
 		if(!taskService.checkUserRights(task.getProject().getId(), userId))
-			return taskDetails(model, task.getId());
+			return taskDetails(model, task.getId(), userId);
 		
 		taskService.saveTask(task);
 		
-		return taskDetails(model, task.getId());
+		return taskDetails(model, task.getId(), userId);
 	}
 	
 	@GetMapping("/delete")
@@ -90,7 +94,7 @@ public class TaskController {
 		comment.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.uuuu HH:mm:ss")));
 		taskService.saveComment(comment);
 		
-		return taskDetails(model, comment.getTask().getId());
+		return taskDetails(model, comment.getTask().getId(), userId);
 	}
 	
 	@PostMapping("/user")
@@ -109,7 +113,7 @@ public class TaskController {
 		}
 		taskService.saveTask(task);
 		
-		return taskDetails(model, task.getId());
+		return taskDetails(model, task.getId(), userId);
 	}
 	
 }

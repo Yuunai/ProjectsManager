@@ -120,7 +120,7 @@
 
             <div class="col-12">
                 <label class="form-header" for="status">Status zadania</label>
-                <form:input path="status" id="status" type="number" class="form-control"/>
+                <form:input path="status" id="status" class="form-control"/>
                 <label class="form-note" for="status"><form:errors path="status"/></label>
             </div>
         </div>
@@ -139,7 +139,7 @@
         </div>
         <div class="row py-4 justify-content-center">
             <div class=" col-4">
-                <button class="btn btn-lg btn-secondary btn-block" type="submit">Dodaj projekt</button>
+                <button class="btn btn-lg btn-secondary btn-block" type="submit">Dodaj zadanie</button>
             </div>
         </div>
 

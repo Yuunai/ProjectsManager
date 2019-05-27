@@ -141,7 +141,7 @@ CREATE TABLE `task` (
   `description` VARCHAR(1024),
   `priority`    INT                  DEFAULT 5,
   `deadline`    DATE                 DEFAULT NULL,
-  `status`      INT                  DEFAULT 0,
+  `status`      VARCHAR(24)          DEFAULT NULL,
   `last_update` TIMESTAMP            DEFAULT now(),
 
   CONSTRAINT `FK_TASK_PROJECT` FOREIGN KEY (`project_id`)

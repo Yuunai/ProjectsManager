@@ -8,8 +8,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.poznan.put.student.projectsmanager.entity.Project;
 import pl.poznan.put.student.projectsmanager.entity.User;
-import pl.poznan.put.student.projectsmanager.service.ProjectService;
-import pl.poznan.put.student.projectsmanager.service.UserService;
+import pl.poznan.put.student.projectsmanager.exceptions.NotFoundException;
+import pl.poznan.put.student.projectsmanager.service.*;
 
 import java.util.List;
 
@@ -18,10 +18,13 @@ import java.util.List;
 public class ProjectController {
 	
 	@Autowired
-	ProjectService projectService;
+	private ProjectService projectService;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
+	
+	@Autowired
+	private TaskService taskService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
@@ -38,9 +41,13 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/details")
-	public String projectDetails(Model model, @RequestParam("pid") int projectId) {
+	public String projectDetails(Model model,
+	                             @RequestParam("pid") int projectId,
+	                             @SessionAttribute("userId") int userId) throws NotFoundException {
 		Project project = projectService.getProject(projectId, true, true);
 		model.addAttribute("project", project);
+		model.addAttribute("access", taskService.checkUserRights(projectId, userId));
+		
 		
 		return "project-details";
 	}

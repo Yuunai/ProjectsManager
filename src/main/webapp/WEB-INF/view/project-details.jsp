@@ -76,10 +76,21 @@
     </c:url>
     <div class="container my-3">
         <p>
-            <button class="btn btn-outline-secondary" onclick="location.href='${newTask}'">
-                <span data-feather="plus" style="margin-bottom: 1px;"></span>
-                Dodaj zadanie
-            </button>
+            <c:choose>
+                <c:when test="${access}">
+                    <button class="btn btn-outline-secondary" onclick="location.href='${newTask}'">
+                        <span data-feather="plus" style="margin-bottom: 1px;"></span>
+                        Dodaj zadanie
+                    </button>
+                </c:when>
+                <c:otherwise>
+                    <button class="btn btn-outline-secondary" disabled onclick="location.href='${newTask}'">
+                        <span data-feather="plus" style="margin-bottom: 1px;"></span>
+                        Dodaj zadanie
+                    </button>
+                </c:otherwise>
+            </c:choose>
+
 <security:authorize access="hasAnyRole('ADMIN')">
 
 <button class="btn btn-outline-secondary" data-toggle="modal"

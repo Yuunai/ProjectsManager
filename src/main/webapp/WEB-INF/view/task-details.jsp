@@ -80,9 +80,20 @@
                 <span data-feather="plus" style="margin-bottom: 1px;"></span>
                 Dodaj komentarz
             </button>
+            <c:choose>
+            <c:when test="${access}">
             <button class="btn btn-outline-secondary" onclick="edit();">
                 Edytuj
             </button>
+            </c:when>
+            <c:otherwise>
+            <button class="btn btn-outline-secondary" disabled onclick="edit();">
+                Edytuj
+            </button>
+            </c:otherwise>
+            </c:choose>
+
+
 <security:authorize access="hasAnyRole('ADMIN')">
             <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/task/delete?tid=${task.id}'">
                 Usuń
@@ -94,9 +105,19 @@
 
             <form action="user?taskId=${task.id}" method="POST"
                        acceptCharset="utf8">
+        <c:choose>
+            <c:when test="${access}">
                 <button class="btn btn-outline-secondary" type="submit">
                     Dołącz/Zrezygnuj
                 </button>
+            </c:when>
+            <c:otherwise>
+                <button class="btn btn-outline-secondary" disabled type="submit">
+                    Dołącz/Zrezygnuj
+                </button>
+            </c:otherwise>
+        </c:choose>
+
             </form>
         </p>
     </div>
@@ -145,7 +166,7 @@
         <div class="row py-4 justify-content-center">
             <div class="col-12 col-md-3">
                 <label class="form-header" for="status">Status zadania</label>
-                <form:input path="status" id="status" type="number" class="form-control" disabled="true"/>
+                <form:input path="status" id="status" class="form-control" disabled="true"/>
                 <label class="form-note" for="status"><form:errors path="status"/></label>
             </div>
             <div class="col-12 col-md-2">
