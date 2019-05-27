@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.poznan.put.student.projectsmanager.dao.ProjectRepository;
+import pl.poznan.put.student.projectsmanager.dao.UserRepository;
 import pl.poznan.put.student.projectsmanager.entity.Project;
 
 import java.util.List;
@@ -14,7 +15,10 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired
-	ProjectRepository projectRepository;
+	private ProjectRepository projectRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Override
 	public Project getProject(int id, boolean initializeTasks, boolean initializeUsers) {
@@ -40,7 +44,12 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Override
 	public void saveProject(Project project) {
+		if(!Hibernate.isInitialized(project.getUsers()))
+			Hibernate.initialize(project.getUsers());
+		if(project.getUsers() == null || project.getUsers().isEmpty())
+			project.setUsers(userRepository.getAdminUsers());
 		projectRepository.saveProject(project);
+		
 	}
 	
 	@Override

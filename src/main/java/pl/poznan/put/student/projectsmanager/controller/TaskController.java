@@ -12,6 +12,7 @@ import pl.poznan.put.student.projectsmanager.service.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
 
 @RequestMapping("/task")
 @Controller
@@ -88,7 +89,11 @@ public class TaskController {
 	                      @SessionAttribute("userId") int userId) throws NotFoundException {
 		User user = userService.getUser(userId);
 		Task task = taskService.getTask(taskId);
-		task.getUsers().add(user);
+		if(task.getUsers().stream().anyMatch(u -> u.getId() == user.getId())) {
+			task.getUsers().removeIf(tempUser -> tempUser.getId() == user.getId());
+		} else {
+			task.getUsers().add(user);
+		}
 		taskService.saveTask(task);
 		
 		return taskDetails(model, task.getId());

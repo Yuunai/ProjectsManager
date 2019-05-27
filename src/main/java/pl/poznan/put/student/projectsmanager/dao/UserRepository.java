@@ -28,6 +28,8 @@ public interface UserRepository {
 	
 	void saveUser(User user);
 	
+	List<User> getAdminUsers();
+	
 	List<AdministrativeRole> getAdmRoles();
 	
 	AdministrativeRole getAdmRole(int id);

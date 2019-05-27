@@ -1,7 +1,6 @@
 package pl.poznan.put.student.projectsmanager.dao;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,7 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
 	public UserDetails getUserDetails(int id) throws NotFoundException {
 		Session session = sessionFactory.getCurrentSession();
 		UserDetails details = session.get(UserDetails.class, id);
-		if(details == null)
+		if (details == null)
 			throw new NotFoundException();
 		return details;
 	}
@@ -54,7 +53,7 @@ public class UserRepositoryImpl implements UserRepository {
 	public User getUser(int id) throws NotFoundException {
 		Session session = sessionFactory.getCurrentSession();
 		User user = session.get(User.class, id);
-		if(user == null)
+		if (user == null)
 			throw new NotFoundException();
 		return user;
 	}
@@ -66,7 +65,7 @@ public class UserRepositoryImpl implements UserRepository {
 		query.setParameter("email", email);
 		List<User> users = query.getResultList();
 		
-		if(users.isEmpty()) {
+		if (users.isEmpty()) {
 			throw new NotFoundException();
 		} else {
 			return query.getSingleResult();
@@ -108,6 +107,19 @@ public class UserRepositoryImpl implements UserRepository {
 	public void saveUser(User user) {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(user);
+	}
+	
+	@Override
+	public List<User> getAdminUsers() {
+		Session session = sessionFactory.getCurrentSession();
+		Query<User> query = session.createQuery("FROM User", User.class);
+		List<User> users = query.getResultList();
+		users.forEach(u -> Hibernate.initialize(u.getAdmRoles()));
+		List<User> result = new ArrayList<>();
+		for (User user : users)
+			if (user.getAdmRoles().stream().anyMatch(r -> r.getId() == 1))
+				result.add(user);
+		return result;
 	}
 	
 	@Override
