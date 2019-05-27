@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -71,7 +73,9 @@
 <section class="text-center">
 	<div class="container my-3">
 		<p>
-			<button class="btn btn-outline-secondary" onclick="location.href='/project/new'">
+<security:authorize access="hasRole('ADMIN')">
+
+<button class="btn btn-outline-secondary" onclick="location.href='/project/new'">
 				<span data-feather="plus" style="margin-bottom: 1px;"></span>
 				Dodaj projekt
 			</button>
@@ -81,6 +85,7 @@
 			<button class="btn btn-outline-secondary" onclick="location.href='/user/list'">
 				Użytkownicy
 			</button>
+</security:authorize>
 			<button class="btn btn-outline-secondary" onclick="location.href='/user/userDetails?userId=${sessionScope.get("userId")}'">
 				Mój profil
 			</button>

@@ -2,6 +2,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -79,13 +80,16 @@
                 <span data-feather="plus" style="margin-bottom: 1px;"></span>
                 Dodaj zadanie
             </button>
-            <button class="btn btn-outline-secondary" data-toggle="modal"
+<security:authorize access="hasAnyRole('ADMIN')">
+
+<button class="btn btn-outline-secondary" data-toggle="modal"
                     data-target="#editModal">
                 Edytuj
             </button>
             <button class="btn btn-outline-secondary" onclick="location.href='/project/projectRights?projectId=${project.id}'">
                 Lista moderatorów
             </button>
+</security:authorize>
         </p>
     </div>
 </section>
